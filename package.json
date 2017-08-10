@@ -10,15 +10,15 @@
   "author": "Petr D. Svoboda <petrdsvoboda@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@types/material-ui": "^0.17.21",
     "@types/react": "^16.0.1",
     "@types/react-dom": "^15.5.2",
-    "material-ui": "^0.18.7",
+    "material-ui": "v1.0.0-beta.4",
     "mobx": "^3.2.2",
     "path": "^0.12.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "ts-loader": "^2.3.2",
+    "typeface-roboto": "^0.0.35",
     "webpack": "^3.5.2",
     "webpack-dev-server": "^2.7.1"
   },
