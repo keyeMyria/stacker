@@ -10,24 +10,53 @@ interface Props {
 	storage: PalletStorage
 }
 
-const Storage: React.SFC<Props> = (props) => {
-	const style = {
-		margin: 8,
-		width: 64,
-		minWidth: 'unset',
-		height: 64,
-		cursor: 'pointer'
-	}
-
-	return (
-		<Button raised
-			style={style}
-		>
-			<Typography type="body1" component="p">
-				{props.storage.palletName}
-			</Typography>
-		</Button>
-	)
+interface State {
+	active: boolean,
+	width: number,
+	height: number
 }
 
-export default Storage
+export default class Storage extends React.Component<Props, State> {
+	state = {
+		active: false,
+		width: 64,
+		height: 64
+	}
+
+	handleToggleActive = () => {
+		if(this.state.active) {
+			this.setState({
+				active: !this.state.active,
+				width: 64,
+				height: 64
+			})
+		} else {
+			this.setState({
+				active: !this.state.active,
+				width: 128,
+				height: 128
+			})
+		}
+	}
+
+	render() {
+		const style = {
+			margin: 8,
+			width: this.state.width,
+			height: this.state.height,
+			minWidth: 'unset',
+			cursor: 'pointer'
+		}
+	
+		return (
+			<Button raised
+				style={style}
+				onClick={this.handleToggleActive}
+			>
+				<Typography type="body1" component="p">
+					{this.props.storage.palletName}
+				</Typography>
+			</Button>
+		)
+	}
+}

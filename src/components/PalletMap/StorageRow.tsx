@@ -1,8 +1,5 @@
 import * as React from 'react'
 
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
-
 import { PalletStorageRow } from '../../stores/PalletStore'
 
 import Storage from './Storage'
