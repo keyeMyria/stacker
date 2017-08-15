@@ -9,8 +9,11 @@ interface Props {
 }
 
 const StorageRow: React.SFC<Props> = (props) => {
-	const style = {
-		display: 'flex'
+	const style: React.CSSProperties = {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignContent: 'center'
 	}
 
 	return (
