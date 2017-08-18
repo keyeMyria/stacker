@@ -6,12 +6,13 @@ import { withStyles } from 'material-ui/styles'
 
 import { PalletStorage } from '../../stores/PalletStore'
 
-interface Props {
-	storage: PalletStorage
-}
-
 interface ClassNames {
 	root: string
+}
+
+interface Props {
+	storage: PalletStorage,
+	classes: ClassNames
 }
 
 const styles = {
@@ -24,7 +25,7 @@ const styles = {
 }
 
 @observer
-class Storage extends React.Component<Props & { classes: ClassNames }> {
+class Storage extends React.Component<Props> {
 	render() {
 		return(
 			<Button
