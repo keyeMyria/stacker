@@ -1,8 +1,8 @@
 import * as React from 'react'
+import { observer } from 'mobx-react'
 
-import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
-import Typography from 'material-ui/Typography'
+import { withStyles } from 'material-ui/styles'
 
 import { PalletStorage } from '../../stores/PalletStore'
 
@@ -10,53 +10,33 @@ interface Props {
 	storage: PalletStorage
 }
 
-interface State {
-	active: boolean,
-	width: number,
-	height: number
+interface ClassNames {
+	root: string
 }
 
-export default class Storage extends React.Component<Props, State> {
-	state = {
-		active: false,
+const styles = {
+	root: {
+		margin: 4,
 		width: 64,
+		minWidth: 0,
 		height: 64
 	}
+}
 
-	handleToggleActive = () => {
-		if(this.state.active) {
-			this.setState({
-				active: !this.state.active,
-				width: 64,
-				height: 64
-			})
-		} else {
-			this.setState({
-				active: !this.state.active,
-				width: 128,
-				height: 128
-			})
-		}
-	}
-
+@observer
+class Storage extends React.Component<Props & { classes: ClassNames }> {
 	render() {
-		const style = {
-			margin: 8,
-			width: this.state.width,
-			height: this.state.height,
-			minWidth: 'unset',
-			cursor: 'pointer'
-		}
-	
-		return (
-			<Button raised
-				style={style}
-				onClick={this.handleToggleActive}
+		return(
+			<Button
+				className={this.props.classes.root}
+				color={this.props.storage.isEmpty ? "accent" : "default"}
+				onClick={() => this.props.storage.toggleEmpty()}
+				raised
 			>
-				<Typography type="body1" component="p">
-					{this.props.storage.palletName}
-				</Typography>
+				{this.props.storage.palletName}
 			</Button>
 		)
 	}
 }
+
+export default withStyles(styles)(Storage)

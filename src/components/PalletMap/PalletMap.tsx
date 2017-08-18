@@ -12,10 +12,6 @@ interface Props {
 	store: PalletStore
 }
 
-interface Style {
-
-}
-
 @observer
 export default class PalletMap extends React.Component<Props> {
 	render() {
