@@ -1,0 +1,7 @@
+{
+	"manifest_version": 2,
+	"name": "Stacker",
+	"description": "Application for pallet stacker.",
+	"homepage_url": "http://172.18.10.98:8085",
+	"display": "fullscreen"
+}

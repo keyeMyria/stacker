@@ -6,7 +6,12 @@ module.exports = {
 	devtool: 'inline-source-map',
 	devServer: {
 		contentBase: './dist',
-		hot: true
+		hot: true,
+		inline: true,
+		host: '0.0.0.0',
+		port: 8085,
+		historyApiFallback: true,
+		noInfo: true
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin()
