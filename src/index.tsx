@@ -5,7 +5,7 @@ import AppStore from './stores/AppStore'
 
 import 'typeface-roboto'
 
-const store = new AppStore()
+const store: AppStore = new AppStore()
 
 render(
   	<App store={store} />,

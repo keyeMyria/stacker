@@ -6,17 +6,19 @@ import PalletStore from '../stores/PalletStore'
 
 import PalletMap from './PalletMap/PalletMap'
 
-const store = new PalletStore()
-
 interface Props {
 	store: AppStore
 }
 
+const palletStore: PalletStore = new PalletStore()
+
 @observer
-export default class App extends React.Component<Props, {}> {
-	render() {
+class App extends React.Component<Props> {
+	render() {		
 		return(
-			<PalletMap store={store} />
+			<PalletMap store={palletStore} />
 		)
 	}
 }
+
+export default App

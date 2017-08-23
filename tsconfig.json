@@ -3,12 +3,16 @@
 		"outDir": "./dist/",
     	"rootDir": "src",
 		"sourceMap": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
 		"module": "commonjs",
 		"target": "es5",
 		"jsx": "react",
 		"allowJs": true,
-		"experimentalDecorators": true
+		"experimentalDecorators": true,
+		"types": [
+			"material-ui"
+		]
 	},
 	"exclude": [
 		"node_modules",

@@ -11,9 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "@types/react": "^16.0.2",
+    "@types/react-dom": "^15.5.4",
     "css-loader": "^0.28.4",
     "file-loader": "^0.11.2",
-    "material-ui": "^1.0.0-beta.5",
+    "material-ui": "^1.0.0-beta.6",
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
     "path": "^0.12.7",
@@ -26,6 +27,7 @@
     "webpack-dev-server": "^2.7.1"
   },
   "devDependencies": {
+    "@types/enzyme": "^2.8.6",
     "typescript": "^2.4.2"
   }
 }

@@ -4,15 +4,14 @@ import { observer } from 'mobx-react'
 import Button from 'material-ui/Button'
 import { withStyles } from 'material-ui/styles'
 
-import { PalletStorage } from '../../stores/PalletStore'
+import { Pallet } from '../../stores/PalletStore'
+
+interface Props {
+	pallet: Pallet
+}
 
 interface ClassNames {
 	root: string
-}
-
-interface Props {
-	storage: PalletStorage,
-	classes: ClassNames
 }
 
 const styles = {
@@ -25,19 +24,19 @@ const styles = {
 }
 
 @observer
-class Storage extends React.Component<Props> {
+class Storage extends React.Component<Props & { classes: ClassNames }> {
 	render() {
 		return(
 			<Button
 				className={this.props.classes.root}
-				color={this.props.storage.isEmpty ? "accent" : "default"}
-				onClick={() => this.props.storage.toggleEmpty()}
+				color={this.props.pallet.isEmpty ? "accent" : "default"}
+				onClick={() => this.props.pallet.toggleEmpty()}
 				raised
 			>
-				{this.props.storage.palletName}
+				{this.props.pallet.getName()}
 			</Button>
 		)
 	}
 }
 
-export default withStyles(styles)(Storage)
+export default withStyles<Props, ClassNames>(styles)(Storage)
