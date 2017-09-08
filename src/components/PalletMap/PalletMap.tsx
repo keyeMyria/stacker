@@ -1,15 +1,16 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
-import Paper from 'material-ui/Paper'
+import { withStyles, StyleRules } from 'material-ui/styles'
+import Card from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Radio, { RadioGroup } from 'material-ui/Radio'
 import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
-import { withStyles, StyleRules } from 'material-ui/styles'
 
 import PalletStore, { Pallet } from '../../stores/PalletStore'
 
 import StorageRow from './StorageRow'
+import SideSwitcher from './SideSwitcher'
 
 interface Props {
 	store: PalletStore
@@ -23,7 +24,9 @@ interface ClassNames {
 const styles: StyleRules = {
 	root: {
 		display: 'flex',
+		flexDirection: 'column',
 		justifyContent: 'center',
+		margin: 32
 	},
 	map: {
 		display: 'flex',
@@ -50,30 +53,18 @@ class PalletMap extends React.Component<Props & { classes: ClassNames }> {
 				/>
 			)
 		}
-
 		return rows
 	}
 
 	render() {
 		return(
-			<div className={this.props.classes.root}>
-				<FormControl>
-					<FormLabel>Stacker side</FormLabel>
-					<RadioGroup
-						aria-label="map"
-						name="map"
-						value={this.props.store.showSide}
-						onChange={(e, v) => this.props.store.switchSide(v)}
-					>
-						<FormControlLabel value="left" control={<Radio />} label="Left" />
-						<FormControlLabel value="right" control={<Radio />} label="Right" />
-					</RadioGroup>
-				</FormControl>
+			<Card className={this.props.classes.root}>
+				<SideSwitcher store={this.props.store} />
 
 				<div className={this.props.classes.map}>
 					{this.mapStorageRows()}
 				</div>
-			</div>
+			</Card>
 		)
 	}
 }

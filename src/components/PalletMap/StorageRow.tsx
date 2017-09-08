@@ -10,6 +10,10 @@ interface Props {
 	row: Pallet[]
 }
 
+interface ClassNames {
+	root: string
+}
+
 const styles: StyleRules = {
 	root: {
 		display: 'flex',
@@ -17,10 +21,6 @@ const styles: StyleRules = {
 		alignItems: 'center',
 		alignContent: 'center'
 	}
-}
-
-interface ClassNames {
-	root: string
 }
 
 const StorageRow: React.SFC<Props & { classes: ClassNames }> = (props) => {

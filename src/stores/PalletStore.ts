@@ -1,9 +1,15 @@
 import { observable, action } from 'mobx'
 
+interface PalletState {
+	id: string
+	name: string
+}
+
 export class Pallet {
 	static nextId: number = 0
 
 	@observable isEmpty: boolean
+	@observable state: PalletState
 
 	id: number
 	side: string
@@ -18,10 +24,15 @@ export class Pallet {
 		this.column = column
 
 		this.isEmpty = false
+		this.state = { id: 'stored', name: 'Stored' }
 	}
 	
 	@action toggleEmpty(): void {
 		this.isEmpty = !this.isEmpty
+	}
+
+	@action request(): void {
+		this.state = { id: 'requested', name: 'Requested' }
 	}
 
 	getName(): string {
@@ -33,6 +44,10 @@ export class Pallet {
 		name += this.row
 
 		return name
+	}
+
+	getRowNumber() {
+		return this.row.charCodeAt(0) - 65
 	}
 }
 
@@ -48,13 +63,18 @@ export default class PalletStore {
 
 		this.pallets = []
 		this.rowCount = 8
-		this.columnCount = 14
+		this.columnCount = 71
 
 		this.generatePallets()
+		this.requestTestPallets()
 	}
 
 	@action switchSide(side: string) {
 		this.showSide = side
+	}
+
+	getRequestedPallets(): Pallet[] {
+		return this.pallets.filter((p: Pallet) => p.state.id === 'requested')
 	}
 
 	generatePallets(): void {
@@ -86,5 +106,27 @@ export default class PalletStore {
 
 	getPalletsFromRowByIndex(side: string, index: number): Pallet[] {
 		return this.getPalletsFromRow(side, String.fromCharCode(65 + index))
+	}
+
+	requestTestPallets(): void {
+		let pallet: Pallet | undefined
+
+		pallet = this.pallets.find((p: Pallet) => (
+			p.side === 'left' && p.row === 'F' && p.column === 53)
+		)
+		if(pallet)
+			pallet.request()
+
+		pallet = this.pallets.find((p: Pallet) => (
+			p.side === 'right' && p.row === 'C' && p.column === 6)
+		)
+		if(pallet)
+			pallet.request()
+
+		pallet = this.pallets.find((p: Pallet) => (
+			p.side === 'left' && p.row === 'B' && p.column === 26)
+		)
+		if(pallet)
+			pallet.request()
 	}
 }

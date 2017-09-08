@@ -6,10 +6,11 @@
 		"noImplicitAny": true,
 		"strictNullChecks": true,
 		"module": "commonjs",
-		"target": "es5",
+		"target": "es6",
 		"jsx": "react",
 		"allowJs": true,
 		"experimentalDecorators": true,
+		"noUnusedLocals": true,
 		"types": [
 			"material-ui"
 		]
