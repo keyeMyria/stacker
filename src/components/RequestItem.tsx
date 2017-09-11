@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
-import Button from 'material-ui/Button'
 import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
 import { withStyles, StyleRules } from 'material-ui/styles'

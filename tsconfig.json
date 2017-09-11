@@ -12,11 +12,13 @@
 		"experimentalDecorators": true,
 		"noUnusedLocals": true,
 		"types": [
-			"material-ui"
+			"material-ui",
+			"material-ui-icons"
 		]
 	},
 	"exclude": [
 		"node_modules",
+		"node_modules/material-ui",
     	"dist"
   	]
 }

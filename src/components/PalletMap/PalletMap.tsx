@@ -3,11 +3,8 @@ import { observer } from 'mobx-react'
 
 import { withStyles, StyleRules } from 'material-ui/styles'
 import Card from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
-import Radio, { RadioGroup } from 'material-ui/Radio'
-import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
 
-import PalletStore, { Pallet } from '../../stores/PalletStore'
+import PalletStore from '../../stores/PalletStore'
 
 import StorageRow from './StorageRow'
 import SideSwitcher from './SideSwitcher'

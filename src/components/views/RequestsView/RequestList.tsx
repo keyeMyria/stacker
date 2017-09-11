@@ -21,7 +21,6 @@ interface ClassNames {
 
 const styles: StyleRules = {
 	root: {
-		width: 400
 	},
 	headline: {
 		color: common['lightBlack'],

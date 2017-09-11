@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
-import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
 import { withStyles, StyleRules } from 'material-ui/styles'
+import { grey, red } from 'material-ui/colors'
+
+import ErrorOutline from 'material-ui-icons/ErrorOutline'
 
 import { Pallet } from '../../../stores/PalletStore'
 
@@ -15,26 +17,52 @@ interface Props {
 
 interface ClassNames {
 	root: string,
-	title: string,
+	priority: string,
+	main: string,
 	header: string,
 	map: string
 }
 
 const styles: StyleRules = {
 	root: {
-		padding: '8px 16px',
-		width: 368
+		display: 'flex',
+		justifyContent: 'flex-end',
+		height: 64,
+		cursor: 'pointer',
+		'&:hover': {
+			backgroundColor: grey[100]
+		},
+		'&:active': {
+			backgroundColor: grey[200]
+		}
 	},
-	title: {
+	priority: {
+		display: 'flex',
+		alignItems: 'center',
+		paddingLeft: 8,
+		paddingRight: 8,
+		borderRight: '1px solid black',
+		borderRightColor: grey[300],
+		background: red['A400'],
+		color: 'white'
+	},
+	main: {
 		display: 'flex',
 		justifyContent: 'space-between',
+		width: 200,
+		padding: '8px 16px',
+		borderRight: '1px solid',
+		borderRightColor: grey[300]
 	},
 	header: {
 		display: 'flex',
+		flexDirection: 'column'
 	},
 	map: {
-		width: 332,
-		height: 32
+		display: 'flex',
+		alignItems: 'center',
+		paddingLeft: 16,
+		paddingRight: 16
 	}
 }
 
@@ -43,11 +71,19 @@ class RequestItem extends React.Component<Props & { classes: ClassNames }> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
-				<div className={this.props.classes.title}>
+				{this.props.pallet.isEmpty &&
+					<div className={this.props.classes.priority}>
+						<ErrorOutline />
+					</div>
+				}
+
+				<div className={this.props.classes.main}>
 					<div className={this.props.classes.header}>
-						<Avatar>!</Avatar>
-						<Typography type="headline">
+						<Typography type="title">
 							{this.props.pallet.getName()}
+						</Typography>
+						<Typography>
+							Test
 						</Typography>
 					</div>
 
@@ -56,12 +92,14 @@ class RequestItem extends React.Component<Props & { classes: ClassNames }> {
 					</Typography>
 				</div>
 
-				<Minimap
-					scale={3}
-					side={this.props.pallet.side}
-					x={this.props.pallet.column}
-					y={this.props.pallet.getRowNumber()}
-				/>
+				<div className={this.props.classes.map}>
+					<Minimap
+						scale={3}
+						side={this.props.pallet.side}
+						x={this.props.pallet.column}
+						y={this.props.pallet.getRowNumber()}
+					/>
+				</div>
 			</div>
 		)
 	}

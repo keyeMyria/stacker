@@ -17,7 +17,6 @@ interface ClassNames {
 
 const styles: StyleRules = {
 	root: {
-		width: 1000
 	}
 }
 

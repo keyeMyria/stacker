@@ -126,7 +126,9 @@ export default class PalletStore {
 		pallet = this.pallets.find((p: Pallet) => (
 			p.side === 'left' && p.row === 'B' && p.column === 26)
 		)
-		if(pallet)
+		if(pallet){
+			pallet.toggleEmpty()
 			pallet.request()
+		}
 	}
 }
