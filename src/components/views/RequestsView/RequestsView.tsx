@@ -17,6 +17,7 @@ interface ClassNames {
 
 const styles: StyleRules = {
 	root: {
+		display: 'flex'
 	}
 }
 
@@ -25,7 +26,7 @@ class RequestsView extends React.Component<Props & { classes: ClassNames }> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
-				<RequestList pallets={this.props.palletStore.getRequestedPallets()} />
+				<RequestList requests={this.props.palletStore.requests} />
 			</div>
 		)
 	}

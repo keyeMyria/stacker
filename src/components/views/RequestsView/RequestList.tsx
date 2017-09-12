@@ -8,10 +8,10 @@ import { common } from 'material-ui/colors'
 
 import RequestItem from './RequestItem'
 
-import { Pallet } from '../../../stores/PalletStore'
+import { PalletRequest } from '../../../stores/PalletStore'
 
 interface Props {
-	pallets: Pallet[]
+	requests: PalletRequest[]
 }
 
 interface ClassNames {
@@ -23,7 +23,7 @@ const styles: StyleRules = {
 	root: {
 	},
 	headline: {
-		color: common['lightBlack'],
+		color: common['minBlack'],
 		marginBottom: 8
 	}
 }
@@ -34,11 +34,11 @@ class RequestList extends React.Component<Props & { classes: ClassNames }> {
 		return(
 			<div className={this.props.classes.root}>
 				<Typography type="headline" className={this.props.classes.headline}>
-					Requested pallets
+					Zažádané palety
 				</Typography>
 
 				<Paper>
-					{this.props.pallets.map(p => <RequestItem key={p.id} pallet={p} />)}
+					{this.props.requests.map(r => <RequestItem key={r.id} request={r} />)}
 				</Paper>
 			</div>
 		)

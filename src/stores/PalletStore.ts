@@ -1,5 +1,16 @@
 import { observable, action } from 'mobx'
 
+export interface PalletRequest {
+	id: number,
+	palletId: number,
+	requester: string,
+	location: string,
+	priority: 'urgent' | 'high' | 'standard' | 'low',
+	requestedAt: Date,
+	isCompleted: boolean,
+	pallet: Pallet
+}
+
 interface PalletState {
 	id: string
 	name: string
@@ -55,6 +66,7 @@ export default class PalletStore {
 	@observable showSide: string
 
 	pallets: Pallet[]
+	requests: PalletRequest[]
 	rowCount: number
 	columnCount: number
 
@@ -62,6 +74,7 @@ export default class PalletStore {
 		this.showSide = 'left'
 
 		this.pallets = []
+		this.requests = []
 		this.rowCount = 8
 		this.columnCount = 71
 
@@ -69,12 +82,29 @@ export default class PalletStore {
 		this.requestTestPallets()
 	}
 
-	@action switchSide(side: string) {
+	@action switchSide(side: string): void {
 		this.showSide = side
 	}
 
-	getRequestedPallets(): Pallet[] {
-		return this.pallets.filter((p: Pallet) => p.state.id === 'requested')
+	@action requestPallet(name: string): void {
+		let pallet: Pallet | undefined 
+		pallet = this.pallets.find((p: Pallet) => p.getName() === name)
+
+		if(!pallet)
+			return
+
+		let request: PalletRequest = {
+			id: pallet.id,
+			palletId: pallet.id,
+			requester: 'Jan Novák',
+			location: 'Sklad 1. patro',
+			priority: 'standard',
+			requestedAt: new Date(),
+			isCompleted: false,
+			pallet
+		}
+
+		this.requests.push(request)
 	}
 
 	generatePallets(): void {
@@ -109,26 +139,11 @@ export default class PalletStore {
 	}
 
 	requestTestPallets(): void {
-		let pallet: Pallet | undefined
-
-		pallet = this.pallets.find((p: Pallet) => (
-			p.side === 'left' && p.row === 'F' && p.column === 53)
-		)
-		if(pallet)
-			pallet.request()
-
-		pallet = this.pallets.find((p: Pallet) => (
-			p.side === 'right' && p.row === 'C' && p.column === 6)
-		)
-		if(pallet)
-			pallet.request()
-
-		pallet = this.pallets.find((p: Pallet) => (
-			p.side === 'left' && p.row === 'B' && p.column === 26)
-		)
-		if(pallet){
-			pallet.toggleEmpty()
-			pallet.request()
-		}
+		this.requestPallet('L11A')
+		this.requestPallet('L26B')
+		this.requestPallet('L51E')
+		this.requestPallet('L53F')
+		this.requestPallet('R42A')
+		this.requestPallet('R06C')
 	}
 }
