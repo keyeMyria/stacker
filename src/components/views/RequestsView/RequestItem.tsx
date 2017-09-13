@@ -50,24 +50,24 @@ const styles: StyleRules = {
 	priority: {
 		display: 'flex',
 		alignItems: 'center',
-		width: 6,
+		width: 8,
 		borderBottom: '1px solid'
 	},
 	priorityUrgent: {
-		background: red['A400'],
-		borderBottomColor: red['A700']
+		background: red[500],
+		borderBottomColor: red[600]
 	},
 	priorityHigh: {
-		background: orange['A400'],
-		borderBottomColor: orange['A700']
+		background: orange[500],
+		borderBottomColor: orange[600]
 	},
 	priorityStandard: {
-		background: green['A400'],
-		borderBottomColor: green['A700']
+		background: green[500],
+		borderBottomColor: green[600]
 	},
 	priorityLow: {
-		background: teal['A400'],
-		borderBottomColor: teal['A700']
+		background: teal[500],
+		borderBottomColor: teal[600]
 	},
 	content: {
 		display: 'flex',
