@@ -42,7 +42,9 @@ class App extends React.Component<Props & { classes: ClassNames }> {
 		return(
 			<Router>
 				<div className={this.props.classes.root}>
-					<Route exact path="/" component={PalletMap}/>
+					<Route exact path="/"  render={props => (
+						<PalletMap {...props} store={palletStore} />
+					)}/>
 					<Route path="/item" component={RequestItem}/>
 					<Route path="/requests" render={props => (
 						<RequestsView {...props} palletStore={palletStore} />

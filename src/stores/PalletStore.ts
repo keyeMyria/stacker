@@ -1,11 +1,12 @@
 import { observable, action } from 'mobx'
 
+type Priority = 'urgent' | 'high' | 'standard' | 'low'
 export interface PalletRequest {
 	id: number,
 	palletId: number,
 	requester: string,
 	location: string,
-	priority: 'urgent' | 'high' | 'standard' | 'low',
+	priority: Priority,
 	requestedAt: Date,
 	isCompleted: boolean,
 	pallet: Pallet
@@ -86,7 +87,7 @@ export default class PalletStore {
 		this.showSide = side
 	}
 
-	@action requestPallet(name: string): void {
+	@action requestPallet(name: string, priority?: Priority): void {
 		let pallet: Pallet | undefined 
 		pallet = this.pallets.find((p: Pallet) => p.getName() === name)
 
@@ -98,7 +99,7 @@ export default class PalletStore {
 			palletId: pallet.id,
 			requester: 'Jan Novák',
 			location: 'Sklad 1. patro',
-			priority: 'standard',
+			priority: priority || 'standard',
 			requestedAt: new Date(),
 			isCompleted: false,
 			pallet
@@ -140,10 +141,10 @@ export default class PalletStore {
 
 	requestTestPallets(): void {
 		this.requestPallet('L11A')
-		this.requestPallet('L26B')
+		this.requestPallet('L26B', 'high')
 		this.requestPallet('L51E')
-		this.requestPallet('L53F')
-		this.requestPallet('R42A')
+		this.requestPallet('L53F', 'urgent')
+		this.requestPallet('R42A', 'low')
 		this.requestPallet('R06C')
 	}
 }
