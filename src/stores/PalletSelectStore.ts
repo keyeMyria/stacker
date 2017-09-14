@@ -104,7 +104,20 @@ export default class PalletSelectStore {
 
 		this.input = input
 	}
-	@action setSide(side: string): void { this.side = side }
-	@action setColumn(column: string): void { this.column = column }
-	@action setRow(row: string): void { this.row = row }
+	@action setSide(side: string): void {
+		this.side = side
+
+		const sideLetter: string = side === 'left' ? 'L' : 'R'
+		this.input = sideLetter + this.column + this.row
+	}
+	@action setColumn(column: string): void {
+		this.column = column
+
+		this.input = this.input.substr(0, 1) + column + this.row
+	}
+	@action setRow(row: string): void {
+		this.row = row
+
+		this.input = this.input.substr(0, 3) + row
+	}
 }
