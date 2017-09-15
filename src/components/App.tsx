@@ -23,15 +23,17 @@ interface Props {
 }
 
 interface ClassNames {
-	root: string
+	root: string,
+	body: string
 }
 
 const styles: StyleRules = {
 	root: {
-		height: '100%',
 		display: 'flex',
 		justifyContent: 'center',
-		paddingTop: 32,
+		paddingTop: 32
+	},
+	body: {
 		backgroundColor: grey[50]
 	}
 }
@@ -41,6 +43,10 @@ const palletStore: PalletStore = new PalletStore()
 
 @observer
 class App extends React.Component<Props & { classes: ClassNames }> {
+	componentWillMount() {
+		document.body.className = this.props.classes.body
+	}
+
 	render() {		
 		return(
 			<Router>
