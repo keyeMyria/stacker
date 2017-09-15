@@ -143,4 +143,11 @@ export default class PalletSelectStore {
 
 		this.input = this.input.substr(0, 3) + row
 	}
+
+	noPalletSelected(): boolean {
+		if(!this.side || !this.column || !this.row)
+			return true
+		else
+			return false
+	}
 }

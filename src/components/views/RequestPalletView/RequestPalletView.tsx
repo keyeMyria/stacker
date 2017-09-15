@@ -8,6 +8,8 @@ import Input, { InputLabel } from 'material-ui/Input'
 import { FormControl } from 'material-ui/Form'
 import { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
+import Button from 'material-ui/Button'
+import AddIcon from 'material-ui-icons/Add'
 import { withStyles, StyleRules } from 'material-ui/styles'
 import { red } from 'material-ui/colors'
 
@@ -19,23 +21,30 @@ interface Props {
 
 interface ClassNames {
 	root: string,
+	inputs: string,
 	search: string,
 	textInput: string,
 	errorText: string,
 	selectInput: string,
-	select: string
+	select: string,
+	button: string
 }
 
 const styles: StyleRules = {
 	root: {
-		width: 400,
+		display: 'flex',
 		marginTop: 200
 	},
+	inputs: {
+		width: 400
+	},
 	search: {
+		height: 32,
 		marginBottom: 4,
 		padding: 8
 	},
 	textInput: {
+		paddingTop: 1,
 		borderBottom: 'none'
 	},
 	errorText: {
@@ -49,11 +58,16 @@ const styles: StyleRules = {
 		justifyContent: 'space-between'
 	},
 	select: {
-		minWidth: 120,
+		minWidth: 100,
 		marginRight: 8,
 		'&:last-child': {
 			marginRight: 0
 		}
+	},
+	button: {
+		width: 48,
+		height: 48,
+		marginLeft: 16
 	}
 }
 
@@ -78,74 +92,86 @@ class RequestPalletView extends React.Component<Props & { classes: ClassNames }>
 	render() {
 		return(
 			<div className={this.props.classes.root}>
-				<Paper className={this.props.classes.search}>
-					<TextField
-						placeholder="Paleta"
-						autoFocus
-						fullWidth
-						value={this.props.store.input}
-						onChange={this.handleChangeInput}
-						className={this.props.classes.textInput}
-						InputProps={{ disableUnderline: true }}
-					/>
-				</Paper>
+				<div className={this.props.classes.inputs}>
+					<Paper className={this.props.classes.search}>
+						<TextField
+							placeholder="Paleta"
+							autoFocus
+							fullWidth
+							value={this.props.store.input}
+							onChange={this.handleChangeInput}
+							className={this.props.classes.textInput}
+							InputProps={{ disableUnderline: true }}
+						/>
+					</Paper>
 
-				<Typography className={this.props.classes.errorText}>
-					{this.props.store.inputError}
-				</Typography>
+					<Typography className={this.props.classes.errorText}>
+						{this.props.store.inputError}
+					</Typography>
 
-				<div className={this.props.classes.selectInput}>
-					<FormControl className={this.props.classes.select}>
-						<InputLabel htmlFor="side">
-							Strana
-						</InputLabel>
-						<Select
-							value={this.props.store.side}
-							onChange={this.handleChangeSide}
-							input={<Input id="side" />}
-							MenuProps={{ MenuListProps: { dense: true }}}
+					<div className={this.props.classes.selectInput}>
+						<FormControl className={this.props.classes.select}>
+							<InputLabel htmlFor="side">
+								Strana
+							</InputLabel>
+							<Select
+								value={this.props.store.side}
+								onChange={this.handleChangeSide}
+								input={<Input id="side" />}
+								MenuProps={{ MenuListProps: { dense: true }}}
+							>
+								<MenuItem value="left">Left</MenuItem>
+								<MenuItem value="right">Right</MenuItem>
+							</Select>
+						</FormControl>
+						
+						<FormControl
+							className={this.props.classes.select}
+							disabled={!this.props.store.side}
 						>
-							<MenuItem value="left">Left</MenuItem>
-							<MenuItem value="right">Right</MenuItem>
-						</Select>
-					</FormControl>
-					
-					<FormControl
-						className={this.props.classes.select}
-						disabled={!this.props.store.side}
-					>
-						<InputLabel htmlFor="column">
-							Sloupec
-						</InputLabel>
-						<Select
-							value={this.props.store.column}
-							onChange={this.handleChangeColumn}
-							input={<Input id="column" />}
-						>	
-							{this.props.store.columnNames.map(c => (
-								<MenuItem key={c} value={c}>{c}</MenuItem>
-							))}
-						</Select>
-					</FormControl>
-					
-					<FormControl
-						className={this.props.classes.select}
-						disabled={!this.props.store.side || !this.props.store.column}
-					>
-						<InputLabel htmlFor="row">
-							Řada
-						</InputLabel>
-						<Select
-							value={this.props.store.row}
-							onChange={this.handleChangeRow}
-							input={<Input id="row" />}
+							<InputLabel htmlFor="column">
+								Sloupec
+							</InputLabel>
+							<Select
+								value={this.props.store.column}
+								onChange={this.handleChangeColumn}
+								input={<Input id="column" />}
+							>	
+								{this.props.store.columnNames.map(c => (
+									<MenuItem key={c} value={c}>{c}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						
+						<FormControl
+							className={this.props.classes.select}
+							disabled={!this.props.store.side || !this.props.store.column}
 						>
-							{this.props.store.rowNames.map(r => (
-								<MenuItem key={r} value={r}>{r}</MenuItem>
-							))}
-						</Select>
-					</FormControl>
+							<InputLabel htmlFor="row">
+								Řada
+							</InputLabel>
+							<Select
+								value={this.props.store.row}
+								onChange={this.handleChangeRow}
+								input={<Input id="row" />}
+							>
+								{this.props.store.rowNames.map(r => (
+									<MenuItem key={r} value={r}>{r}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</div>
 				</div>
+
+				<Button
+					fab
+					color="primary"
+					aria-label="add"
+					className={this.props.classes.button}
+					disabled={this.props.store.noPalletSelected()}
+				>
+					<AddIcon />
+				</Button>
 			</div>
 		)
 	}
