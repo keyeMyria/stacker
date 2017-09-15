@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
+import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
+import Typography from 'material-ui/Typography'
 import Input, { InputLabel } from 'material-ui/Input'
 import { FormControl } from 'material-ui/Form'
 import { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
 import { withStyles, StyleRules } from 'material-ui/styles'
+import { red } from 'material-ui/colors'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
 
@@ -16,7 +19,9 @@ interface Props {
 
 interface ClassNames {
 	root: string,
+	search: string,
 	textInput: string,
+	errorText: string,
 	selectInput: string,
 	select: string
 }
@@ -24,10 +29,20 @@ interface ClassNames {
 const styles: StyleRules = {
 	root: {
 		width: 400,
-		margin: 'auto'
+		marginTop: 200
+	},
+	search: {
+		marginBottom: 4,
+		padding: 8
 	},
 	textInput: {
-		marginBottom: 16
+		borderBottom: 'none'
+	},
+	errorText: {
+		height: 20,
+		marginBottom: 16,
+		color: red['A400'],
+		fontSize: 10
 	},
 	selectInput: {
 		display: 'flex',
@@ -63,15 +78,21 @@ class RequestPalletView extends React.Component<Props & { classes: ClassNames }>
 	render() {
 		return(
 			<div className={this.props.classes.root}>
-				<div className={this.props.classes.textInput}>
+				<Paper className={this.props.classes.search}>
 					<TextField
-						label="Paleta"
+						placeholder="Paleta"
 						autoFocus
 						fullWidth
 						value={this.props.store.input}
 						onChange={this.handleChangeInput}
+						className={this.props.classes.textInput}
+						InputProps={{ disableUnderline: true }}
 					/>
-				</div>
+				</Paper>
+
+				<Typography className={this.props.classes.errorText}>
+					{this.props.store.inputError}
+				</Typography>
 
 				<div className={this.props.classes.selectInput}>
 					<FormControl className={this.props.classes.select}>
@@ -82,6 +103,7 @@ class RequestPalletView extends React.Component<Props & { classes: ClassNames }>
 							value={this.props.store.side}
 							onChange={this.handleChangeSide}
 							input={<Input id="side" />}
+							MenuProps={{ MenuListProps: { dense: true }}}
 						>
 							<MenuItem value="left">Left</MenuItem>
 							<MenuItem value="right">Right</MenuItem>
