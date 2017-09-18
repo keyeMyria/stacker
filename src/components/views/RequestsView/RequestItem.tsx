@@ -11,6 +11,8 @@ import { grey, red, orange, green, teal } from 'material-ui/colors'
 
 import { PalletRequest } from '../../../stores/PalletStore'
 
+import capitalize from '../../../helpers/capitalize'
+
 import Minimap from '../../common/Minimap'
 
 interface Props {
@@ -99,10 +101,6 @@ const styles: StyleRules = {
 		paddingLeft: 16,
 		paddingRight: 16
 	}
-}
-
-function capitalize(s: string): string {
-    return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 @observer

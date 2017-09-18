@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 
-type Priority = 'urgent' | 'high' | 'standard' | 'low'
+export type Priority = 'urgent' | 'high' | 'standard' | 'low'
+
 export interface PalletRequest {
 	id: number,
 	palletId: number,

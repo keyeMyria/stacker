@@ -17,7 +17,8 @@ interface Props {
 interface ClassNames {
 	root: string,
 	inputs: string,
-	button: string
+	button: string,
+	priority: string
 }
 
 const styles: StyleRules = {

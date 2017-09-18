@@ -10,6 +10,8 @@ import { red } from 'material-ui/colors'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
 
+import PriorityButton from './PriorityButton'
+
 interface Props {
 	store: PalletSelectStore
 }
@@ -26,12 +28,13 @@ const styles: StyleRules = {
 		marginBottom: 16
 	},
 	search: {
-		height: 32,
-		marginBottom: 4,
-		padding: 8
+		display: 'flex',
+		height: 48,
+		marginBottom: 4
 	},
 	textInput: {
-		paddingTop: 1,
+		padding: 8,
+		paddingTop: 9,
 		borderBottom: 'none'
 	},
 	errorText: {
@@ -51,6 +54,10 @@ class PalletInput extends React.Component<Props & { classes: ClassNames }> {
 		return(
 			<div className={this.props.classes.root}>
 				<Paper className={this.props.classes.search}>
+					<PriorityButton
+						store={this.props.store}
+					/>
+
 					<TextField
 						placeholder="Paleta"
 						autoFocus

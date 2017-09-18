@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx'
 
+import { Priority } from './PalletStore'
+
 export default class PalletSelectStore {
 	@observable input: string
 	@observable inputError: string
@@ -7,6 +9,8 @@ export default class PalletSelectStore {
 	@observable side: string
 	@observable column: string
 	@observable row: string
+
+	@observable priority: Priority
 
 	columnNames: string[]
 	rowNames: string[]
@@ -32,6 +36,8 @@ export default class PalletSelectStore {
 		this.side = ''
 		this.column = ''
 		this.row = ''
+
+		this.priority = 'standard'
 	}
 
 	@action setInput(input: string): void {
@@ -142,6 +148,10 @@ export default class PalletSelectStore {
 		this.row = row
 
 		this.input = this.input.substr(0, 3) + row
+	}
+	
+	@action setPriority(priority: Priority): void {
+		this.priority = priority
 	}
 
 	noPalletSelected(): boolean {
