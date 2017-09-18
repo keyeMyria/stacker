@@ -11,6 +11,7 @@ export default class PalletSelectStore {
 	@observable row: string
 
 	@observable priority: Priority
+	@observable location: string
 
 	columnNames: string[]
 	rowNames: string[]
@@ -38,6 +39,7 @@ export default class PalletSelectStore {
 		this.row = ''
 
 		this.priority = 'standard'
+		this.location = ''
 	}
 
 	@action setInput(input: string): void {
@@ -153,9 +155,13 @@ export default class PalletSelectStore {
 	@action setPriority(priority: Priority): void {
 		this.priority = priority
 	}
+	
+	@action setLocation(location: string): void {
+		this.location = location
+	}
 
-	noPalletSelected(): boolean {
-		if(!this.side || !this.column || !this.row)
+	formMissingValues(): boolean {
+		if(!this.side || !this.column || !this.row || !this.priority || !this.location)
 			return true
 		else
 			return false

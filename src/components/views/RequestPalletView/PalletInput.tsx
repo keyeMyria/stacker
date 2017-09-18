@@ -3,10 +3,13 @@ import { observer } from 'mobx-react'
 
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
+import Select from 'material-ui/Select'
+import Input from 'material-ui/Input'
+import { MenuItem } from 'material-ui/Menu'
 import Typography from 'material-ui/Typography'
 
 import { withStyles, StyleRules } from 'material-ui/styles'
-import { red } from 'material-ui/colors'
+import { red, grey } from 'material-ui/colors'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
 
@@ -20,6 +23,9 @@ interface ClassNames {
 	root: string,
 	search: string,
 	textInput: string,
+	palletInput: string,
+	locationInput: string,
+	selectPlaceholder: string,
 	errorText: string
 }
 
@@ -37,6 +43,20 @@ const styles: StyleRules = {
 		paddingTop: 9,
 		borderBottom: 'none'
 	},
+	palletInput: {
+		width: 90
+	},
+	locationInput: {
+		width: 265,
+		borderLeft: '1px solid',
+		borderLeftColor: grey[200]
+	},
+	selectPlaceholder: {
+		position: 'absolute',
+		marginTop: 5,
+		fontSize: 16,
+		color: '#A1A1A1'
+	},
 	errorText: {
 		height: 20,
 		color: red['A400'],
@@ -46,8 +66,12 @@ const styles: StyleRules = {
 
 @observer
 class PalletInput extends React.Component<Props & { classes: ClassNames }> {
-	handleChangeInput = (event: any): void => {
+	handleChangeInputPallet = (event: any): void => {
 		this.props.store.setInput(event.target.value)
+	}
+
+	handleChangeInputLocation = (event: any): void => {
+		this.props.store.setLocation(event.target.value)
 	}
 
 	render() {
@@ -61,12 +85,44 @@ class PalletInput extends React.Component<Props & { classes: ClassNames }> {
 					<TextField
 						placeholder="Paleta"
 						autoFocus
-						fullWidth
 						value={this.props.store.input}
-						onChange={this.handleChangeInput}
-						className={this.props.classes.textInput}
+						onChange={this.handleChangeInputPallet}
+						className={[
+							this.props.classes.textInput,
+							this.props.classes.palletInput
+						].join(' ')}
 						InputProps={{ disableUnderline: true }}
 					/>
+
+					<div
+						className={[
+							this.props.classes.textInput,
+							this.props.classes.locationInput
+						].join(' ')}
+					>
+						{!this.props.store.location &&
+							<Typography className={this.props.classes.selectPlaceholder}>
+								Umístění
+							</Typography>
+						}
+
+						<Select
+							value={this.props.store.location}
+							onChange={this.handleChangeInputLocation}
+							input={
+								<Input
+									disableUnderline
+									fullWidth
+								/>
+							}
+						>
+							<MenuItem value="prijem">Příjem</MenuItem>
+							<MenuItem value="sklad">Hutní sklad</MenuItem>
+							<MenuItem value="expedice">Expedice</MenuItem>
+							<MenuItem value="haslerPrvniPatro">Hasler 1. patro</MenuItem>
+							<MenuItem value="haslerSklad">Hasler sklad</MenuItem>
+						</Select>
+					</div>
 				</Paper>
 			
 				<Typography className={this.props.classes.errorText}>
