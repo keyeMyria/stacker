@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 
 import Button from 'material-ui/Button'
 import Menu, { MenuItem } from 'material-ui/Menu'
-import Tooltip from 'material-ui/Tooltip'
+// import Tooltip from 'material-ui/Tooltip'
 import { withStyles, StyleRules } from 'material-ui/styles'
 import { darken } from 'material-ui/styles/colorManipulator'
 import { red, orange, green, teal } from 'material-ui/colors'
@@ -90,7 +90,7 @@ class PriorityButton extends React.Component<Props & { classes: ClassNames }, St
 	render() {
 		return(
 			<div>
-				<Tooltip label="Priorita">
+				{/* <Tooltip id="tooltip-priority" label="Priorita" placement="top"> */}
 					<Button
 						fab
 						color="primary"
@@ -103,7 +103,7 @@ class PriorityButton extends React.Component<Props & { classes: ClassNames }, St
 					>
 						&zwnj;
 					</Button>
-				</Tooltip>
+				{/* </Tooltip> */}
 
 				<Menu
 					id="simple-menu"
