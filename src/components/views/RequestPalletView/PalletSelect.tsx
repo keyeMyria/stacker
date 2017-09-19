@@ -60,8 +60,8 @@ class PalletSelect extends React.Component<Props & { classes: ClassNames }> {
 						input={<Input id="side" />}
 						MenuProps={{ MenuListProps: { dense: true }}}
 					>
-						<MenuItem value="left">Left</MenuItem>
-						<MenuItem value="right">Right</MenuItem>
+						<MenuItem value="left">Levá</MenuItem>
+						<MenuItem value="right">Pravá</MenuItem>
 					</Select>
 				</FormControl>
 				
