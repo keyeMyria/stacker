@@ -1,39 +1,32 @@
 import * as React from 'react'
 
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import { Pallet } from '../../stores/PalletStore'
-
-import Storage from './Storage'
 
 interface Props {
 	row: Pallet[]
 }
 
-interface ClassNames {
-	root: string
-}
+type ClassNames = 'root'
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassNames>(() => ({
 	root: {
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
 		alignContent: 'center'
 	}
-}
+}))
 
-const StorageRow: React.SFC<Props & { classes: ClassNames }> = (props) => {
+const StorageRow: React.SFC<Props & WithStyles<ClassNames>> = (props) => {
 	return (
 		<div className={props.classes.root}>
 			{props.row.map(p => (
-				<Storage
-					key={p.column}
-					pallet={p}
-				/>
+				p
 			))}
 		</div>
 	)
 }
 
-export default withStyles<Props, ClassNames>(styles)(StorageRow)
+export default decorate<Props>(StorageRow)

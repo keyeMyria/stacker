@@ -2,7 +2,7 @@ import * as React from 'react'
 import { observer } from 'mobx-react'
 
 import Button from 'material-ui/Button'
-import { withStyles } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import { Pallet } from '../../stores/PalletStore'
 
@@ -10,21 +10,19 @@ interface Props {
 	pallet: Pallet
 }
 
-interface ClassNames {
-	root: string
-}
+type ClassKeys = 'root'
 
-const styles = {
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 		margin: 4,
 		width: 64,
 		minWidth: 0,
 		height: 64
 	}
-}
+}))
 
 @observer
-class Storage extends React.Component<Props & { classes: ClassNames }> {
+class Storage extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		return(
 			<Button
@@ -39,4 +37,4 @@ class Storage extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(Storage)
+export default decorate(Storage)

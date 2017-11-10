@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 import { common } from 'material-ui/colors'
 
 import RequestItem from './RequestItem'
@@ -14,22 +14,22 @@ interface Props {
 	requests: PalletRequest[]
 }
 
-interface ClassNames {
-	root: string,
-	headline: string
-}
+type ClassKeys = (
+	'root'
+	| 'headline'
+)
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 	},
 	headline: {
 		color: common['minBlack'],
 		marginBottom: 8
 	}
-}
+}))
 
 @observer
-class RequestList extends React.Component<Props & { classes: ClassNames }> {
+class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
@@ -45,4 +45,4 @@ class RequestList extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(RequestList)
+export default decorate(RequestList)

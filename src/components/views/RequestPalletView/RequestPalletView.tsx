@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 
 import Button from 'material-ui/Button'
 import AddIcon from 'material-ui-icons/Add'
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
 
@@ -15,17 +15,17 @@ interface Props {
 	store: PalletSelectStore
 }
 
-interface ClassNames {
-	root: string,
-	request: string,
-	inputs: string,
-	button: string,
-	activeRequests: string
-}
+type ClassKeys = (
+	'root'
+	| 'request'
+	| 'inputs'
+	| 'button'
+	| 'activeRequests'
+)
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
-		marginTop: 240
+		marginTop: 160
 	},
 	request: {
 		display: 'flex'
@@ -41,10 +41,10 @@ const styles: StyleRules = {
 	activeRequests: {
 		marginTop: 64
 	}
-}
+}))
 
 @observer
-class RequestPalletView extends React.Component<Props & { classes: ClassNames }> {
+class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
@@ -79,4 +79,4 @@ class RequestPalletView extends React.Component<Props & { classes: ClassNames }>
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(RequestPalletView)
+export default decorate(RequestPalletView)

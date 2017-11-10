@@ -6,7 +6,7 @@ import { FormControl } from 'material-ui/Form'
 import Input, { InputLabel } from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
 
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
 
@@ -14,12 +14,9 @@ interface Props {
 	store: PalletSelectStore
 }
 
-interface ClassNames {
-	root: string,
-	select: string
-}
+type ClassKeys = 'root' | 'select'
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 		display: 'flex',
 		justifyContent: 'space-between'
@@ -31,10 +28,10 @@ const styles: StyleRules = {
 			marginRight: 0
 		}
 	}
-}
+}))
 
 @observer
-class PalletSelect extends React.Component<Props & { classes: ClassNames }> {
+class PalletSelect extends React.Component<Props & WithStyles<ClassKeys>> {
 	handleChangeSide = (event: any): void => {
 		this.props.store.setSide(event.target.value)
 	}
@@ -105,4 +102,4 @@ class PalletSelect extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(PalletSelect)
+export default decorate(PalletSelect)

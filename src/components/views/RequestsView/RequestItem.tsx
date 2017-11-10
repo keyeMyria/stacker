@@ -4,14 +4,13 @@ import * as moment from 'moment'
 
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
+import { Color } from 'material-ui'
 import { grey, red, orange, green, teal } from 'material-ui/colors'
 
 // import ErrorOutline from 'material-ui-icons/ErrorOutline'
 
 import { PalletRequest } from '../../../stores/PalletStore'
-
-import capitalize from '../../../helpers/capitalize'
 
 import Minimap from '../../common/Minimap'
 
@@ -19,18 +18,17 @@ interface Props {
 	request: PalletRequest
 }
 
-interface ClassNames {
-	[key: string]: string,
-	root: string,
-	priority: string,
-	priorityUrgent: string,
-	main: string,
-	parameters: string,
-	side: string,
-	map: string
-}
+type ClassKeys = (
+	'root'
+	| 'priority'
+	| 'content'
+	| 'main'
+	| 'parameters'
+	| 'side'
+	| 'map'
+)
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 		display: 'flex',
 		justifyContent: 'flex-end',
@@ -54,22 +52,6 @@ const styles: StyleRules = {
 		alignItems: 'center',
 		width: 8,
 		borderBottom: '1px solid'
-	},
-	priorityUrgent: {
-		background: red[500],
-		borderBottomColor: red[600]
-	},
-	priorityHigh: {
-		background: orange[500],
-		borderBottomColor: orange[600]
-	},
-	priorityStandard: {
-		background: green[500],
-		borderBottomColor: green[600]
-	},
-	priorityLow: {
-		background: teal[500],
-		borderBottomColor: teal[600]
 	},
 	content: {
 		display: 'flex',
@@ -101,18 +83,32 @@ const styles: StyleRules = {
 		paddingLeft: 16,
 		paddingRight: 16
 	}
-}
+}))
 
 @observer
-class RequestItem extends React.Component<Props & { classes: ClassNames }> {
+class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
+	getPriorityStyle(): React.CSSProperties {
+		const priority = this.props.request.priority
+
+		let color: Color
+
+		if(priority === 'urgent') color = red
+		else if(priority === 'high') color = orange
+		else if(priority === 'standard') color = green
+		else color = teal
+
+		return {
+			background: color[500],
+			borderBottomColor: color[600]
+		}
+	}
+
 	render() {
 		return(
 			<div className={this.props.classes.root}>
 				<div
-					className={[
-						this.props.classes.priority,
-						this.props.classes['priority' + capitalize(this.props.request.priority)]
-					].join(' ')}
+					className={this.props.classes.priority}
+					style={this.getPriorityStyle()}
 				/>
 				
 				<div className={this.props.classes.content}>
@@ -156,4 +152,4 @@ class RequestItem extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(RequestItem)
+export default decorate(RequestItem)

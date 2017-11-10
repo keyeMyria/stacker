@@ -3,8 +3,8 @@ import { observer } from 'mobx-react'
 
 import Button from 'material-ui/Button'
 import Menu, { MenuItem } from 'material-ui/Menu'
-// import Tooltip from 'material-ui/Tooltip'
-import { withStyles, StyleRules } from 'material-ui/styles'
+import Tooltip from 'material-ui/Tooltip'
+import { withStyles, WithStyles } from 'material-ui/styles'
 import { darken } from 'material-ui/styles/colorManipulator'
 import { red, orange, green, teal } from 'material-ui/colors'
 
@@ -17,21 +17,21 @@ interface Props {
 	store: PalletSelectStore
 }
 
-interface ClassNames {
-	[key: string]: string,
-	button: string,
-	priorityUrgent: string,
-	priorityHigh: string,
-	priorityStandard: string,
-	priorityLow: string,
-}
+type ClassKeys = (
+	'button'
+	| 'priorityUrgent'
+	| 'priorityHigh'
+	| 'priorityStandard'
+	| 'priorityLow'
+	| string
+)
 
 interface State {
 	anchorEl: HTMLElement | undefined,
 	open: boolean
 }
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassKeys>(() => ({
 	button: {
 		width: 24,
 		height: 48,
@@ -65,10 +65,10 @@ const styles: StyleRules = {
 			backgroundColor: darken(teal['A200'], 0.12)
 		}
 	}
-}
+}))
 
 @observer
-class PriorityButton extends React.Component<Props & { classes: ClassNames }, State> {
+class PriorityButton extends React.Component<Props & WithStyles<ClassKeys>, State> {
 	state: State = {
 		anchorEl: undefined,
 		open: false,
@@ -90,7 +90,7 @@ class PriorityButton extends React.Component<Props & { classes: ClassNames }, St
 	render() {
 		return(
 			<div>
-				{/* <Tooltip id="tooltip-priority" label="Priorita" placement="top"> */}
+				<Tooltip id="tooltip-priority" title="Priorita" placement="top">
 					<Button
 						fab
 						color="primary"
@@ -103,7 +103,7 @@ class PriorityButton extends React.Component<Props & { classes: ClassNames }, St
 					>
 						&zwnj;
 					</Button>
-				{/* </Tooltip> */}
+				</Tooltip>
 
 				<Menu
 					id="simple-menu"
@@ -141,4 +141,4 @@ class PriorityButton extends React.Component<Props & { classes: ClassNames }, St
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(PriorityButton)
+export default decorate(PriorityButton)

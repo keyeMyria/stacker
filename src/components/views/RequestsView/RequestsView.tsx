@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import RequestList from './RequestList'
 
@@ -11,18 +11,18 @@ interface Props {
 	palletStore: PalletStore
 }
 
-interface ClassNames {
-	root: string
-}
+type ClassKeys = (
+	'root'
+)
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 		display: 'flex'
 	}
-}
+}))
 
 @observer
-class RequestsView extends React.Component<Props & { classes: ClassNames }> {
+class RequestsView extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
@@ -32,4 +32,4 @@ class RequestsView extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(RequestsView)
+export default decorate(RequestsView)

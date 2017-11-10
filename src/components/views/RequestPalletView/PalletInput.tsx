@@ -8,7 +8,7 @@ import Input from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
 import Typography from 'material-ui/Typography'
 
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 import { red, grey } from 'material-ui/colors'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
@@ -19,17 +19,18 @@ interface Props {
 	store: PalletSelectStore
 }
 
-interface ClassNames {
-	root: string,
-	search: string,
-	textInput: string,
-	palletInput: string,
-	locationInput: string,
-	selectPlaceholder: string,
-	errorText: string
-}
+type ClassKeys = (
+	'root'
+	|'search'
+	|'textInput'
+	|'palletInput'
+	|'locationInput'
+	|'selectPlaceholder'
+	|'errorText'
+)
 
-const styles: StyleRules = {
+
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 		marginBottom: 16
 	},
@@ -62,10 +63,10 @@ const styles: StyleRules = {
 		color: red['A400'],
 		fontSize: 10
 	}
-}
+}))
 
 @observer
-class PalletInput extends React.Component<Props & { classes: ClassNames }> {
+class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 	handleChangeInputPallet = (event: any): void => {
 		this.props.store.setInput(event.target.value)
 	}
@@ -133,4 +134,4 @@ class PalletInput extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(PalletInput)
+export default decorate(PalletInput)

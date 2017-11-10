@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 import Card from 'material-ui/Card'
 
 import PalletStore from '../../stores/PalletStore'
@@ -13,12 +13,9 @@ interface Props {
 	store: PalletStore
 }
 
-interface ClassNames {
-	root: string,
-	map: string
-}
+type ClassNames = 'root' | 'map'
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassNames>(() => ({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -34,10 +31,10 @@ const styles: StyleRules = {
 		marginLeft: 32,
 		marginRight: 32
 	}
-}
+}))
 
 @observer
-class PalletMap extends React.Component<Props & { classes: ClassNames }> {
+class PalletMap extends React.Component<Props & WithStyles<ClassNames>> {
 	mapStorageRows(): JSX.Element[] {
 		let rows: JSX.Element[] = []
 		for(let i = 0; i < this.props.store.rowCount; i++) {
@@ -66,4 +63,4 @@ class PalletMap extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(PalletMap)
+export default decorate(PalletMap)

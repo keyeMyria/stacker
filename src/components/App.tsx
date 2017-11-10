@@ -6,7 +6,7 @@ import {
 	RouteProps
 } from 'react-router-dom'
 
-import { withStyles, StyleRules } from 'material-ui/styles'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import { grey } from 'material-ui/colors'
 
@@ -22,12 +22,12 @@ interface Props {
 	store: AppStore
 }
 
-interface ClassNames {
-	root: string,
-	body: string
-}
+type ClassKeys = (
+	'root'
+	| 'body'
+)
 
-const styles: StyleRules = {
+const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 		display: 'flex',
 		justifyContent: 'center',
@@ -36,13 +36,13 @@ const styles: StyleRules = {
 	body: {
 		backgroundColor: grey[50]
 	}
-}
+}))
 
 const palletSelectStore: PalletSelectStore = new PalletSelectStore()
 const palletStore: PalletStore = new PalletStore()
 
 @observer
-class App extends React.Component<Props & { classes: ClassNames }> {
+class App extends React.Component<Props & WithStyles<ClassKeys>> {
 	componentWillMount() {
 		document.body.className = this.props.classes.body
 	}
@@ -66,4 +66,4 @@ class App extends React.Component<Props & { classes: ClassNames }> {
 	}
 }
 
-export default withStyles<Props, ClassNames>(styles)(App)
+export default decorate(App)
