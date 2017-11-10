@@ -13,6 +13,7 @@ import { grey } from 'material-ui/colors'
 import AppStore from '../stores/AppStore'
 import PalletSelectStore from '../stores/PalletSelectStore'
 import PalletStore from '../stores/PalletStore'
+import RequestsStore from '../stores/RequestsStore'
 
 import PalletMap from './PalletMap/PalletMap'
 import RequestsView from './views/RequestsView/RequestsView'
@@ -39,6 +40,7 @@ const decorate = withStyles<ClassKeys>(() => ({
 }))
 
 const palletSelectStore: PalletSelectStore = new PalletSelectStore()
+const requestsStore: RequestsStore = new RequestsStore()
 const palletStore: PalletStore = new PalletStore()
 
 @observer
@@ -55,7 +57,12 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 						<PalletMap {...props} store={palletStore} />
 					)}/>
 					<Route path="/request" render={(props: RouteProps) => (
-						<RequestPalletView {...props} store={palletSelectStore} />
+						<RequestPalletView
+							{...props}
+							selectStore={palletSelectStore}
+							requests={requestsStore}
+							palletStore={palletStore}
+						/>
 					)}/>
 					<Route path="/requests" render={(props: RouteProps) => (
 						<RequestsView {...props} palletStore={palletStore} />

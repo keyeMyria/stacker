@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 
-import { Priority } from './PalletStore'
+import Priority from './types/Priority'
+import { PalletRequestBase } from './interfaces/PalletRequest'
 
 export default class PalletSelectStore {
 	@observable input: string
@@ -165,5 +166,14 @@ export default class PalletSelectStore {
 			return true
 		else
 			return false
+	}
+	
+	createRequest(): PalletRequestBase {
+		return {
+			palletId: 0,
+			requester: 'Jan Novak',
+			location: this.location,
+			priority: this.priority
+		}
 	}
 }

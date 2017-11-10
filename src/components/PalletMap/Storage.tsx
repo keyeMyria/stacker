@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import Button from 'material-ui/Button'
 import { withStyles, WithStyles } from 'material-ui/styles'
 
-import { Pallet } from '../../stores/PalletStore'
+import Pallet from '../../stores/common/Pallet'
 
 interface Props {
 	pallet: Pallet

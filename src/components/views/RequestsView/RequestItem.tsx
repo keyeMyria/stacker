@@ -11,7 +11,7 @@ import { grey, red, orange, green, teal } from 'material-ui/colors'
 
 // import ErrorOutline from 'material-ui-icons/ErrorOutline'
 
-import { PalletRequest } from '../../../stores/PalletStore'
+import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
 import Minimap from '../../common/Minimap'
 
@@ -105,6 +105,10 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 	}
 
 	render() {
+		if(this.props.request.pallet === undefined) {
+			return null
+		}
+		
 		return(
 			<div className={this.props.classes.root}>
 				<div

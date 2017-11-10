@@ -9,7 +9,7 @@ import { darken } from 'material-ui/styles/colorManipulator'
 import { red, orange, green, teal } from 'material-ui/colors'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
-import { Priority } from '../../../stores/PalletStore'
+import Priority from '../../../stores/types/Priority'
 
 import capitalize from '../../../helpers/capitalize'
 

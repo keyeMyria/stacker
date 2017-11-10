@@ -8,12 +8,14 @@ import List from 'material-ui/List'
 import { common } from 'material-ui/colors'
 import { withStyles, WithStyles } from 'material-ui/styles'
 
-import PalletSelectStore from '../../../stores/PalletSelectStore'
+import RequestsStore from '../../../stores/RequestsStore'
+import PalletStore from '../../../stores/PalletStore'
 
 import RequestItem from './RequestItem'
 
 interface Props {
-	store: PalletSelectStore
+	requests: RequestsStore,
+	pallets: PalletStore,
 	className: string
 }
 

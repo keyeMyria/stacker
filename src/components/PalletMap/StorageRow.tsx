@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
-import { Pallet } from '../../stores/PalletStore'
+import Pallet from '../../stores/common/Pallet'
 
 interface Props {
 	row: Pallet[]

@@ -6,13 +6,17 @@ import AddIcon from 'material-ui-icons/Add'
 import { withStyles, WithStyles } from 'material-ui/styles'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
+import RequestsStore from '../../../stores/RequestsStore'
+import PalletStore from '../../../stores/PalletStore'
 
 import PalletInput from './PalletInput'
 import PalletSelect from './PalletSelect'
 import ActiveRequests from './ActiveRequests'
 
 interface Props {
-	store: PalletSelectStore
+	selectStore: PalletSelectStore,
+	requests: RequestsStore,
+	palletStore: PalletStore
 }
 
 type ClassKeys = (
@@ -51,11 +55,11 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 				<div className={this.props.classes.request}>
 					<div className={this.props.classes.inputs}>
 						<PalletInput
-							store={this.props.store}
+							store={this.props.selectStore}
 						/>
 
 						<PalletSelect
-							store={this.props.store}
+							store={this.props.selectStore}
 						/>
 					</div>
 
@@ -64,14 +68,18 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 						color="primary"
 						aria-label="add"
 						className={this.props.classes.button}
-						disabled={this.props.store.formMissingValues()}
+						disabled={this.props.selectStore.formMissingValues()}
+						onClick={() => this.props.requests.addRequest(
+							this.props.selectStore.createRequest()
+						)}
 					>
 						<AddIcon />
 					</Button>
 				</div>
 
 				<ActiveRequests
-					store={this.props.store}
+					pallets={this.props.palletStore}
+					requests={this.props.requests}
 					className={this.props.classes.activeRequests}
 				/>
 			</div>

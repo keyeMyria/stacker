@@ -8,7 +8,7 @@ import { common } from 'material-ui/colors'
 
 import RequestItem from './RequestItem'
 
-import { PalletRequest } from '../../../stores/PalletStore'
+import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
 interface Props {
 	requests: PalletRequest[]
