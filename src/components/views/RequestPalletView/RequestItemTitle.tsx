@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import * as moment from 'moment'
+import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import * as csLocale from 'date-fns/locale/cs'
 
 import Typography from 'material-ui/Typography'
 import { withStyles, WithStyles } from 'material-ui/styles'
@@ -38,7 +39,7 @@ class RequestItemTitle extends React.Component<Props & WithStyles<ClassKeys>> {
 				</Typography>
 
 				<Typography className={this.props.classes.time}>
-					{moment(this.props.time).locale('cs').fromNow()}
+					{distanceInWordsToNow(this.props.time, { addSuffix: true, locale: csLocale })}
 				</Typography>
 			</div>
 		)

@@ -29,7 +29,6 @@ type ClassKeys = (
 	|'errorText'
 )
 
-
 const decorate = withStyles<ClassKeys>(() => ({
 	root: {
 		marginBottom: 16
