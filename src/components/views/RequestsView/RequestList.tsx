@@ -8,10 +8,10 @@ import { common } from 'material-ui/colors'
 
 import RequestItem from './RequestItem'
 
-import PalletRequest from '../../../stores/interfaces/PalletRequest'
+import RequestsStore from '../../../stores/RequestsStore'
 
 interface Props {
-	requests: PalletRequest[]
+	store: RequestsStore
 }
 
 type ClassKeys = (
@@ -38,7 +38,9 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 				</Typography>
 
 				<Paper>
-					{this.props.requests.map(r => <RequestItem key={r.id} request={r} />)}
+					{this.props.store.requests.map(r => (
+						<RequestItem key={r.id} request={r} />
+					))}
 				</Paper>
 			</div>
 		)

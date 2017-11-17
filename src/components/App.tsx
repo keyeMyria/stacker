@@ -67,7 +67,10 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 							/>
 						)}/>
 						<Route path="/requests" render={(props: RouteProps) => (
-							<RequestsView {...props} palletStore={palletStore} />
+							<RequestsView
+								{...props}
+								store={requestsStore}
+							/>
 						)}/>
 					</div>
 				</AppFrame>

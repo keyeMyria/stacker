@@ -5,10 +5,10 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 
 import RequestList from './RequestList'
 
-import PalletStore from '../../../stores/PalletStore'
+import RequestsStore from '../../../stores/RequestsStore'
 
 interface Props {
-	palletStore: PalletStore
+	store: RequestsStore
 }
 
 type ClassKeys = (
@@ -26,7 +26,7 @@ class RequestsView extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
-				<RequestList requests={this.props.palletStore.requests} />
+				<RequestList store={this.props.store} />
 			</div>
 		)
 	}

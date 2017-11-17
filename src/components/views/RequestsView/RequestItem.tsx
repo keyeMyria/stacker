@@ -143,7 +143,10 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 
 						<div className={this.props.classes.side}>
 							<Typography type="caption">
-								{distanceInWordsToNow(this.props.request.requestedAt, { addSuffix: true, locale: csLocale })}
+								{distanceInWordsToNow(
+									this.props.request.requestedAt,
+									{ addSuffix: true, locale: csLocale }
+								)}
 							</Typography>
 
 							<Button raised color="primary">
