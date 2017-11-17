@@ -19,7 +19,7 @@ export default class PalletSelectStore {
 		this.initRequests()
 	}
 
-	addRequest(palletParams: PalletParams, requestParams: RequestParams): void {
+	@action addRequest(palletParams: PalletParams, requestParams: RequestParams): void {
 		const pallet: Pallet = this.palletStore.findPallet(palletParams)
 
 		for(let r of this.requests) {
@@ -29,6 +29,7 @@ export default class PalletSelectStore {
 
 		this.requests.push({
 			id: PalletSelectStore.nextId++,
+			status: 'requested',
 			isCompleted: false,
 			requestedAt: new Date(),
 			palletId: pallet.id,
@@ -41,6 +42,13 @@ export default class PalletSelectStore {
 
 	@action cancelRequest(id: number): void {
 		this.requests = this.requests.filter(r => r.id !== id)
+	}
+
+	@action deliver(id: number): void {
+		this.requests.forEach(r => {
+			if(r.id === id)
+				r.status = 'delivered'
+		})
 	}
 
 	initRequests(): void {

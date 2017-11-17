@@ -38,8 +38,14 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 				</Typography>
 
 				<Paper>
-					{this.props.store.requests.map(r => (
-						<RequestItem key={r.id} request={r} />
+					{this.props.store.requests
+					.filter(r => r.status !== 'delivered')
+					.map(r => (
+						<RequestItem
+							key={r.id}
+							request={r}
+							deliver={() => this.props.store.deliver(r.id)}
+						/>
 					))}
 				</Paper>
 			</div>

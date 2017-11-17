@@ -7,8 +7,11 @@ export interface RequestParams {
 	priority: Priority
 }
 
+export type RequestStatus = 'requested' | 'delivered' | 'toReturn' | 'completed'
+
 export default interface PalletRequest extends RequestParams {
 	id: number,
+	status: RequestStatus,
 	requestedAt: Date,
 	isCompleted: boolean,
 	palletId: number,

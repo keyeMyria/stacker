@@ -3,7 +3,6 @@ import { observable, action } from 'mobx'
 import PalletRequest from './interfaces/PalletRequest'
 import Pallet, { PalletParams } from './common/Pallet'
 import { NoPalletError } from './common/Errors'
-import Priority from './types/Priority'
 
 export default class PalletStore {
 	@observable showSide: string
@@ -22,32 +21,10 @@ export default class PalletStore {
 		this.columnCount = 71
 
 		this.generatePallets()
-		this.requestTestPallets()
 	}
 
 	@action switchSide(side: string): void {
 		this.showSide = side
-	}
-
-	@action requestPallet(name: string, priority?: Priority): void {
-		let pallet: Pallet | undefined 
-		pallet = this.pallets.find((p: Pallet) => p.getName() === name)
-
-		if(!pallet)
-			return
-
-		let request: PalletRequest = {
-			id: pallet.id,
-			palletId: pallet.id,
-			requester: 'Jan Novák',
-			location: 'Sklad 1. patro',
-			priority: priority || 'standard',
-			requestedAt: new Date(),
-			isCompleted: false,
-			pallet
-		}
-
-		this.requests.push(request)
 	}
 
 	generatePallets(): void {
@@ -94,14 +71,5 @@ export default class PalletStore {
 		}
 
 		return pallet
-	}
-
-	requestTestPallets(): void {
-		this.requestPallet('L11A')
-		this.requestPallet('L26B', 'high')
-		this.requestPallet('L51E')
-		this.requestPallet('L53F', 'urgent')
-		this.requestPallet('R42A', 'low')
-		this.requestPallet('R06C')
 	}
 }

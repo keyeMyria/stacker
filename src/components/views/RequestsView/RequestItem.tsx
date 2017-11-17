@@ -4,7 +4,6 @@ import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import * as csLocale from 'date-fns/locale/cs'
 
 import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { Color } from 'material-ui'
 import { grey, red, orange, green, teal } from 'material-ui/colors'
@@ -14,9 +13,11 @@ import { grey, red, orange, green, teal } from 'material-ui/colors'
 import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
 import Minimap from '../../common/Minimap'
+import ItemActions from './ItemActions'
 
 interface Props {
-	request: PalletRequest
+	request: PalletRequest,
+	deliver: () => void
 }
 
 type ClassKeys = (
@@ -149,9 +150,10 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 								)}
 							</Typography>
 
-							<Button raised color="primary">
-								Deliver
-							</Button>
+							<ItemActions
+								status={this.props.request.status}
+								deliver={this.props.deliver}
+							/>
 						</div>
 					</div>
 				</div>
