@@ -40,7 +40,7 @@ export default class PalletSelectStore {
 		})
 	}
 
-	@action cancelRequest(id: number): void {
+	@action cancel(id: number): void {
 		this.requests = this.requests.filter(r => r.id !== id)
 	}
 
@@ -48,6 +48,22 @@ export default class PalletSelectStore {
 		this.requests.forEach(r => {
 			if(r.id === id)
 				r.status = 'delivered'
+		})
+	}
+
+	@action return(id: number): void {
+		this.requests.forEach(r => {
+			if(r.id === id)
+				r.status = 'toReturn'
+		})
+	}
+	
+	@action complete(id: number): void {
+		this.requests.forEach(r => {
+			if(r.id === id) {
+				r.status = 'completed'
+				r.isCompleted = true
+			}
 		})
 	}
 

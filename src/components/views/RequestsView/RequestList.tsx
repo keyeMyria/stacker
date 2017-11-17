@@ -39,12 +39,13 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 
 				<Paper>
 					{this.props.store.requests
-					.filter(r => r.status !== 'delivered')
+					.filter(r => r.status !== 'delivered' && r.isCompleted === false)
 					.map(r => (
 						<RequestItem
 							key={r.id}
 							request={r}
 							deliver={() => this.props.store.deliver(r.id)}
+							complete={() => this.props.store.complete(r.id)}
 						/>
 					))}
 				</Paper>

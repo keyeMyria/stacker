@@ -17,7 +17,8 @@ import ItemActions from './ItemActions'
 
 interface Props {
 	request: PalletRequest,
-	deliver: () => void
+	deliver: () => void,
+	complete: () => void
 }
 
 type ClassKeys = (
@@ -153,6 +154,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 							<ItemActions
 								status={this.props.request.status}
 								deliver={this.props.deliver}
+								complete={this.props.complete}
 							/>
 						</div>
 					</div>

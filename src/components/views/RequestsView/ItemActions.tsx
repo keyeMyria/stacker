@@ -7,7 +7,8 @@ import { RequestStatus } from '../../../stores/interfaces/PalletRequest'
 
 interface Props {
     status: RequestStatus,
-    deliver: () => void
+    deliver: () => void,
+    complete: () => void
 }
 
 const ItemActions: React.SFC<Props> = (props) => {
@@ -19,6 +20,16 @@ const ItemActions: React.SFC<Props> = (props) => {
                 onClick={props.deliver}
             >
                 Dorucit
+            </Button>
+        )
+    } else if(props.status === 'toReturn') {
+        return(
+            <Button
+                raised
+                color="accent"
+                onClick={props.complete}
+            >
+                Vratit
             </Button>
         )
     } else {

@@ -49,11 +49,14 @@ class ActiveRequests extends React.Component<Props & WithStyles<ClassNames>> {
 				<Divider />
 
 				<List>
-					{this.props.requests.requests.map(r => (
+					{this.props.requests.requests
+					.filter(r => r.status === 'requested' || r.status === 'delivered')
+					.map(r => (
 						<RequestItem
 							key={r.id}
 							request={r}
-							handleCancel={() => this.props.requests.cancelRequest(r.id)}
+							handleCancel={() => this.props.requests.cancel(r.id)}
+							handleReturn={() => this.props.requests.return(r.id)}
 						/>
 					))}
 				</List>
