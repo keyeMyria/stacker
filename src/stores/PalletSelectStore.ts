@@ -1,9 +1,12 @@
 import { observable, action } from 'mobx'
 
 import Priority from './types/Priority'
-import { PalletRequestBase } from './interfaces/PalletRequest'
+
+import RequestsStore from './RequestsStore'
 
 export default class PalletSelectStore {
+	requestStore: RequestsStore
+
 	@observable input: string
 	@observable inputError: string
 
@@ -17,7 +20,9 @@ export default class PalletSelectStore {
 	columnNames: string[]
 	rowNames: string[]
 
-	constructor() {
+	constructor(requestStore: RequestsStore) {
+		this.requestStore = requestStore
+
 		this.columnNames = []
 		this.rowNames = []
 
@@ -161,19 +166,25 @@ export default class PalletSelectStore {
 		this.location = location
 	}
 
+	@action createRequest(): void {
+		if(!this.side || !this.column || !this.row)
+			return
+			
+		this.requestStore.addRequest({
+			side: this.side,
+			column: parseInt(this.column),
+			row: this.row
+		}, {
+			priority: this.priority,
+			location: this.location,
+			requester: 'Jan Novak'
+		})
+	}
+
 	formMissingValues(): boolean {
 		if(!this.side || !this.column || !this.row || !this.priority || !this.location)
 			return true
 		else
 			return false
-	}
-	
-	createRequest(): PalletRequestBase {
-		return {
-			palletId: 0,
-			requester: 'Jan Novak',
-			location: this.location,
-			priority: this.priority
-		}
 	}
 }

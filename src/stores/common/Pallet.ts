@@ -2,7 +2,13 @@ import { observable, action } from 'mobx'
 
 import PalletState from '../interfaces/PalletState'
 
-export default class Pallet {
+export interface PalletParams {
+	side: string
+	row: string
+	column: number
+}
+
+export default class Pallet implements PalletParams {
 	static nextId: number = 0
 
 	@observable isEmpty: boolean

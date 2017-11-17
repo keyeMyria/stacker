@@ -69,9 +69,7 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 						aria-label="add"
 						className={this.props.classes.button}
 						disabled={this.props.selectStore.formMissingValues()}
-						onClick={() => this.props.requests.addRequest(
-							this.props.selectStore.createRequest()
-						)}
+						onClick={() => this.props.selectStore.createRequest()}
 					>
 						<AddIcon />
 					</Button>

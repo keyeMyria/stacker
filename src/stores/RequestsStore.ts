@@ -1,43 +1,62 @@
-import { observable, action } from 'mobx'
+import { observable } from 'mobx'
 
-import PalletRequest, { PalletRequestBase } from './interfaces/PalletRequest'
+import PalletRequest, { RequestParams } from './interfaces/PalletRequest'
+import Pallet, { PalletParams } from './common/Pallet'
+
+import PalletStore from './PalletStore'
 
 export default class PalletSelectStore {
 	static nextId: number = 0
+	palletStore: PalletStore
 
 	@observable requests: PalletRequest[]
 
-	constructor() {
+	constructor(palletStore: PalletStore) {
+		this.palletStore = palletStore
 		this.requests = []
+
+		this.initRequests()
 	}
 
-	@action addRequest(request: PalletRequestBase): void {
+	addRequest(palletParams: PalletParams, requestParams: RequestParams): void {
+		const pallet: Pallet = this.palletStore.findPallet(palletParams)
+
 		this.requests.push({
 			id: PalletSelectStore.nextId++,
 			isCompleted: false,
 			requestedAt: new Date(),
-			palletId: request.palletId,
-			requester: request.requester,
-			location: request.location,
-			priority: request.priority
+			palletId: pallet.id,
+			pallet: pallet,
+			requester: requestParams.requester,
+			location: requestParams.location,
+			priority: requestParams.priority
 		})
 	}
 
 	initRequests(): void {
 		this.addRequest({
-			palletId: 0,
+			side: 'left',
+			column: 1,
+			row: 'A'
+		}, {
 			requester: 'Jan Novak',
 			location: 'Prizemi',
 			priority: 'standard'
 		})
 		this.addRequest({
-			palletId: 0,
+			side: 'right',
+			column: 67,
+			row: 'G'
+		}, {
 			requester: 'Jan Novak',
 			location: 'Prizemi',
 			priority: 'standard'
 		})
 		this.addRequest({
-			palletId: 0,
+			side: 'left',
+			column: 39,
+			row: 'C'
+		}, {
 			requester: 'Jan Novak',
 			location: 'Prizemi',
 			priority: 'standard'

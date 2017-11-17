@@ -46,9 +46,9 @@ class ActiveRequests extends React.Component<Props & WithStyles<ClassNames>> {
 				<Divider />
 
 				<List>
-					<RequestItem />
-					<RequestItem />
-					<RequestItem />
+					{this.props.requests.requests.map(r => (
+						<RequestItem key={r.id} request={r} />
+					))}
 				</List>
 			</div>
 		)

@@ -1,7 +1,8 @@
 import { observable, action } from 'mobx'
 
 import PalletRequest from './interfaces/PalletRequest'
-import Pallet from './common/Pallet'
+import Pallet, { PalletParams } from './common/Pallet'
+import { NoPalletException } from './common/Errors'
 import Priority from './types/Priority'
 
 export default class PalletStore {
@@ -78,6 +79,21 @@ export default class PalletStore {
 
 	getPalletsFromRowByIndex(side: string, index: number): Pallet[] {
 		return this.getPalletsFromRow(side, String.fromCharCode(65 + index))
+	}
+
+	findPallet(params: PalletParams): Pallet {
+		let pallet: Pallet | undefined
+		pallet = this.pallets.find(p => (
+			p.side === params.side
+			&& p.column === params.column
+			&& p.row === params.row
+		))
+
+		if(pallet === undefined) {
+			throw new NoPalletException()
+		}
+
+		return pallet
 	}
 
 	requestTestPallets(): void {

@@ -9,7 +9,10 @@ import { grey } from 'material-ui/colors'
 
 import RequestItemTitle from './RequestItemTitle'
 
+import PalletRequest from '../../../stores/interfaces/PalletRequest'
+
 interface Props {
+	request: PalletRequest
 }
 
 type ClassKeys = 'root' | 'status'
@@ -39,11 +42,11 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 				<ListItemText
 					primary={
 						<RequestItemTitle
-							title="L35D"
+							title={this.props.request.pallet.getName()}
 							time={new Date()}
 						/>
 					}
-					secondary="Hutní sklad"
+					secondary={this.props.request.location}
 				>
 					test
 				</ListItemText>

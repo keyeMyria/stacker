@@ -39,9 +39,9 @@ const decorate = withStyles<ClassKeys>(() => ({
 	}
 }))
 
-const palletSelectStore: PalletSelectStore = new PalletSelectStore()
-const requestsStore: RequestsStore = new RequestsStore()
 const palletStore: PalletStore = new PalletStore()
+const requestsStore: RequestsStore = new RequestsStore(palletStore)
+const palletSelectStore: PalletSelectStore = new PalletSelectStore(requestsStore)
 
 @observer
 class App extends React.Component<Props & WithStyles<ClassKeys>> {
