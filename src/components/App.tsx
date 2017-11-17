@@ -16,6 +16,7 @@ import PalletStore from '../stores/PalletStore'
 import RequestsStore from '../stores/RequestsStore'
 
 import PalletMap from './PalletMap/PalletMap'
+import AppFrame from './views/AppFrame/AppFrame'
 import RequestsView from './views/RequestsView/RequestsView'
 import RequestPalletView from './views/RequestPalletView/RequestPalletView'
 
@@ -24,12 +25,12 @@ interface Props {
 }
 
 type ClassKeys = (
-	'root'
+	'routes'
 	| 'body'
 )
 
 const decorate = withStyles<ClassKeys>(() => ({
-	root: {
+	routes: {
 		display: 'flex',
 		justifyContent: 'center',
 		paddingTop: 32
@@ -52,22 +53,24 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {		
 		return(
 			<Router>
-				<div className={this.props.classes.root}>
-					<Route exact path="/"  render={(props: RouteProps) => (
-						<PalletMap {...props} store={palletStore} />
-					)}/>
-					<Route path="/request" render={(props: RouteProps) => (
-						<RequestPalletView
-							{...props}
-							selectStore={palletSelectStore}
-							requests={requestsStore}
-							palletStore={palletStore}
-						/>
-					)}/>
-					<Route path="/requests" render={(props: RouteProps) => (
-						<RequestsView {...props} palletStore={palletStore} />
-					)}/>
-				</div>
+				<AppFrame>
+					<div className={this.props.classes.routes}>
+						<Route exact path="/"  render={(props: RouteProps) => (
+							<PalletMap {...props} store={palletStore} />
+						)}/>
+						<Route path="/request" render={(props: RouteProps) => (
+							<RequestPalletView
+								{...props}
+								selectStore={palletSelectStore}
+								requests={requestsStore}
+								palletStore={palletStore}
+							/>
+						)}/>
+						<Route path="/requests" render={(props: RouteProps) => (
+							<RequestsView {...props} palletStore={palletStore} />
+						)}/>
+					</div>
+				</AppFrame>
 			</Router>
 		)
 	}

@@ -30,7 +30,7 @@ type ClassKeys = (
 
 const decorate = withStyles<ClassKeys>(() => ({
 	root: {
-		marginTop: 160
+		marginTop: 100
 	},
 	request: {
 		display: 'flex'
