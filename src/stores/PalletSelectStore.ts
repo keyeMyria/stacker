@@ -1,11 +1,13 @@
 import { observable, action } from 'mobx'
 
 import Priority from './types/Priority'
+import ErrorSnackbar from '../components/common/ErrorSnackbar'
 
 import RequestsStore from './RequestsStore'
 
 export default class PalletSelectStore {
 	requestStore: RequestsStore
+	errorHandler: ErrorSnackbar
 
 	@observable input: string
 	@observable inputError: string
@@ -169,16 +171,20 @@ export default class PalletSelectStore {
 	@action createRequest(): void {
 		if(!this.side || !this.column || !this.row)
 			return
-			
-		this.requestStore.addRequest({
-			side: this.side,
-			column: parseInt(this.column),
-			row: this.row
-		}, {
-			priority: this.priority,
-			location: this.location,
-			requester: 'Jan Novak'
-		})
+		
+		try {
+			this.requestStore.addRequest({
+				side: this.side,
+				column: parseInt(this.column),
+				row: this.row
+			}, {
+				priority: this.priority,
+				location: this.location,
+				requester: 'Jan Novak'
+			})
+		} catch(e) {
+			this.errorHandler.handleDisplayError(e.message)
+		}
 	}
 
 	formMissingValues(): boolean {

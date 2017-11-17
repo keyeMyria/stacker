@@ -12,6 +12,7 @@ import PalletStore from '../../../stores/PalletStore'
 import PalletInput from './PalletInput'
 import PalletSelect from './PalletSelect'
 import ActiveRequests from './ActiveRequests'
+import ErrorSnackbar from '../../common/ErrorSnackbar'
 
 interface Props {
 	selectStore: PalletSelectStore,
@@ -73,6 +74,10 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 					>
 						<AddIcon />
 					</Button>
+					<ErrorSnackbar ref={instance => {
+						if(instance)
+							this.props.selectStore.errorHandler = instance
+					}} />
 				</div>
 
 				<ActiveRequests

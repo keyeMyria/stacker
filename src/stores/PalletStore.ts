@@ -2,7 +2,7 @@ import { observable, action } from 'mobx'
 
 import PalletRequest from './interfaces/PalletRequest'
 import Pallet, { PalletParams } from './common/Pallet'
-import { NoPalletException } from './common/Errors'
+import { NoPalletError } from './common/Errors'
 import Priority from './types/Priority'
 
 export default class PalletStore {
@@ -90,7 +90,7 @@ export default class PalletStore {
 		))
 
 		if(pallet === undefined) {
-			throw new NoPalletException()
+			throw new NoPalletError()
 		}
 
 		return pallet
