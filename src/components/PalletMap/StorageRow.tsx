@@ -4,6 +4,8 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 
 import Pallet from '../../stores/common/Pallet'
 
+import Storage from './Storage'
+
 interface Props {
 	row: Pallet[]
 }
@@ -23,7 +25,7 @@ const StorageRow: React.SFC<Props & WithStyles<ClassNames>> = (props) => {
 	return (
 		<div className={props.classes.root}>
 			{props.row.map(p => (
-				p
+				<Storage pallet={p} key={p.id} />
 			))}
 		</div>
 	)

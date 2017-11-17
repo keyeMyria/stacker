@@ -20,16 +20,16 @@ const decorate = withStyles<ClassNames>(() => ({
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		margin: 32
+		width: 1200
 	},
 	map: {
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
 		alignItems: 'center',
 		alignContent: 'center',
 		marginLeft: 32,
-		marginRight: 32
+		marginRight: 32,
+		overflow: 'auto'
 	}
 }))
 
