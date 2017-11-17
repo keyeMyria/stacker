@@ -79,8 +79,8 @@ const Minimap: React.SFC<Props> = (props: Props): JSX.Element | null => {
 
 				{/* Column position */}
 				<Rect
-					x={16 * props.scale + props.x * props.scale + 5}
-					y={0}
+					x={16 * props.scale + props.x * props.scale + 2}
+					y={1}
 					width={props.scale}
 					height={16 * props.scale}
 					fill={grey[300]}
@@ -89,7 +89,7 @@ const Minimap: React.SFC<Props> = (props: Props): JSX.Element | null => {
 				{/* Row position */}
 				<Rect
 					x={16 * props.scale + 5}
-					y={2 * props.y * props.scale}
+					y={2 * props.y * props.scale + 1}
 					width={71 * props.scale}
 					height={2 * props.scale}
 					fill={grey[300]}
@@ -97,8 +97,8 @@ const Minimap: React.SFC<Props> = (props: Props): JSX.Element | null => {
 
 				{/* Pallet position */}
 				<Rect
-					x={16 * props.scale + props.x * props.scale + 5}
-					y={2 * props.y * props.scale}
+					x={16 * props.scale + props.x * props.scale + 2}
+					y={2 * props.y * props.scale + 1}
 					width={props.scale}
 					height={2 * props.scale}
 					fill={grey[400]}

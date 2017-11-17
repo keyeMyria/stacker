@@ -79,6 +79,15 @@ export default class PalletSelectStore {
 		})
 		this.addRequest({
 			side: 'right',
+			column: 71,
+			row: 'H'
+		}, {
+			requester: 'Jan Novak',
+			location: 'Prizemi',
+			priority: 'standard'
+		})
+		this.addRequest({
+			side: 'right',
 			column: 67,
 			row: 'G'
 		}, {
