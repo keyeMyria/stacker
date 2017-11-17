@@ -12,7 +12,8 @@ import RequestItemTitle from './RequestItemTitle'
 import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
 interface Props {
-	request: PalletRequest
+	request: PalletRequest,
+	handleCancel: () => void
 }
 
 type ClassKeys = 'root' | 'status'
@@ -43,16 +44,15 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 					primary={
 						<RequestItemTitle
 							title={this.props.request.pallet.getName()}
-							time={new Date()}
+							time={this.props.request.requestedAt}
 						/>
 					}
 					secondary={this.props.request.location}
 				>
-					test
 				</ListItemText>
 
 				<ListItemSecondaryAction>
-					<IconButton aria-label="Delete">
+					<IconButton aria-label="Delete" onClick={this.props.handleCancel}>
 						<BlockIcon />
 					</IconButton>
 				</ListItemSecondaryAction>

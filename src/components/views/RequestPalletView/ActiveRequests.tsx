@@ -32,6 +32,9 @@ const decorate = withStyles<ClassNames>(() => ({
 @observer
 class ActiveRequests extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
+		if(this.props.requests.requests.length === 0) 
+			return null
+			
 		return(
 			<div
 				className={[
@@ -47,7 +50,11 @@ class ActiveRequests extends React.Component<Props & WithStyles<ClassNames>> {
 
 				<List>
 					{this.props.requests.requests.map(r => (
-						<RequestItem key={r.id} request={r} />
+						<RequestItem
+							key={r.id}
+							request={r}
+							handleCancel={() => this.props.requests.cancelRequest(r.id)}
+						/>
 					))}
 				</List>
 			</div>

@@ -1,7 +1,8 @@
-import { observable } from 'mobx'
+import { observable, action } from 'mobx'
 
 import PalletRequest, { RequestParams } from './interfaces/PalletRequest'
 import Pallet, { PalletParams } from './common/Pallet'
+import { AlreadySelectedError } from './common/Errors'
 
 import PalletStore from './PalletStore'
 
@@ -21,6 +22,11 @@ export default class PalletSelectStore {
 	addRequest(palletParams: PalletParams, requestParams: RequestParams): void {
 		const pallet: Pallet = this.palletStore.findPallet(palletParams)
 
+		for(let r of this.requests) {
+			if(r.id === pallet.id)
+				throw new AlreadySelectedError('Pallet')
+		}
+
 		this.requests.push({
 			id: PalletSelectStore.nextId++,
 			isCompleted: false,
@@ -31,6 +37,10 @@ export default class PalletSelectStore {
 			location: requestParams.location,
 			priority: requestParams.priority
 		})
+	}
+
+	@action cancelRequest(id: number): void {
+		this.requests = this.requests.filter(r => r.id !== id)
 	}
 
 	initRequests(): void {
