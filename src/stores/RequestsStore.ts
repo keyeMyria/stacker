@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import PalletRequest, { RequestParams } from './interfaces/PalletRequest'
+import PalletRequest, { RequestParams, RequestStatus } from './interfaces/PalletRequest'
 import Pallet, { PalletParams } from './common/Pallet'
 import { AlreadySelectedError } from './common/Errors'
 
@@ -65,6 +65,10 @@ export default class PalletSelectStore {
 				r.isCompleted = true
 			}
 		})
+	}
+
+	getRequestsByStatus(status: RequestStatus): PalletRequest[] {
+		return this.requests.filter(r => r.status === status)
 	}
 
 	initRequests(): void {

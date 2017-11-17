@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
+import List, { ListItem, ListItemText } from 'material-ui/List'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { common } from 'material-ui/colors'
 
@@ -17,6 +18,7 @@ interface Props {
 type ClassKeys = (
 	'root'
 	| 'headline'
+	| 'requestList'
 )
 
 const decorate = withStyles<ClassKeys>(() => ({
@@ -25,6 +27,9 @@ const decorate = withStyles<ClassKeys>(() => ({
 	headline: {
 		color: common['minBlack'],
 		marginBottom: 8
+	},
+	requestList: {
+		marginBottom: 32
 	}
 }))
 
@@ -37,10 +42,8 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 					Zažádané palety
 				</Typography>
 
-				<Paper>
-					{this.props.store.requests
-					.filter(r => r.status !== 'delivered' && r.isCompleted === false)
-					.map(r => (
+				<Paper className={this.props.classes.requestList}>
+					{this.props.store.getRequestsByStatus('requested').map(r => (
 						<RequestItem
 							key={r.id}
 							request={r}
@@ -49,6 +52,31 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 						/>
 					))}
 				</Paper>
+
+				<Paper className={this.props.classes.requestList}>
+					{this.props.store.getRequestsByStatus('toReturn').map(r => (
+						<RequestItem
+							key={r.id}
+							request={r}
+							deliver={() => this.props.store.deliver(r.id)}
+							complete={() => this.props.store.complete(r.id)}
+						/>
+					))}
+				</Paper>
+
+				<Typography type="subheading" className={this.props.classes.headline}>
+					Vyskladněné palety
+				</Typography>
+
+				<List dense>
+					{this.props.store.getRequestsByStatus('delivered').map(r => (
+						<ListItem disableGutters>
+							<ListItemText
+								primary={r.pallet.getName() + ': ' + r.location + ' (' + r.requester + ')'}
+							/>
+						</ListItem>
+					))}
+				</List>
 			</div>
 		)
 	}
