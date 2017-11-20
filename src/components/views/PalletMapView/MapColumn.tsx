@@ -7,7 +7,7 @@ import Pallet from '../../../stores/common/Pallet'
 import MapPallet from './MapPallet'
 
 interface Props {
-	pallets: Pallet[]
+	palletPairs: Pallet[][]
 }
 
 type ClassNames = 'root'
@@ -15,7 +15,11 @@ type ClassNames = 'root'
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		marginRight: 2,
+		'&:last-child': {
+			marginRight: 0
+		}
 	}
 }))
 
@@ -23,8 +27,8 @@ const decorate = withStyles<ClassNames>(() => ({
 class MapColumn extends React.Component<Props & WithStyles<ClassNames>> {
 	mapPallets(): JSX.Element[] {
 		let pallets: JSX.Element[] = []
-		for(let pallet of this.props.pallets) {
-			pallets.push(<MapPallet key={pallet.id} pallet={pallet} />)
+		for(let pallet of this.props.palletPairs) {
+			pallets.push(<MapPallet key={pallet[0].id} palletPair={pallet} />)
 		}
 		return pallets
 	}

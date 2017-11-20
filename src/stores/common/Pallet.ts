@@ -49,7 +49,11 @@ export default class Pallet implements PalletParams {
 		return name
 	}
 
-	getRowNumber() {
+	getRowNumber(): number {
 		return this.row.charCodeAt(0) - 65
+	}
+
+	static rowIndex(row: string) {
+		return row.charCodeAt(0) - 65
 	}
 }

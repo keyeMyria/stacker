@@ -17,7 +17,8 @@ type ClassNames = 'root'
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
 		display: 'flex',
-		width: 1000
+		width: 1000,
+		overflow: 'hidden'
 	}
 }))
 

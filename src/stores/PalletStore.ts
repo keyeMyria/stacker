@@ -48,10 +48,26 @@ export default class PalletStore {
 		return this.pallets.filter((p: Pallet): boolean => p.side === side)
 	}
 	
-	getPalletsFromColumn(column: number): Pallet[] {
+	getPalletsFromColumn(column: number, pair?: boolean): Pallet[] {
 		return this.pallets.filter((p: Pallet): boolean => (
 			p.column === column
 		))
+	}
+
+	getPalletPairsFromColumn(column: number): Pallet[][] {
+		let palletColumn: Pallet[]
+		palletColumn = this.pallets.filter((p: Pallet): boolean => (
+			p.column === column
+		))
+
+		let pallets: Pallet[][] = []
+		for (let i = 0; i < this.rowCount; i++) {
+			let palletPair: Pallet[] = []
+			palletColumn.filter(p => p.getRowNumber() === i).forEach(p => palletPair.push(p))
+			pallets.push(palletPair)
+		}
+
+		return pallets
 	}
 
 	getPalletsFromRow(side: string, row: string): Pallet[] {
@@ -70,6 +86,18 @@ export default class PalletStore {
 		for (let i = 1; i <= this.columnCount; i++) {
 			let column: Pallet[]
 			column = this.getPalletsFromColumn(i)
+			columns.push(column)
+		}
+
+		return columns
+	}
+
+	getColumnPairs(): Pallet[][][] {
+		let columns: Pallet[][][] = []
+
+		for (let i = 1; i <= this.columnCount; i++) {
+			let column: Pallet[][]
+			column = this.getPalletPairsFromColumn(i)
 			columns.push(column)
 		}
 

@@ -23,8 +23,8 @@ const decorate = withStyles<ClassNames>(() => ({
 class Map extends React.Component<Props & WithStyles<ClassNames>> {
 	mapColumns(): JSX.Element[] {
 		let columns: JSX.Element[] = []
-		for(let column of this.props.pallets.getColumns()) {
-			columns.push(<MapColumn key={column[0].id} pallets={column} />)
+		for(let column of this.props.pallets.getColumnPairs()) {
+			columns.push(<MapColumn key={column[0][0].id} palletPairs={column} />)
 		}
 		return columns
 	}
