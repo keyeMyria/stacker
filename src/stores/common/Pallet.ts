@@ -53,7 +53,11 @@ export default class Pallet implements PalletParams {
 		return this.row.charCodeAt(0) - 65
 	}
 
-	static rowIndex(row: string) {
+	static rowIndex(row: string): number {
 		return row.charCodeAt(0) - 65
+	}
+
+	static rowChar(row: number): string {
+		return String.fromCharCode(65 + row)
 	}
 }

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { observer } from 'mobx-react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 
 import Pallet from '../../../stores/common/Pallet'
 import MapPallet from './MapPallet'
@@ -10,7 +11,7 @@ interface Props {
 	palletPairs: Pallet[][]
 }
 
-type ClassNames = 'root'
+type ClassNames = 'root' | 'columnLegend'
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
@@ -20,6 +21,12 @@ const decorate = withStyles<ClassNames>(() => ({
 		'&:last-child': {
 			marginRight: 0
 		}
+	},
+	columnLegend: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: 16
 	}
 }))
 
@@ -36,6 +43,10 @@ class MapColumn extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
+				<Typography className={this.props.classes.columnLegend}>
+					{this.props.palletPairs[0][0].column}
+				</Typography>
+
 				{this.mapPallets()}
 			</div>
 		)
