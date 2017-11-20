@@ -47,6 +47,12 @@ export default class PalletStore {
 	getPalletsFromSide(side: string): Pallet[] {
 		return this.pallets.filter((p: Pallet): boolean => p.side === side)
 	}
+	
+	getPalletsFromColumn(column: number): Pallet[] {
+		return this.pallets.filter((p: Pallet): boolean => (
+			p.column === column
+		))
+	}
 
 	getPalletsFromRow(side: string, row: string): Pallet[] {
 		return this.pallets.filter((p: Pallet): boolean => (
@@ -56,6 +62,18 @@ export default class PalletStore {
 
 	getPalletsFromRowByIndex(side: string, index: number): Pallet[] {
 		return this.getPalletsFromRow(side, String.fromCharCode(65 + index))
+	}
+
+	getColumns(): Pallet[][] {
+		let columns: Pallet[][] = []
+
+		for (let i = 1; i <= this.columnCount; i++) {
+			let column: Pallet[]
+			column = this.getPalletsFromColumn(i)
+			columns.push(column)
+		}
+
+		return columns
 	}
 
 	findPallet(params: PalletParams): Pallet {

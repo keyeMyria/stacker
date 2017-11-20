@@ -19,6 +19,7 @@ import PalletMap from './PalletMap/PalletMap'
 import AppFrame from './views/AppFrame/AppFrame'
 import RequestsView from './views/RequestsView/RequestsView'
 import RequestPalletView from './views/RequestPalletView/RequestPalletView'
+import PalletMapView from './views/PalletMapView/PalletMapView'
 
 interface Props {
 	store: AppStore
@@ -57,7 +58,7 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 					<div className={this.props.classes.routes}>
 						<Route exact path="/"  render={(props: RouteProps) => (
 							<PalletMap {...props} store={palletStore} />
-						)}/>
+						)} />
 						<Route path="/request" render={(props: RouteProps) => (
 							<RequestPalletView
 								{...props}
@@ -65,13 +66,16 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 								requests={requestsStore}
 								palletStore={palletStore}
 							/>
-						)}/>
+						)} />
 						<Route path="/requests" render={(props: RouteProps) => (
 							<RequestsView
 								{...props}
 								store={requestsStore}
 							/>
-						)}/>
+						)} />
+						<Route exact path="/map"  render={(props: RouteProps) => (
+							<PalletMapView {...props} pallets={palletStore} />
+						)} />
 					</div>
 				</AppFrame>
 			</Router>
