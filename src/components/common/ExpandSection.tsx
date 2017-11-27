@@ -17,15 +17,9 @@ interface State {
 	expand: boolean
 }
 
-type ClassNames = 'root' | 'toggle' | 'title' |'expandButton'
+type ClassNames = 'toggle' | 'title' |'expandButton'
 
-const decorate = withStyles<ClassNames>(theme => ({
-	root: {
-		marginBottom: 8,
-		'&:last-child': {
-			marginBottom: 0
-		}
-	},
+const decorate = withStyles<ClassNames>(() => ({
 	toggle: {
 		display: 'flex',
 		cursor: 'pointer',
