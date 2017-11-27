@@ -32,6 +32,9 @@ export default class PalletStore {
 			for (let j = 0; j < this.columnCount; j++) {
 				let pallet: Pallet
 				pallet = new Pallet('left', String.fromCharCode(65 + i), j + 1)
+
+				if(i === j) pallet.toggleEmpty()
+
 				this.pallets.push(pallet)
 			}
 		}
@@ -39,6 +42,9 @@ export default class PalletStore {
 			for (let j = 0; j < this.columnCount; j++) {
 				let pallet: Pallet
 				pallet = new Pallet('right', String.fromCharCode(65 + i), j + 1)
+
+				if(i === j + 1) pallet.toggleEmpty()
+
 				this.pallets.push(pallet)
 			}
 		}

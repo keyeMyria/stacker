@@ -25,8 +25,8 @@ const decorate = withStyles<ClassNames>(() => ({
 	rowLegend: {
 		display: 'flex',
 		flexDirection: 'column',
-		minWidth: 16,
-		marginTop: 16
+		minWidth: 32,
+		marginTop: 32
 	},
 	rowLegendLetter: {
 		display: 'flex',
@@ -60,6 +60,9 @@ class PalletMapView extends React.Component<Props & WithStyles<ClassNames>> {
 
 				<Map pallets={this.props.pallets} />
 
+				<div className={this.props.classes.rowLegend}>
+					{this.mapRowLegend()}
+				</div>
 			</Card>
 		)
 	}
