@@ -9,8 +9,14 @@ import { orange, grey } from 'material-ui/colors'
 
 import Pallet from '../../../stores/common/Pallet'
 
+import PalletDialog from '../../dialogs/PalletDialog'
+
 interface Props {
 	pallet: Pallet
+}
+
+interface State {
+	open: boolean
 }
 
 type ClassNames = 'root' | 'name' | 'rootEmpty' | 'nameEmpty'
@@ -45,13 +51,27 @@ const decorate = withStyles<ClassNames>(theme => ({
 }))
 
 @observer
-class MapPallet extends React.Component<Props & WithStyles<ClassNames>> {
+class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
+	state: State = {
+		open: false
+	}
+
+	handleDialogOpen = () => {
+		this.setState({ open: true })
+	}
+
+	handleDialogClose = () => {
+		this.setState({ open: false })
+	}
+
 	render() {		
-		return(
+		return[
 			<div className={classnames(
 					this.props.classes.root,
 					{ [this.props.classes.rootEmpty]: this.props.pallet.isEmpty }
 				)}
+				onClick={this.handleDialogOpen}
+				key="content"
 			>
 				<Typography
 					className={classnames(
@@ -62,7 +82,14 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>> {
 					{this.props.pallet.getName()}
 				</Typography>
 			</div>
-		)
+		,
+			<PalletDialog
+				open={this.state.open}
+				handleClose={this.handleDialogClose}
+				pallet={this.props.pallet}
+				key="dialog"
+			/>
+		]
 	}
 }
 

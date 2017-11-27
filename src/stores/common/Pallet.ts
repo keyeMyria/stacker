@@ -49,6 +49,10 @@ export default class Pallet implements PalletParams {
 		return name
 	}
 
+	getSideName(): string {
+		return this.side === 'left' ? 'Levá' : 'Pravá'
+	}
+
 	getRowNumber(): number {
 		return this.row.charCodeAt(0) - 65
 	}
