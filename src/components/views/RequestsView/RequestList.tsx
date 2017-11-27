@@ -3,13 +3,13 @@ import { observer } from 'mobx-react'
 
 import Typography from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
-import List, { ListItem, ListItemText } from 'material-ui/List'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { common } from 'material-ui/colors'
 
 import RequestItem from './RequestItem'
 
 import RequestsStore from '../../../stores/RequestsStore'
+import RequestListCommon from '../../common/RequestList/RequestList'
 
 interface Props {
 	store: RequestsStore
@@ -64,19 +64,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 					))}
 				</Paper>
 
-				<Typography type="subheading" className={this.props.classes.headline}>
-					Vyskladněné palety
-				</Typography>
-
-				<List dense>
-					{this.props.store.getRequestsByStatus('delivered').map(r => (
-						<ListItem disableGutters>
-							<ListItemText
-								primary={r.pallet.getName() + ': ' + r.location + ' (' + r.requester + ')'}
-							/>
-						</ListItem>
-					))}
-				</List>
+				<RequestListCommon requests={this.props.store} />
 			</div>
 		)
 	}
