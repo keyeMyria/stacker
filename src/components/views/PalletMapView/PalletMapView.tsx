@@ -43,7 +43,7 @@ class PalletMapView extends React.Component<Props & WithStyles<ClassNames>> {
 		let rows: JSX.Element[] = []
 		for(let i = 0; i < this.props.pallets.rowCount; i++) {
 			rows.push(
-				<Typography className={this.props.classes.rowLegendLetter}>
+				<Typography key={i} className={this.props.classes.rowLegendLetter}>
 					{Pallet.rowChar(i)}
 				</Typography>
 			)
