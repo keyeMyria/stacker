@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 
-import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { common } from 'material-ui/colors'
 
@@ -23,9 +21,12 @@ type ClassKeys = (
 
 const decorate = withStyles<ClassKeys>(() => ({
 	root: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center'
 	},
 	headline: {
-		color: common['minBlack'],
+		color: common['lightBlack'],
 		marginBottom: 8
 	},
 	requestList: {
@@ -38,12 +39,12 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
-				<Typography type="headline" className={this.props.classes.headline}>
-					Zažádané palety
-				</Typography>
-
-				<Paper className={this.props.classes.requestList}>
-					{this.props.store.getRequestsByStatus('requested').map(r => (
+				<RequestListCommon
+					header="Zažádané palety"
+					requests={this.props.store}
+					type="requested"
+					withPaper
+					mapListItemFunction={(r => (
 						<RequestItem
 							key={r.id}
 							request={r}
@@ -51,10 +52,15 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 							complete={() => this.props.store.complete(r.id)}
 						/>
 					))}
-				</Paper>
+					className={this.props.classes.requestList}
+				/>
 
-				<Paper className={this.props.classes.requestList}>
-					{this.props.store.getRequestsByStatus('toReturn').map(r => (
+				<RequestListCommon
+					header="Palety k vraceni"
+					requests={this.props.store}
+					type="toReturn"
+					withPaper
+					mapListItemFunction={(r => (
 						<RequestItem
 							key={r.id}
 							request={r}
@@ -62,9 +68,15 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 							complete={() => this.props.store.complete(r.id)}
 						/>
 					))}
-				</Paper>
+					className={this.props.classes.requestList}
+				/>
 
-				<RequestListCommon requests={this.props.store} />
+				<RequestListCommon
+					header="Vyvezene palety"
+					requests={this.props.store}
+					type="delivered"
+					className={this.props.classes.requestList}
+				/>
 			</div>
 		)
 	}
