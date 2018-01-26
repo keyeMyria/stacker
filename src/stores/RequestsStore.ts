@@ -27,7 +27,7 @@ export default class PalletSelectStore {
 				throw new AlreadySelectedError('Pallet')
 		}
 
-		this.requests.push({
+		const request: PalletRequest = {
 			id: PalletSelectStore.nextId++,
 			status: 'requested',
 			isCompleted: false,
@@ -37,7 +37,11 @@ export default class PalletSelectStore {
 			requester: requestParams.requester,
 			location: requestParams.location,
 			priority: requestParams.priority
-		})
+		}
+
+		pallet.requests.push(request);
+
+		this.requests.push(request)
 	}
 
 	@action cancel(id: number): void {

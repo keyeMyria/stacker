@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 
 import PalletState from '../interfaces/PalletState'
+import PalletRequest from '../interfaces/PalletRequest'
 
 export interface PalletParams {
 	side: string
@@ -18,6 +19,7 @@ export default class Pallet implements PalletParams {
 	side: string
 	row: string
 	column: number
+	requests: PalletRequest[]
 
 	constructor(side: string, row: string, column: number) {
 		this.id = Pallet.nextId++
