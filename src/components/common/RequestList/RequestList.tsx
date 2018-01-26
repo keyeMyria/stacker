@@ -11,6 +11,7 @@ import { common } from 'material-ui/colors'
 import RequestsStore from '../../../stores/RequestsStore'
 import PalletRequest, { RequestStatus } from '../../../stores/interfaces/PalletRequest'
 import RequestListItem from './RequestListItem'
+import RequestListItemSummary from './RequestListItemSummary'
 
 interface Props {
 	requests: RequestsStore,
@@ -18,6 +19,7 @@ interface Props {
 	type?: RequestStatus,
 	completed?: boolean,
 	withPaper?: boolean,
+	summaryItem?: boolean,
 	className?: string,
 	mapListItemFunction?: (r: PalletRequest) => JSX.Element
 }
@@ -36,7 +38,11 @@ const decorate = withStyles<ClassNames>(() => ({
 @observer
 class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	mapListItem = (r: PalletRequest): JSX.Element => {
-		return <RequestListItem key={r.id} request={r} />
+		if(this.props.summaryItem === true) {
+			return <RequestListItemSummary key={r.id} request={r} />
+		} else {
+			return <RequestListItem key={r.id} request={r} />
+		}
 	}
 
 	getMapListItemFunction = (r: PalletRequest) => {
@@ -77,7 +83,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 		}
 
 		let content = (
-			<List disablePadding >
+			<List disablePadding>
 				{requests}
 			</List>
 		)

@@ -74,6 +74,11 @@ class NavigationDrawer extends React.Component<Props & WithStyles<ClassKeys>> {
                                 <ListItemText primary="Pallet map" />
                             </ListItem>
                         </Link>
+                        <Link to="/history" className={this.props.classes.linkItem}>
+                            <ListItem button>
+                                <ListItemText primary="Request history" />
+                            </ListItem>
+                        </Link>
                     </List>
                 </div>
             </Drawer>

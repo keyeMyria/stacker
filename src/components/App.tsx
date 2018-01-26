@@ -20,6 +20,7 @@ import AppFrame from './views/AppFrame/AppFrame'
 import RequestsView from './views/RequestsView/RequestsView'
 import RequestPalletView from './views/RequestPalletView/RequestPalletView'
 import PalletMapView from './views/PalletMapView/PalletMapView'
+import HistoryView from './views/HistoryView/HistoryView'
 
 interface Props {
 	store: AppStore
@@ -75,6 +76,9 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 						)} />
 						<Route exact path="/map"  render={(props: RouteProps) => (
 							<PalletMapView {...props} pallets={palletStore} />
+						)} />
+						<Route exact path="/history"  render={(props: RouteProps) => (
+							<HistoryView {...props} store={requestsStore} />
 						)} />
 					</div>
 				</AppFrame>

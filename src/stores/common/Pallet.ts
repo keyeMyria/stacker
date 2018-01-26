@@ -30,6 +30,8 @@ export default class Pallet implements PalletParams {
 
 		this.isEmpty = false
 		this.state = { id: 'stored', name: 'Stored' }
+
+		this.requests = []
 	}
 	
 	@action toggleEmpty(): void {

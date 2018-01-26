@@ -9,7 +9,6 @@ import Pallet from '../../stores/common/Pallet'
 import ExpandSection from '../common/ExpandSection'
 import Field from '../common/Field'
 import Minimap from '../common/Minimap'
-import RequestList from '../common/RequestList/RequestList'
 
 interface Props {
 	open: boolean,
@@ -81,7 +80,6 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 						title="Požadavky"
 						className={this.props.classes.requests}
 					>
-						<RequestList requests={store} />
 					</ExpandSection>
 				</DialogContent>
 
