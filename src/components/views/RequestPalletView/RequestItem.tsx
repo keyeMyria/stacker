@@ -2,6 +2,7 @@ import * as React from 'react'
 import { observer } from 'mobx-react'
 
 import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
+import Tooltip from 'material-ui/Tooltip'
 import IconButton from 'material-ui/IconButton'
 import BlockIcon from 'material-ui-icons/Block'
 import ForwardIcon from 'material-ui-icons/Forward'
@@ -41,15 +42,19 @@ const decorate = withStyles<ClassKeys>(() => ({
 class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		const cancelButton = (
-			<IconButton aria-label="Cancel" onClick={this.props.handleCancel}>
-				<BlockIcon />
-			</IconButton>
+			<Tooltip id="tooltip-cancel" title="Zrušit">
+				<IconButton aria-label="Cancel" onClick={this.props.handleCancel}>
+					<BlockIcon />
+				</IconButton>
+			</Tooltip>
 		)
 
 		const returnButton = (
-			<IconButton aria-label="Return" onClick={this.props.handleReturn}>
-				<ForwardIcon />
-			</IconButton>
+			<Tooltip id="tooltip-return" title="Vrátit">
+				<IconButton aria-label="Return" onClick={this.props.handleReturn}>
+					<ForwardIcon />
+				</IconButton>
+			</Tooltip>
 		)
 
 		return(
