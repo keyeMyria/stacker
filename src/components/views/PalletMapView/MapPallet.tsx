@@ -18,6 +18,7 @@ const decorate = withStyles<ClassNames>(theme => ({
 		width: 64,
 		height: 64,
 		marginBottom: 2,
+		display: 'flex',
 		'&:last-child': {
 			marginBottom: 0
 		}

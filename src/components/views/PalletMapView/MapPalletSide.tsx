@@ -5,7 +5,7 @@ import * as classnames from 'classnames'
 import Typography from 'material-ui/Typography'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { lighten } from 'material-ui/styles/colorManipulator'
-import { orange, grey } from 'material-ui/colors'
+import { grey, common, deepOrange } from 'material-ui/colors'
 
 import Pallet from '../../../stores/common/Pallet'
 
@@ -19,34 +19,33 @@ interface State {
 	open: boolean
 }
 
-type ClassNames = 'root' | 'name' | 'rootEmpty' | 'nameEmpty'
+type ClassNames = 'root' | 'name' | 'rootEmpty'
 
 const decorate = withStyles<ClassNames>(theme => ({
 	root: {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		width: 64,
-		height: 32,
-		background: orange[500],
+		width: 32,
+		height: 64,
+		background: grey[300],
 		cursor: 'pointer',
 		'&:hover': {
-			background: lighten(orange[500], 0.2)
+			background: lighten(grey[300], 0.4)
 		}
 	},
 	name: {
 		width: '100%',
-		background: lighten(orange[500], 0.2),
-		textAlign: 'center'
+		textAlign: 'center',
+		fontSize: 18,
+		fontWeight: 500,
+		color: common['white']
 	},
 	rootEmpty: {
-		background: grey[500],
+		background: deepOrange[100],
 		'&:hover': {
-			background: lighten(grey[500], 0.2)
+			background: lighten(deepOrange[100], 0.4)
 		}
-	},
-	nameEmpty: {
-		background: lighten(grey[500], 0.2)
 	}
 }))
 
@@ -73,13 +72,8 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 				onClick={this.handleDialogOpen}
 				key="content"
 			>
-				<Typography
-					className={classnames(
-						this.props.classes.name,
-						{ [this.props.classes.nameEmpty]: this.props.pallet.isEmpty }
-					)}
-				>
-					{this.props.pallet.getName()}
+				<Typography className={this.props.classes.name}>
+					{this.props.pallet.side === 'left' ? 'L' : 'R'}
 				</Typography>
 			</div>
 		,
