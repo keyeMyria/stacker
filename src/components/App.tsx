@@ -7,8 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
-
-import { grey } from 'material-ui/colors'
+import Reboot from 'material-ui/Reboot'
 
 import AppStore from '../stores/AppStore'
 import PalletSelectStore from '../stores/PalletSelectStore'
@@ -27,7 +26,6 @@ interface Props {
 
 type ClassKeys = (
 	'routes'
-	| 'body'
 )
 
 const decorate = withStyles<ClassKeys>(() => ({
@@ -35,9 +33,6 @@ const decorate = withStyles<ClassKeys>(() => ({
 		display: 'flex',
 		justifyContent: 'center',
 		paddingTop: 32
-	},
-	body: {
-		backgroundColor: grey[50]
 	}
 }))
 
@@ -47,13 +42,10 @@ const palletSelectStore: PalletSelectStore = new PalletSelectStore(requestsStore
 
 @observer
 class App extends React.Component<Props & WithStyles<ClassKeys>> {
-	componentWillMount() {
-		document.body.className = this.props.classes.body
-	}
-
 	render() {		
 		return(
 			<Router>
+				<Reboot />
 				<AppFrame>
 					<div className={this.props.classes.routes}>
 						<Route path="/" render={(props: RouteProps) => (
