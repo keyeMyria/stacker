@@ -51,6 +51,11 @@ class ActiveRequests extends React.Component<Props & WithStyles<ClassNames>> {
 				<List>
 					{this.props.requests.requests
 					.filter(r => r.status === 'requested' || r.status === 'delivered')
+					.sort((a, b) => {
+						if(a.status === b.status) return 0
+						else if(a.status === 'requested') return -1
+						else return 1
+					})
 					.map(r => (
 						<RequestItem
 							key={r.id}
