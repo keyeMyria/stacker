@@ -15,7 +15,6 @@ import PalletSelectStore from '../stores/PalletSelectStore'
 import PalletStore from '../stores/PalletStore'
 import RequestsStore from '../stores/RequestsStore'
 
-import PalletMap from './PalletMap/PalletMap'
 import AppFrame from './views/AppFrame/AppFrame'
 import RequestsView from './views/RequestsView/RequestsView'
 import RequestPalletView from './views/RequestPalletView/RequestPalletView'
@@ -57,10 +56,7 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 			<Router>
 				<AppFrame>
 					<div className={this.props.classes.routes}>
-						<Route exact path="/"  render={(props: RouteProps) => (
-							<PalletMap {...props} store={palletStore} />
-						)} />
-						<Route path="/request" render={(props: RouteProps) => (
+						<Route path="/" render={(props: RouteProps) => (
 							<RequestPalletView
 								{...props}
 								selectStore={palletSelectStore}

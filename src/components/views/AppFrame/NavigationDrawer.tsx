@@ -59,7 +59,7 @@ class NavigationDrawer extends React.Component<Props & WithStyles<ClassKeys>> {
                     </div>
                     <Divider />
                     <List>
-                        <Link to="/request" className={this.props.classes.linkItem}>
+                        <Link to="/" className={this.props.classes.linkItem}>
                             <ListItem button>
                                 <ListItemText primary="Request" />
                             </ListItem>
