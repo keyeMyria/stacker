@@ -38,6 +38,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 					requests={this.props.store}
 					type="requested"
 					withPaper
+					disableUnderline
 					mapListItemFunction={(r => (
 						<RequestItem
 							key={r.id}
@@ -54,6 +55,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 					requests={this.props.store}
 					type="toReturn"
 					withPaper
+					disableUnderline
 					mapListItemFunction={(r => (
 						<RequestItem
 							key={r.id}

@@ -12,6 +12,7 @@ import RequestsStore from '../../../stores/RequestsStore'
 import PalletRequest, { RequestStatus } from '../../../stores/interfaces/PalletRequest'
 import RequestListItem from './RequestListItem'
 import RequestListItemSummary from './RequestListItemSummary'
+import Divider from 'material-ui/Divider/Divider';
 
 interface Props {
 	requests: RequestsStore,
@@ -19,26 +20,33 @@ interface Props {
 	type?: RequestStatus,
 	completed?: boolean,
 	withPaper?: boolean,
-	summaryItem?: boolean,
+	disableUnderline?: boolean,
+	itemType?: 'default' | 'summary' | 'user',
 	className?: string,
 	mapListItemFunction?: (r: PalletRequest) => JSX.Element
 }
 
-type ClassNames = 'root' | 'header'
+type ClassNames = 'root' | 'header' | 'list'
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
 	},
 	header: {
-		color: grey[700],
-		marginBottom: 8
+		color: grey[700]
+	},
+	list: {
+		marginTop: 8
 	}
 }))
 
 @observer
 class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
+	static defaultProps: Partial<Props> = {
+		itemType: 'default'
+	}
+
 	mapListItem = (r: PalletRequest): JSX.Element => {
-		if(this.props.summaryItem === true) {
+		if(this.props.itemType === 'summary') {
 			return <RequestListItemSummary key={r.id} request={r} />
 		} else {
 			return <RequestListItem key={r.id} request={r} />
@@ -71,19 +79,22 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	}
 
 	render() {
+		const { disableUnderline } = this.props
 		let header = null
 		let requests = this.getRequests()
 
 		if(this.props.header && requests.length > 0) {
-			header = (
-				<Typography type="headline" className={this.props.classes.header}>
+			header = [
+				<Typography key="header" type="headline" className={this.props.classes.header}>
 					{this.props.header}
-				</Typography>
-			)
+				</Typography>,
+				(disableUnderline === undefined || disableUnderline === false) ? 
+					<Divider key="divider" /> : null
+			]
 		}
 
 		let content = (
-			<List disablePadding>
+			<List disablePadding className={this.props.classes.list}>
 				{requests}
 			</List>
 		)

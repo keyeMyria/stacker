@@ -81,8 +81,8 @@ export default class PalletSelectStore {
 			column: 1,
 			row: 'A'
 		}, {
-			requester: 'Jan Novak',
-			location: 'Prizemi',
+			requester: 'Jan Novák',
+			location: 'Přízemí',
 			priority: 'standard'
 		})
 		this.addRequest({
@@ -90,8 +90,8 @@ export default class PalletSelectStore {
 			column: 71,
 			row: 'H'
 		}, {
-			requester: 'Jan Novak',
-			location: 'Prizemi',
+			requester: 'Jan Novák',
+			location: 'Přízemí',
 			priority: 'standard'
 		})
 		this.addRequest({
@@ -99,8 +99,8 @@ export default class PalletSelectStore {
 			column: 67,
 			row: 'G'
 		}, {
-			requester: 'Jan Novak',
-			location: 'Prizemi',
+			requester: 'Jan Novák',
+			location: 'Přízemí',
 			priority: 'standard'
 		})
 		this.addRequest({
@@ -108,8 +108,8 @@ export default class PalletSelectStore {
 			column: 39,
 			row: 'C'
 		}, {
-			requester: 'Jan Novak',
-			location: 'Prizemi',
+			requester: 'Jan Novák',
+			location: 'Přízemí',
 			priority: 'standard'
 		})
 	}

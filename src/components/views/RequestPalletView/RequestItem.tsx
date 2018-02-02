@@ -9,8 +9,6 @@ import ForwardIcon from 'material-ui-icons/Forward'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { grey } from 'material-ui/colors'
 
-import RequestItemTitle from './RequestItemTitle'
-
 import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
 interface Props {
@@ -60,12 +58,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 		return(
 			<ListItem disableGutters className={this.props.classes.root}>
 				<ListItemText
-					primary={
-						<RequestItemTitle
-							title={this.props.request.pallet.getName()}
-							time={this.props.request.requestedAt}
-						/>
-					}
+					primary=""
 					secondary={this.props.request.location}
 				>
 				</ListItemText>
