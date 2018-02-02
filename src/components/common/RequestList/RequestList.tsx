@@ -6,7 +6,7 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
 import List from 'material-ui/List'
 import Typography from 'material-ui/Typography'
-import { common } from 'material-ui/colors'
+import { grey } from 'material-ui/colors'
 
 import RequestsStore from '../../../stores/RequestsStore'
 import PalletRequest, { RequestStatus } from '../../../stores/interfaces/PalletRequest'
@@ -30,7 +30,7 @@ const decorate = withStyles<ClassNames>(() => ({
 	root: {
 	},
 	header: {
-		color: common['lightBlack'],
+		color: grey[700],
 		marginBottom: 8
 	}
 }))

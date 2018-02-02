@@ -2,7 +2,6 @@ import * as React from 'react'
 import { observer } from 'mobx-react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
-import { common } from 'material-ui/colors'
 
 import RequestItem from './RequestItem'
 
@@ -15,7 +14,6 @@ interface Props {
 
 type ClassKeys = (
 	'root'
-	| 'headline'
 	| 'requestList'
 )
 
@@ -24,10 +22,6 @@ const decorate = withStyles<ClassKeys>(() => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center'
-	},
-	headline: {
-		color: common['lightBlack'],
-		marginBottom: 8
 	},
 	requestList: {
 		marginBottom: 32
@@ -72,7 +66,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 				/>
 
 				<RequestListCommon
-					header="Vyvezene palety"
+					header="Vyvezené palety"
 					requests={this.props.store}
 					type="delivered"
 					className={this.props.classes.requestList}

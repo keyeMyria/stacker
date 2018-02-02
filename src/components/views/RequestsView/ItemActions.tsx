@@ -26,7 +26,7 @@ const ItemActions: React.SFC<Props> = (props) => {
         return(
             <Button
                 raised
-                color="accent"
+                color="secondary"
                 onClick={props.complete}
             >
                 Vratit

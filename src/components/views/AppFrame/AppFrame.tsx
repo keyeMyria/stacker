@@ -105,7 +105,7 @@ class AppFrame extends React.Component<WithStyles<ClassKeys>, State> {
                     <Toolbar>
                         <IconButton
                             className={this.props.classes.menuButton}
-                            color="contrast"
+                            color="inherit"
                             aria-label="Menu"
                             onClick={() => this.handleDrawerOpen()}
                         >

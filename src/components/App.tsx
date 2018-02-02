@@ -45,10 +45,10 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {		
 		return(
 			<Router>
-				<Reboot />
 				<AppFrame>
+					<Reboot />
 					<div className={this.props.classes.routes}>
-						<Route path="/" render={(props: RouteProps) => (
+						<Route exact path="/" render={(props: RouteProps) => (
 							<RequestPalletView
 								{...props}
 								selectStore={palletSelectStore}

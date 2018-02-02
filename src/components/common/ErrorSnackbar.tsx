@@ -53,7 +53,7 @@ class ErrorSnackbar extends React.Component<{}, State> {
             <Snackbar
                 open={this.state.open}
                 autoHideDuration={5000}
-                onRequestClose={this.handleRequestClose}
+                onClose={this.handleRequestClose}
                 message={<ErrorMessage message={this.state.message} />}
                 action={<CloseButton closeAction={this.handleRequestClose} />}
             />

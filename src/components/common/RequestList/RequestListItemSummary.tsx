@@ -6,7 +6,7 @@ import * as csLocale from 'date-fns/locale/cs'
 import * as classnames from 'classnames'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
-import { common } from 'material-ui/colors'
+import { grey } from 'material-ui/colors'
 import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
@@ -49,7 +49,7 @@ const decorate = withStyles<ClassNames>(() => ({
 		justifyContent: 'space-between'
 	},
 	textLight: {
-		color: common['lightBlack']
+		color: grey[500]
 	},
 	section: {
 		marginTop: 8

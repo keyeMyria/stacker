@@ -109,7 +109,7 @@ class PriorityButton extends React.Component<Props & WithStyles<ClassKeys>, Stat
 					id="simple-menu"
 					anchorEl={this.state.anchorEl}
 					open={this.state.open}
-					onRequestClose={this.handleRequestClose}
+					onClose={this.handleRequestClose}
 				>
 					<MenuItem
 						onClick={() => this.selectPriority('urgent')}

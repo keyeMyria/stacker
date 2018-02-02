@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List from 'material-ui/List'
 
-import { common } from 'material-ui/colors'
+import { grey } from 'material-ui/colors'
 import { withStyles, WithStyles } from 'material-ui/styles'
 
 import RequestsStore from '../../../stores/RequestsStore'
@@ -25,7 +25,7 @@ const decorate = withStyles<ClassNames>(() => ({
 	root: {
 	},
 	title: {
-		color: common['lightBlack']
+		color: grey[700]
 	}
 }))
 

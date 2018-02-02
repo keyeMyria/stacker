@@ -40,7 +40,7 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 		return (
 			<Dialog
 				open={this.props.open}
-				onRequestClose={this.props.handleClose}
+				onClose={this.props.handleClose}
 			>
 				<DialogTitle>{this.props.pallet.getName()}</DialogTitle>
 
@@ -84,7 +84,7 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 				</DialogContent>
 
 				<DialogActions>
-					<Button color="accent" onClick={() => this.props.pallet.toggleEmpty()}>
+					<Button color="secondary" onClick={() => this.props.pallet.toggleEmpty()}>
 						{this.props.pallet.isEmpty ? 'Fill' : 'Empty'}
 					</Button>
 
