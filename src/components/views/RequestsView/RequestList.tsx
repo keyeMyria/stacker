@@ -50,7 +50,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 				/>
 
 				<RequestListCommon
-					header="Palety k vraceni"
+					header="Palety k vrácení"
 					requests={this.props.store}
 					type="toReturn"
 					withPaper

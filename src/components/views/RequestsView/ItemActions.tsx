@@ -19,7 +19,7 @@ const ItemActions: React.SFC<Props> = (props) => {
                 color="primary"
                 onClick={props.deliver}
             >
-                Dorucit
+                Doručit
             </Button>
         )
     } else if(props.status === 'toReturn') {
@@ -29,7 +29,7 @@ const ItemActions: React.SFC<Props> = (props) => {
                 color="secondary"
                 onClick={props.complete}
             >
-                Vratit
+                Vrátit
             </Button>
         )
     } else {
