@@ -23,7 +23,8 @@ interface Props {
 	disableUnderline?: boolean,
 	itemType?: 'default' | 'summary' | 'user',
 	className?: string,
-	mapListItemFunction?: (r: PalletRequest) => JSX.Element
+	mapListItemFunction?: (r: PalletRequest) => JSX.Element,
+	filter?: (request: PalletRequest) => PalletRequest | undefined
 }
 
 type ClassNames = 'root' | 'header' | 'list'
@@ -62,7 +63,13 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	}
 
 	getRequests = () => {
-		return this.props.requests.requests
+		let requests: PalletRequest[] = this.props.requests.requests
+
+		if(this.props.filter !== undefined) {
+			requests = requests.filter(this.props.filter)
+		}
+		
+		return requests
 			.filter(r => {
 				if(this.props.type === undefined)
 					return r

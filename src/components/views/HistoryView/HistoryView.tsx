@@ -4,7 +4,11 @@ import { observer } from 'mobx-react'
 import { withStyles, WithStyles } from 'material-ui/styles'
 
 import RequestsStore from '../../../stores/RequestsStore'
+import SearchStore from '../../../stores/SearchStore'
 import RequestList from '../../common/RequestList/RequestList'
+import Search from '../../common/Search'
+
+const searchStore = new SearchStore()
 
 interface Props {
 	store: RequestsStore
@@ -14,7 +18,9 @@ type ClassNames = 'root'
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
-		display: 'flex'
+		display: 'flex',
+		flexDirection: 'column',
+		width: 500
 	}
 }))
 
@@ -22,7 +28,15 @@ const decorate = withStyles<ClassNames>(() => ({
 class HistoryView extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
 		return(
-			<RequestList withPaper summaryItem requests={this.props.store} />
+			<div className={this.props.classes.root}>
+				<Search store={searchStore} />
+				<RequestList
+					withPaper
+					itemType="summary"
+					requests={this.props.store}
+					filter={searchStore.filter}
+				/>
+			</div>
 		)
 	}
 }
