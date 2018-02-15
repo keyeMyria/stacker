@@ -6,7 +6,7 @@ import Card from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 
 import PalletStore from '../../../stores/PalletStore'
-import Pallet from '../../../stores/common/Pallet'
+import Pallet from '../../../models/Pallet'
 
 import Map from './Map'
 

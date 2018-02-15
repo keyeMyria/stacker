@@ -124,14 +124,14 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 							scale={3}
 							side={this.props.request.pallet.side}
 							x={this.props.request.pallet.column}
-							y={this.props.request.pallet.getRowNumber()}
+							y={this.props.request.pallet.row}
 						/>
 					</div>
 
 					<div className={this.props.classes.main}>
 						<div className={this.props.classes.parameters}>
 							<Typography type="title">
-								{this.props.request.pallet.getName()}
+								{this.props.request.pallet.name}
 							</Typography>
 							<div>
 								<Typography>

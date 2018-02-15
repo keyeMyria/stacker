@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 
 import PalletRequest, { RequestParams, RequestStatus } from './interfaces/PalletRequest'
-import Pallet, { PalletParams } from './common/Pallet'
+import Pallet from '../models/Pallet'
 import { AlreadySelectedError } from './common/Errors'
 
 import PalletStore from './PalletStore'
@@ -16,10 +16,10 @@ export default class PalletSelectStore {
 		this.palletStore = palletStore
 		this.requests = []
 
-		this.initRequests()
+		// this.initRequests()
 	}
 
-	@action addRequest(palletParams: PalletParams, requestParams: RequestParams): void {
+	@action addRequest(palletParams: any, requestParams: RequestParams): void {
 		const pallet: Pallet = this.palletStore.findPallet(palletParams)
 
 		for(let r of this.requests) {
@@ -38,8 +38,6 @@ export default class PalletSelectStore {
 			location: requestParams.location,
 			priority: requestParams.priority
 		}
-
-		pallet.requests.push(request);
 
 		this.requests.push(request)
 	}

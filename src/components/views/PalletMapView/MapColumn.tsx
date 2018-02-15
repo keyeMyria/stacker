@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 
-import Pallet from '../../../stores/common/Pallet'
+import Pallet from '../../../models/Pallet'
 import MapPallet from './MapPallet'
 
 interface Props {

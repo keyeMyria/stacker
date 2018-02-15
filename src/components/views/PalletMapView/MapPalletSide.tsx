@@ -7,7 +7,7 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 import { lighten } from 'material-ui/styles/colorManipulator'
 import { grey, common, deepOrange } from 'material-ui/colors'
 
-import Pallet from '../../../stores/common/Pallet'
+import Pallet from '../../../models/Pallet'
 
 import PalletDialog from '../../dialogs/PalletDialog'
 

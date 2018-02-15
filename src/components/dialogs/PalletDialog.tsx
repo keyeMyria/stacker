@@ -5,7 +5,7 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 
-import Pallet from '../../stores/common/Pallet'
+import Pallet from '../../models/Pallet'
 import ExpandSection from '../common/ExpandSection'
 import Field from '../common/Field'
 import Minimap from '../common/Minimap'
@@ -42,7 +42,7 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 				open={this.props.open}
 				onClose={this.props.handleClose}
 			>
-				<DialogTitle>{this.props.pallet.getName()}</DialogTitle>
+				<DialogTitle>{this.props.pallet.name}</DialogTitle>
 
 				<DialogContent>
 					<Field
@@ -64,7 +64,7 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 						/>
 						<Field
 							title="Řada"
-							content={this.props.pallet.row}
+							content={this.props.pallet.getRowChar()}
 							className={this.props.classes.positionItem}
 						/>
 					</div>
@@ -73,7 +73,7 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 						scale={5}
 						side={this.props.pallet.side}
 						x={this.props.pallet.column}
-						y={this.props.pallet.getRowNumber()}
+						y={this.props.pallet.row}
 					/>
 
 					<ExpandSection

@@ -1,3 +1,5 @@
+import { observable, action } from 'mobx'
+import axios from 'axios'
 import Request from './Request'
 
 export type Side = 'left' | 'right'
@@ -6,6 +8,9 @@ export interface Position {
 	column: number,
 	row: number
 }
+
+const baseURL: string = 'http://localhost:8080/stacker'
+const api = axios.create({ baseURL: baseURL + 'pallet' })
 
 const sideToChar = (side: Side): string => side === 'left' ? 'L' : 'R'
 const charToSide = (char: string): Side => char === 'L' ? 'left' : 'right'
@@ -19,10 +24,32 @@ export default class Pallet {
 	side: Side
 	column: number
 	row: number
-	isEmpty: boolean
+	@observable isEmpty: boolean
 	content: string
 	requests: Request[]
 	name: string
+
+	@action async toggleEmpty(): Promise<void> {
+		try {
+			await api.get('/action/empty')
+
+			this.isEmpty = !this.isEmpty
+		} catch(err) {
+			console.log(err)
+		}
+	}
+	
+	getSideName(): string {
+		return this.side === 'left' ? 'Levá' : 'Pravá'
+	}
+
+	getRowChar(): string {
+		return numToChar(this.row)
+	}
+
+	static rowChar(row: number): string {
+		return String.fromCharCode(65 + row)
+	}
 
 	static toName(side: Side, column: number, row: number): string {
 		return sideToChar(side) + numToDoubleDigit(column) + numToChar(row)

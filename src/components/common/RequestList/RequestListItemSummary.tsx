@@ -78,7 +78,7 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 		const text = (
 			<div className={this.props.classes.text}>
 				<Typography>
-					{request.pallet.getName()}
+					{request.pallet.name}
 					<span className={this.props.classes.textLight}>&nbsp;do&nbsp;</span>
 					{request.location}
 					<span className={this.props.classes.textLight}>&nbsp;zadal(a)&nbsp;</span>

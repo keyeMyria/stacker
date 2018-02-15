@@ -35,7 +35,7 @@ class RequestListItem extends React.Component<Props & WithStyles<ClassNames>> {
 		const primaryText = (
 			<div className={this.props.classes.primaryText}>
 				<Typography type="subheading">
-					{this.props.request.pallet.getName()}
+					{this.props.request.pallet.name}
 				</Typography>
 				<Typography type="caption">
 					{distanceInWordsToNow(

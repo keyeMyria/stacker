@@ -1,11 +1,17 @@
 import { observable, action } from 'mobx'
-
+import axios from 'axios'
 import PalletRequest from './interfaces/PalletRequest'
-import Pallet, { PalletParams } from './common/Pallet'
 import { NoPalletError } from './common/Errors'
+
+import Pallet from '../models/Pallet'
+
+const baseURL: string = 'http://localhost:8080/stacker/'
+const api = axios.create({ baseURL: baseURL + 'pallet/' })
 
 export default class PalletStore {
 	@observable showSide: string
+
+	@observable fetchingPallets: boolean
 
 	pallets: Pallet[]
 	requests: PalletRequest[]
@@ -14,40 +20,25 @@ export default class PalletStore {
 
 	constructor() {
 		this.showSide = 'left'
+		this.fetchingPallets = true
 
 		this.pallets = []
 		this.requests = []
 		this.rowCount = 8
 		this.columnCount = 71
 
-		this.generatePallets()
+		this.fetchPallets()
 	}
 
 	@action switchSide(side: string): void {
 		this.showSide = side
 	}
 
-	generatePallets(): void {
-		for (let i = 0; i < this.rowCount; i++) {
-			for (let j = 0; j < this.columnCount; j++) {
-				let pallet: Pallet
-				pallet = new Pallet('left', String.fromCharCode(65 + i), j + 1)
+	async fetchPallets(): Promise<void> {
+		const response = await api.get<Pallet[]>('')
 
-				if(i === j) pallet.toggleEmpty()
-
-				this.pallets.push(pallet)
-			}
-		}
-		for (let i = 0; i < this.rowCount; i++) {
-			for (let j = 0; j < this.columnCount; j++) {
-				let pallet: Pallet
-				pallet = new Pallet('right', String.fromCharCode(65 + i), j + 1)
-
-				if(i === j + 1) pallet.toggleEmpty()
-
-				this.pallets.push(pallet)
-			}
-		}
+		this.pallets = response.data
+		this.fetchingPallets = false
 	}
 
 	getPalletsFromSide(side: string): Pallet[] {
@@ -67,23 +58,23 @@ export default class PalletStore {
 		))
 
 		let pallets: Pallet[][] = []
-		for (let i = 0; i < this.rowCount; i++) {
+		for (let i = 1; i <= this.rowCount; i++) {
 			let palletPair: Pallet[] = []
-			palletColumn.filter(p => p.getRowNumber() === i).forEach(p => palletPair.push(p))
+			palletColumn.filter(p => p.row === i).forEach(p => palletPair.push(p))
 			pallets.push(palletPair)
 		}
 
 		return pallets
 	}
 
-	getPalletsFromRow(side: string, row: string): Pallet[] {
+	getPalletsFromRow(side: string, row: number): Pallet[] {
 		return this.pallets.filter((p: Pallet): boolean => (
 			p.side === side && p.row === row
 		))
 	}
 
 	getPalletsFromRowByIndex(side: string, index: number): Pallet[] {
-		return this.getPalletsFromRow(side, String.fromCharCode(65 + index))
+		return this.getPalletsFromRow(side, index)
 	}
 
 	getColumns(): Pallet[][] {
@@ -110,7 +101,7 @@ export default class PalletStore {
 		return columns
 	}
 
-	findPallet(params: PalletParams): Pallet {
+	findPallet(params: any): Pallet {
 		let pallet: Pallet | undefined
 		pallet = this.pallets.find(p => (
 			p.side === params.side
@@ -123,5 +114,15 @@ export default class PalletStore {
 		}
 
 		return pallet
+	}
+
+	sortPallets(): Pallet[] {
+		return this.pallets.sort((a, b) => {
+			const rows = a.row - b.row
+			const columns = a.column - b.column
+			const sides = a.side === 'left' ? -1 : 1
+
+			return rows !== 0 ? rows : columns !== 0 ? columns : sides
+		})
 	}
 }

@@ -20,7 +20,7 @@ export default class SearchStore {
 
 	filter = (i: PalletRequest) => {
 		if(this.filterField === 'name') {
-			if(i.pallet.getName().toLowerCase().search(this.filterText) > -1)
+			if(i.pallet.name.toLowerCase().search(this.filterText) > -1)
 				return i
 		} else if(this.filterField === 'location' || this.filterField === 'requester') {
 			if(i[this.filterField].search(this.filterText) > -1)
