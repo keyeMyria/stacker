@@ -15,6 +15,8 @@ import PalletStore from '../stores/PalletStore'
 import RequestsStore from '../stores/RequestsStore'
 
 import AppFrame from './views/AppFrame/AppFrame'
+import AdminView from './views/AdminView/AdminView'
+import LoginView from './views/LoginView/LoginView'
 import RequestsView from './views/RequestsView/RequestsView'
 import RequestPalletView from './views/RequestPalletView/RequestPalletView'
 import PalletMapView from './views/PalletMapView/PalletMapView'
@@ -28,7 +30,7 @@ type ClassKeys = (
 	'routes'
 )
 
-const decorate = withStyles<ClassKeys>(() => ({
+const decorate = withStyles<ClassKeys>(theme => ({
 	routes: {
 		display: 'flex',
 		justifyContent: 'center',
@@ -42,34 +44,44 @@ const palletSelectStore: PalletSelectStore = new PalletSelectStore(requestsStore
 
 @observer
 class App extends React.Component<Props & WithStyles<ClassKeys>> {
-	render() {		
+	render() {
+		const { isAuthenticated } = this.props.store
+		
 		return(
 			<Router>
-				<AppFrame>
+				<>
 					<Reboot />
-					<div className={this.props.classes.routes}>
-						<Route exact path="/" render={(props: RouteProps) => (
-							<RequestPalletView
-								{...props}
-								selectStore={palletSelectStore}
-								requests={requestsStore}
-								palletStore={palletStore}
-							/>
-						)} />
-						<Route path="/requests" render={(props: RouteProps) => (
-							<RequestsView
-								{...props}
-								store={requestsStore}
-							/>
-						)} />
-						<Route exact path="/map"  render={(props: RouteProps) => (
-							<PalletMapView {...props} pallets={palletStore} />
-						)} />
-						<Route exact path="/history"  render={(props: RouteProps) => (
-							<HistoryView {...props} store={requestsStore} />
-						)} />
-					</div>
-				</AppFrame>
+					{isAuthenticated ?
+						<AppFrame store={this.props.store}>
+							<div className={this.props.classes.routes}>
+								<Route exact path="/" render={(props: RouteProps) => (
+									<RequestPalletView
+										{...props}
+										selectStore={palletSelectStore}
+										requests={requestsStore}
+										palletStore={palletStore}
+									/>
+								)} />
+								<Route exact path="/requests" render={(props: RouteProps) => (
+									<RequestsView
+										{...props}
+										store={requestsStore}
+									/>
+								)} />
+								<Route exact path="/map"  render={(props: RouteProps) => (
+									<PalletMapView {...props} pallets={palletStore} />
+								)} />
+								<Route exact path="/history"  render={(props: RouteProps) => (
+									<HistoryView {...props} store={requestsStore} />
+								)} />
+								<Route exact path="/administration" render={(props: RouteProps) => (
+									<AdminView {...props} />
+								)} />
+							</div>
+						</AppFrame> :
+						<LoginView store={this.props.store} />
+					}
+				</>
 			</Router>
 		)
 	}

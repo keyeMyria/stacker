@@ -4,16 +4,25 @@ import * as classNames from 'classnames'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
+import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
+import Menu, { MenuItem } from 'material-ui/Menu'
 
 import MenuIcon from 'material-ui-icons/Menu'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
+import AppStore from '../../../stores/AppStore'
+
 import NavigationDrawer from './NavigationDrawer'
 
+interface Props {
+    store: AppStore
+}
+
 interface State {
-    open: boolean
+    drawerOpen: boolean,
+    menuAnchor: any
 }
 
 type ClassKeys = (
@@ -23,6 +32,7 @@ type ClassKeys = (
     | 'appBarShift'
     | 'content'
     | 'contentShift'
+    | 'title'
 )
 
 const drawerWidth = 240
@@ -64,9 +74,8 @@ const decorate = withStyles<ClassKeys>(theme => ({
 		}),
 		marginTop: 56,
 		[theme.breakpoints.up('sm')]: {
-			content: {
-				marginTop: 64,
-			},
+			height: 'calc(100% - 64px)',
+            marginTop: 64
         },
         marginLeft: -drawerWidth
     },
@@ -76,20 +85,37 @@ const decorate = withStyles<ClassKeys>(theme => ({
 			duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0
-	}
+    },
+    title: {
+        flex: 1
+    }
 }), { withTheme: true })
 
-class AppFrame extends React.Component<WithStyles<ClassKeys>, State> {
+class AppFrame extends React.Component<Props & WithStyles<ClassKeys>> {
     state: State = {
-        open: false
+        drawerOpen: false,
+        menuAnchor: null
     }
 
-    handleDrawerOpen = () => {
-        this.setState({ open: true })
+    handleDrawerOpen = (): void => {
+        this.setState({ drawerOpen: true })
     }
 
-    handleDrawerClose = () => {
-        this.setState({ open: false })
+    handleDrawerClose = (): void => {
+        this.setState({ drawerOpen: false })
+    }
+
+    handleMenuOpen = (event: React.MouseEvent<HTMLDivElement>): void => {
+        this.setState({ menuAnchor: event.currentTarget })
+    }
+
+    handleMenuClose = (): void => {
+        this.setState({ menuAnchor: null })
+    }
+
+    handleLogout = (): void => {
+        this.props.store.logout()
+        this.handleMenuClose()
     }
 
     render() {
@@ -99,7 +125,7 @@ class AppFrame extends React.Component<WithStyles<ClassKeys>, State> {
                     position="static"
                     className={classNames(
                         this.props.classes.appBar,
-                        { [this.props.classes.appBarShift]: this.state.open }
+                        { [this.props.classes.appBarShift]: this.state.drawerOpen }
                     )}
                 >
                     <Toolbar>
@@ -112,20 +138,44 @@ class AppFrame extends React.Component<WithStyles<ClassKeys>, State> {
                             <MenuIcon />
                         </IconButton>
 
-                        <Typography type="title" color="inherit">
+                        <Typography
+                            type="title"
+                            color="inherit"
+                            className={this.props.classes.title}
+                        >
                             Stacker
                         </Typography>
+
+                        {this.props.store.isAuthenticated && (
+                            <div>
+                                <Button
+                                    onClick={this.handleMenuOpen}
+                                    color="inherit"
+                                >
+                                    {this.props.store.user.fullName}
+                                </Button>
+                                <Menu
+                                    open={Boolean(this.state.menuAnchor)}
+                                    anchorEl={this.state.menuAnchor}
+                                    onClose={this.handleMenuClose}
+                                >
+                                    <MenuItem onClick={this.handleLogout}>
+                                        Logout
+                                    </MenuItem>
+                                </Menu>
+                            </div>
+                        )}
                     </Toolbar>
                 </AppBar>
 
                 <NavigationDrawer
-                    open={this.state.open}
+                    open={this.state.drawerOpen}
                     handleClose={this.handleDrawerClose}
                 />
 
                 <main className={classNames(
                     this.props.classes.content,
-                    { [this.props.classes.contentShift]: this.state.open }
+                    { [this.props.classes.contentShift]: this.state.drawerOpen }
                 )}>
                     {this.props.children}
                 </main>
@@ -134,4 +184,4 @@ class AppFrame extends React.Component<WithStyles<ClassKeys>, State> {
     }
 }
   
-export default decorate<{}>(AppFrame)
+export default decorate(AppFrame)
