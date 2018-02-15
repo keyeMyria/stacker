@@ -19,6 +19,7 @@ type ClassKeys = (
     'drawerPaper'
     | 'drawerHeader'
     | 'linkItem'
+    | 'divider'
 )
 
 const drawerWidth = 240
@@ -38,6 +39,10 @@ const decorate = withStyles<ClassKeys>(theme => ({
     },
     linkItem: {
         textDecoration: 'none'
+    },
+    divider: {
+        marginBottom: 8,
+        marginTop: 8 
     }
 }), { withTheme: true })
 
@@ -77,6 +82,14 @@ class NavigationDrawer extends React.Component<Props & WithStyles<ClassKeys>> {
                         <Link to="/history" className={this.props.classes.linkItem}>
                             <ListItem button>
                                 <ListItemText primary="Request history" />
+                            </ListItem>
+                        </Link>
+
+                        <Divider className={this.props.classes.divider} />
+
+                        <Link to="/administration" className={this.props.classes.linkItem}>
+                            <ListItem button>
+                                <ListItemText primary="Administrace" />
                             </ListItem>
                         </Link>
                     </List>

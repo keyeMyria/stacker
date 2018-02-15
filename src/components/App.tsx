@@ -75,7 +75,7 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 									<HistoryView {...props} store={requestsStore} />
 								)} />
 								<Route exact path="/administration" render={(props: RouteProps) => (
-									<AdminView {...props} />
+									<AdminView {...props} store={this.props.store} />
 								)} />
 							</div>
 						</AppFrame> :

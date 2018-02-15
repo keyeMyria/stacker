@@ -5,14 +5,9 @@ import * as jwtDecode from 'jwt-decode'
 import User from '../models/User'
 
 const baseURL: string = 'http://localhost:8080/'
-
-const authApi = axios.create({
-	baseURL: baseURL + 'auth'
-})
-
-const userApi = axios.create({
-	baseURL: baseURL + 'stacker/user'
-})
+const authApi = axios.create({ baseURL: baseURL + 'auth' })
+const userApi = axios.create({ baseURL: baseURL + 'stacker/user' })
+const palletApi = axios.create({ baseURL: baseURL + 'stacker/pallet' })
 
 const getUserFromLocalStorage = () => {
 	const token = localStorage.getItem('token')
@@ -83,5 +78,29 @@ export default class AppStore {
 		const response = await userApi.post('', getUserFromLocalStorage())
 
 		return response.data
+	}
+
+	/** 
+	 * Helper function to initialize all pallets at the start of production
+	*/
+	@action async initializePallets(): Promise<void> {
+		for(let i = 1; i <= 8; i++) {
+			for(let j = 1; j <= 71; j++) {
+				try {
+					await palletApi.post('', {
+						row: i,
+						column: j,
+						side: 'left'
+					})
+					await palletApi.post('', {
+						row: i,
+						column: j,
+						side: 'right'
+					})
+				} catch(err) {
+					console.log(err)
+				}
+			}
+		}
 	}
 }
