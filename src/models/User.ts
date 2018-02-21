@@ -7,7 +7,7 @@ export default class User {
 	lastName: string
 	isAdmin: boolean
 	isWorker: boolean
-	requests: Request[]
-    statusChange: StatusChange
+	requests?: Request[]
+    statusChange?: StatusChange
 	fullName: string
 }

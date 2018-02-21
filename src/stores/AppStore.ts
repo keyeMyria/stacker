@@ -31,6 +31,25 @@ export default class AppStore {
 
 	@action async login(username: string, password: string): Promise<void> {
 		try {
+			// FIXME: Temporary admin login
+			if(username === 'admin' && password === 'admin') {
+				this.user = {
+					username: 'localadmin',
+					lastName: 'Admin', 
+					firstName: 'Admin',
+					fullName: 'Admin',
+					isWorker: true,
+					isAdmin: true,
+					requests: [],
+					statusChange: undefined
+				}
+
+				this.isAuthenticated = true
+				this.hasAuthError = false
+
+				return
+			}
+
 			const response = await authApi.post('login', {
 				username,
 				password
