@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as R from 'ramda'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
@@ -24,12 +25,18 @@ class Map extends React.Component<Props & WithStyles<ClassNames>> {
 	mapColumns(): JSX.Element[] {
 		let columns: JSX.Element[] = []
 
-		for(let i = 0; i < this.props.pallets.pallets.length; i + 1) {
+		let leftPallets = this.props.pallets.pallets.filter(p => p.side === 'left')
+		let rightPallets = this.props.pallets.pallets.filter(p => p.side === 'right')
+
+		for(let i = 0; i < R.max(leftPallets.length, rightPallets.length); i++) {
 			columns.push(<MapPallet
 				key={i}
-				palletPair={[this.props.pallets.pallets[i], this.props.pallets.pallets[i + 1]]}
+				palletPair={[leftPallets[i], rightPallets[i]]}
 			/>)
+			console.log(i)
 		}
+
+		console.log(columns)
 
 		return columns
 	}
