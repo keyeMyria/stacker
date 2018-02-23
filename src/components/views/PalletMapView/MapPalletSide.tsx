@@ -9,7 +9,7 @@ import { grey, common, deepOrange } from 'material-ui/colors'
 
 import Pallet from '../../../models/Pallet'
 
-import PalletDialog from '../../dialogs/PalletDialog'
+// import PalletDialog from '../../dialogs/PalletDialog'
 
 interface Props {
 	pallet: Pallet
@@ -76,13 +76,13 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 					{this.props.pallet.side === 'left' ? 'L' : 'R'}
 				</Typography>
 			</div>
-		,
-			<PalletDialog
-				open={this.state.open}
-				handleClose={this.handleDialogClose}
-				pallet={this.props.pallet}
-				key="dialog"
-			/>
+		// ,
+		// 	<PalletDialog
+		// 		open={this.state.open}
+		// 		handleClose={this.handleDialogClose}
+		// 		pallet={this.props.pallet}
+		// 		key="dialog"
+		// 	/>
 		]
 	}
 }

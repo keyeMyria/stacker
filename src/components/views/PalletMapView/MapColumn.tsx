@@ -35,7 +35,7 @@ class MapColumn extends React.Component<Props & WithStyles<ClassNames>> {
 	mapPallets(): JSX.Element[] {
 		let pallets: JSX.Element[] = []
 		for(let pallet of this.props.palletPairs) {
-			pallets.push(<MapPallet key={pallet[0].id} palletPair={pallet} />)
+			pallets.push(<MapPallet key={pallet[0].id} palletPair={pallet} style={{}} />)
 		}
 		return pallets
 	}

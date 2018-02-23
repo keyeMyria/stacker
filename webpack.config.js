@@ -8,7 +8,6 @@ module.exports = {
 		contentBase: './dist',
 		hot: true,
 		inline: true,
-		host: '0.0.0.0',
 		port: 8085,
 		historyApiFallback: true,
 		noInfo: true

@@ -16,7 +16,9 @@ type ClassNames = 'root'
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
-		display: 'grid'
+		display: 'grid',
+		overflow: 'auto',
+		gridGap: '4px 4px'
 	}
 }))
 
@@ -24,19 +26,18 @@ const decorate = withStyles<ClassNames>(() => ({
 class Map extends React.Component<Props & WithStyles<ClassNames>> {
 	mapColumns(): JSX.Element[] {
 		let columns: JSX.Element[] = []
-
+		
 		let leftPallets = this.props.pallets.pallets.filter(p => p.side === 'left')
 		let rightPallets = this.props.pallets.pallets.filter(p => p.side === 'right')
-
+		
 		for(let i = 0; i < R.max(leftPallets.length, rightPallets.length); i++) {
+			const style = { gridColumn: leftPallets[i].column, gridRow: leftPallets[i].row }
 			columns.push(<MapPallet
 				key={i}
 				palletPair={[leftPallets[i], rightPallets[i]]}
+				style={style}
 			/>)
-			console.log(i)
 		}
-
-		console.log(columns)
 
 		return columns
 	}
