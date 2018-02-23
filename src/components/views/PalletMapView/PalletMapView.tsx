@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import Card from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
+import { CircularProgress } from 'material-ui/Progress'
 
 import PalletStore from '../../../stores/PalletStore'
 import Pallet from '../../../models/Pallet'
@@ -12,6 +13,10 @@ import Map from './Map'
 
 interface Props {
 	pallets: PalletStore
+}
+
+interface State {
+	loading: boolean
 }
 
 type ClassNames = 'root' | 'rowLegend' | 'rowLegendLetter'
@@ -33,12 +38,20 @@ const decorate = withStyles<ClassNames>(() => ({
 		alignItems: 'center',
 		justifyContent: 'center',
 		height: 64,
-		marginBottom: 2
+		marginBottom: 4
 	}
 }))
 
 @observer
-class PalletMapView extends React.Component<Props & WithStyles<ClassNames>> {
+class PalletMapView extends React.Component<Props & WithStyles<ClassNames>, State> {
+	state = {
+		loading: true
+	}
+
+	componentDidMount() {
+		this.setState({ loading: false })
+	}
+
 	mapRowLegend(): JSX.Element[] {
 		let rows: JSX.Element[] = []
 		for(let i = 0; i < this.props.pallets.rowCount; i++) {
@@ -52,6 +65,10 @@ class PalletMapView extends React.Component<Props & WithStyles<ClassNames>> {
 	}
 
 	render() {
+		if(this.state.loading) {
+			return(<CircularProgress size={128} />)
+		}
+
 		return(
 			<Card className={this.props.classes.root}>
 				<div className={this.props.classes.rowLegend}>

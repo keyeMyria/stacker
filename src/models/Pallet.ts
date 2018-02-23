@@ -9,7 +9,7 @@ export interface Position {
 	row: number
 }
 
-const baseURL: string = 'http://localhost:8080/stacker'
+const baseURL: string = 'http://localhost:8080/stacker/'
 const api = axios.create({ baseURL: baseURL + 'pallet' })
 
 const sideToChar = (side: Side): string => side === 'left' ? 'L' : 'R'
@@ -29,9 +29,20 @@ export default class Pallet {
 	requests: Request[]
 	name: string
 
+	constructor(pallet: any) {
+		this.id = pallet.id
+		this.side = pallet.side
+		this.column = pallet.column
+		this.row = pallet.row
+		this.isEmpty = pallet.isEmpty
+		this.content = pallet.content
+		this.requests = pallet.requests
+		this.name = pallet.name
+	}
+
 	@action async toggleEmpty(): Promise<void> {
 		try {
-			await api.get('/action/empty')
+			await api.get(this.id + '/action/empty')
 
 			this.isEmpty = !this.isEmpty
 		} catch(err) {

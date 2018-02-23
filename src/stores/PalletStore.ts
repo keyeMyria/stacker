@@ -37,7 +37,8 @@ export default class PalletStore {
 	async fetchPallets(): Promise<void> {
 		const response = await api.get<Pallet[]>('')
 
-		this.pallets = response.data
+		this.pallets = response.data.map(p => new Pallet(p))
+		this.pallets = this.sortPallets()
 		this.fetchingPallets = false
 	}
 
