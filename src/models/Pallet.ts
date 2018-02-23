@@ -29,7 +29,7 @@ export default class Pallet {
 	requests: Request[]
 	name: string
 
-	constructor(pallet: any) {
+	constructor(pallet: Pallet) {
 		this.id = pallet.id
 		this.side = pallet.side
 		this.column = pallet.column
