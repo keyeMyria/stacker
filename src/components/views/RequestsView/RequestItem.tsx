@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { observer } from 'mobx-react'
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import * as csLocale from 'date-fns/locale/cs'
+import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import Typography from 'material-ui/Typography'
-import { withStyles, WithStyles } from 'material-ui/styles'
 import { Color } from 'material-ui'
-import { grey, red, orange, green, teal } from 'material-ui/colors'
+import { green, grey, orange, red, teal } from 'material-ui/colors'
+import { withStyles, WithStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 
 // import ErrorOutline from 'material-ui-icons/ErrorOutline'
 
@@ -59,13 +59,13 @@ const decorate = withStyles<ClassKeys>(() => ({
 	content: {
 		display: 'flex',
 		borderBottom: '1px solid',
-		borderBottomColor: grey[300],
+		borderBottomColor: grey[300]
 	},
 	main: {
 		display: 'flex',
 		justifyContent: 'space-between',
 		width: 400,
-		padding: '8px 16px',
+		padding: '8px 16px'
 		// borderRight: '1px solid',
 		// borderRightColor: grey[300]
 	},
@@ -95,10 +95,15 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 
 		let color: Color
 
-		if(priority === 'urgent') color = red
-		else if(priority === 'high') color = orange
-		else if(priority === 'standard') color = green
-		else color = teal
+		if (priority === 'urgent') {
+			color = red
+		} else if (priority === 'high') {
+			color = orange
+		} else if (priority === 'standard') {
+			color = green
+		} else {
+			color = teal
+		}
 
 		return {
 			background: color[500],
@@ -107,17 +112,22 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 	}
 
 	render() {
-		if(this.props.request.pallet === undefined) {
+		if (this.props.request.pallet === undefined) {
 			return null
 		}
-		
+
+		const requestedAt = distanceInWordsToNow(
+			this.props.request.requestedAt,
+			{ addSuffix: true, locale: csLocale }
+		)
+
 		return(
 			<div className={this.props.classes.root}>
 				<div
 					className={this.props.classes.priority}
 					style={this.getPriorityStyle()}
 				/>
-				
+
 				<div className={this.props.classes.content}>
 					<div className={this.props.classes.map}>
 						<Minimap
@@ -145,10 +155,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 
 						<div className={this.props.classes.side}>
 							<Typography type="caption">
-								{distanceInWordsToNow(
-									this.props.request.requestedAt,
-									{ addSuffix: true, locale: csLocale }
-								)}
+								{requestedAt}
 							</Typography>
 
 							<ItemActions

@@ -1,10 +1,10 @@
-import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import { withStyles, WithStyles } from 'material-ui/styles'
 import Input from 'material-ui/Input'
-import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
+import Select from 'material-ui/Select'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import SearchStore from '../../stores/SearchStore'
 
@@ -33,7 +33,7 @@ class Search extends React.Component<Props & WithStyles<ClassNames>> {
 	handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		this.props.store.changeFilterField(event.target.value)
 	}
-	
+
 	render() {
 		const { store, classes } = this.props
 

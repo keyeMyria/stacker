@@ -1,6 +1,6 @@
-import { observable, action } from 'mobx'
 import axios from 'axios'
 import * as jwtDecode from 'jwt-decode'
+import { action, observable } from 'mobx'
 
 import User from '../models/User'
 
@@ -12,8 +12,9 @@ const palletApi = axios.create({ baseURL: baseURL + 'stacker/pallet' })
 const getUserFromLocalStorage = () => {
 	const token = localStorage.getItem('token')
 
-	if(token !== null)
+	if (token !== null) {
 		return jwtDecode(token)
+	}
 }
 
 export default class AppStore {
@@ -32,10 +33,10 @@ export default class AppStore {
 	@action async login(username: string, password: string): Promise<void> {
 		try {
 			// FIXME: Temporary admin login
-			if(username === 'admin' && password === 'admin') {
+			if (username === 'admin' && password === 'admin') {
 				this.user = {
 					username: 'localadmin',
-					lastName: 'Admin', 
+					lastName: 'Admin',
 					firstName: 'Admin',
 					fullName: 'Admin',
 					isWorker: true,
@@ -61,7 +62,7 @@ export default class AppStore {
 
 			this.isAuthenticated = true
 			this.hasAuthError = false
-		} catch(err) {
+		} catch (err) {
 			this.authError = err.response.data
 			this.hasAuthError = true
 		}
@@ -70,7 +71,7 @@ export default class AppStore {
 	@action async verify(): Promise<void> {
 		const token = localStorage.getItem('token')
 
-		if(token === null) {
+		if (token === null) {
 			this.isAuthenticated = false
 			return
 		}
@@ -83,7 +84,7 @@ export default class AppStore {
 			this.user = await this.fetchUser()
 
 			this.isAuthenticated = true
-		} catch(err) {
+		} catch (err) {
 			this.isAuthenticated = false
 		}
 	}
@@ -99,12 +100,12 @@ export default class AppStore {
 		return response.data
 	}
 
-	/** 
+	/**
 	 * Helper function to initialize all pallets at the start of production
-	*/
+	 */
 	@action async initializePallets(): Promise<void> {
-		for(let i = 1; i <= 8; i++) {
-			for(let j = 1; j <= 71; j++) {
+		for (let i = 1; i <= 8; i++) {
+			for (let j = 1; j <= 71; j++) {
 				try {
 					await palletApi.post('', {
 						row: i,
@@ -116,7 +117,7 @@ export default class AppStore {
 						column: j,
 						side: 'right'
 					})
-				} catch(err) {
+				} catch (err) {
 					console.log(err)
 				}
 			}

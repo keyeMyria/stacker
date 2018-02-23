@@ -1,13 +1,13 @@
-import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import { withStyles, WithStyles } from 'material-ui/styles'
 import Card from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
+import { withStyles, WithStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 
-import PalletStore from '../../../stores/PalletStore'
 import Pallet from '../../../models/Pallet'
+import PalletStore from '../../../stores/PalletStore'
 
 import Map from './Map'
 
@@ -53,8 +53,8 @@ class PalletMapView extends React.Component<Props & WithStyles<ClassNames>, Stat
 	}
 
 	mapRowLegend(): JSX.Element[] {
-		let rows: JSX.Element[] = []
-		for(let i = 0; i < this.props.pallets.rowCount; i++) {
+		const rows: JSX.Element[] = []
+		for (let i = 0; i < this.props.pallets.rowCount; i++) {
 			rows.push(
 				<Typography key={i} className={this.props.classes.rowLegendLetter}>
 					{Pallet.rowChar(i)}
@@ -65,7 +65,7 @@ class PalletMapView extends React.Component<Props & WithStyles<ClassNames>, Stat
 	}
 
 	render() {
-		if(this.state.loading) {
+		if (this.state.loading) {
 			return(<CircularProgress size={128} />)
 		}
 

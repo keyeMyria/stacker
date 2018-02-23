@@ -1,9 +1,9 @@
-import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import { withStyles, WithStyles } from 'material-ui/styles'
-import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
+import { withStyles, WithStyles } from 'material-ui/styles'
 
 import Pallet from '../../models/Pallet'
 import ExpandSection from '../common/ExpandSection'
@@ -36,6 +36,8 @@ const decorate = withStyles<ClassNames>(() => ({
 
 @observer
 class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
+	handleToggleEmpty = () => this.props.pallet.toggleEmpty()
+
 	render() {
 		return (
 			<Dialog
@@ -68,7 +70,7 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 							className={this.props.classes.positionItem}
 						/>
 					</div>
-					
+
 					<Minimap
 						scale={5}
 						side={this.props.pallet.side}
@@ -80,11 +82,12 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 						title="Požadavky"
 						className={this.props.classes.requests}
 					>
+						Empty
 					</ExpandSection>
 				</DialogContent>
 
 				<DialogActions>
-					<Button color="secondary" onClick={() => this.props.pallet.toggleEmpty()}>
+					<Button color="secondary" onClick={this.handleToggleEmpty}>
 						{this.props.pallet.isEmpty ? 'Fill' : 'Empty'}
 					</Button>
 

@@ -1,21 +1,21 @@
-import * as React from 'react'
-import * as format from 'date-fns/format'
+import * as classnames from 'classnames'
 import * as distanceInWords from 'date-fns/distance_in_words'
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import * as format from 'date-fns/format'
 import * as csLocale from 'date-fns/locale/cs'
-import * as classnames from 'classnames'
+import * as React from 'react'
 
-import { withStyles, WithStyles } from 'material-ui/styles'
-import { grey } from 'material-ui/colors'
-import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
-import Typography from 'material-ui/Typography'
-import IconButton from 'material-ui/IconButton'
-import Collapse from 'material-ui/transitions/Collapse'
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import ExpandLessIcon from 'material-ui-icons/ExpandLess'
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
+import { grey } from 'material-ui/colors'
+import IconButton from 'material-ui/IconButton'
+import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
+import { withStyles, WithStyles } from 'material-ui/styles'
+import Collapse from 'material-ui/transitions/Collapse'
+import Typography from 'material-ui/Typography'
 
-import PalletRequest from '../../../stores/interfaces/PalletRequest'
 import { formatPriority } from '../../../helpers/priority'
+import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
 const timeFormat: string = 'H:mm'
 const dateFormat: string = ', D. M. YYYY'
@@ -75,6 +75,11 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 	render() {
 		const request = this.props.request
 
+		const requestedAt = distanceInWordsToNow(
+			this.props.request.requestedAt,
+			{ addSuffix: true, locale: csLocale }
+		)
+
 		const text = (
 			<div className={this.props.classes.text}>
 				<Typography>
@@ -85,12 +90,18 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 					{request.requester}
 				</Typography>
 				<Typography className={this.props.classes.textLight}>
-					{distanceInWordsToNow(
-						this.props.request.requestedAt,
-						{ addSuffix: true, locale: csLocale }
-					)}
+					{requestedAt}
 				</Typography>
 			</div>
+		)
+
+		const infoClasses = classnames(
+			this.props.classes.textLight,
+			this.props.classes.infoItem
+		)
+		const infoPriorityClasses = classnames(
+			this.props.classes.section,
+			this.props.classes.infoItem
 		)
 
 		return(
@@ -124,9 +135,7 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 						<span>
 							{format(request.requestedAt, timeFormat, csLocale)}
 						</span>
-						<span className={
-							classnames(this.props.classes.textLight, this.props.classes.infoItem)
-						}>
+						<span className={infoClasses}>
 							{format(request.requestedAt, dateFormat, csLocale)}
 						</span>
 						<span>
@@ -140,9 +149,7 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 						<span>
 							{format(request.requestedAt, timeFormat, csLocale)}
 						</span>
-						<span className={
-							classnames(this.props.classes.textLight, this.props.classes.infoItem)
-						}>
+						<span className={infoClasses}>
 							{format(request.requestedAt, dateFormat, csLocale)}
 						</span>
 						<span>
@@ -150,9 +157,7 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 						</span>
 					</Typography>
 					<Typography>
-						<span className={
-							classnames(this.props.classes.infoItem, this.props.classes.section)
-						}>
+						<span className={infoPriorityClasses}>
 							Priorita:
 						</span>
 						<span>

@@ -1,8 +1,8 @@
-import { observable, action } from 'mobx'
+import { action, observable } from 'mobx'
 
-import PalletRequest, { RequestParams, RequestStatus } from './interfaces/PalletRequest'
 import Pallet from '../models/Pallet'
 import { AlreadySelectedError } from './common/Errors'
+import PalletRequest, { RequestParams, RequestStatus } from './interfaces/PalletRequest'
 
 import PalletStore from './PalletStore'
 
@@ -22,9 +22,10 @@ export default class PalletSelectStore {
 	@action addRequest(palletParams: any, requestParams: RequestParams): void {
 		const pallet: Pallet = this.palletStore.findPallet(palletParams)
 
-		for(let r of this.requests) {
-			if(r.id === pallet.id)
+		for (const r of this.requests) {
+			if (r.id === pallet.id) {
 				throw new AlreadySelectedError('Pallet')
+			}
 		}
 
 		const request: PalletRequest = {
@@ -33,7 +34,7 @@ export default class PalletSelectStore {
 			isCompleted: false,
 			requestedAt: new Date(),
 			palletId: pallet.id,
-			pallet: pallet,
+			pallet,
 			requester: requestParams.requester,
 			location: requestParams.location,
 			priority: requestParams.priority
@@ -48,21 +49,23 @@ export default class PalletSelectStore {
 
 	@action deliver(id: number): void {
 		this.requests.forEach(r => {
-			if(r.id === id)
+			if (r.id === id) {
 				r.status = 'delivered'
+			}
 		})
 	}
 
 	@action return(id: number): void {
 		this.requests.forEach(r => {
-			if(r.id === id)
+			if (r.id === id) {
 				r.status = 'toReturn'
+			}
 		})
 	}
-	
+
 	@action complete(id: number): void {
 		this.requests.forEach(r => {
-			if(r.id === id) {
+			if (r.id === id) {
 				r.status = 'completed'
 				r.isCompleted = true
 			}

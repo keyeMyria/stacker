@@ -1,14 +1,14 @@
-import * as React from 'react'
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import * as csLocale from 'date-fns/locale/cs'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import { withStyles, WithStyles } from 'material-ui/styles'
 import { grey } from 'material-ui/colors'
-import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
-import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
+import { ListItem, ListItemSecondaryAction } from 'material-ui/List'
+import { withStyles, WithStyles } from 'material-ui/styles'
 import Tooltip from 'material-ui/Tooltip'
+import Typography from 'material-ui/Typography'
 
 import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
@@ -54,6 +54,11 @@ class RequestListItemUser extends React.Component<Props & WithStyles<ClassNames>
 	render() {
 		const request = this.props.request
 
+		const requestedAt = distanceInWordsToNow(
+			this.props.request.requestedAt,
+			{ addSuffix: true, locale: csLocale }
+		)
+
 		const text = (
 			<div className={this.props.classes.text}>
 				<Typography type="subheading">
@@ -62,10 +67,7 @@ class RequestListItemUser extends React.Component<Props & WithStyles<ClassNames>
 					{request.location}
 				</Typography>
 				<Typography className={this.props.classes.textLight}>
-					{distanceInWordsToNow(
-						this.props.request.requestedAt,
-						{ addSuffix: true, locale: csLocale }
-					)}
+					{requestedAt}
 				</Typography>
 			</div>
 		)

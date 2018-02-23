@@ -1,5 +1,5 @@
-import { observable, action } from 'mobx'
 import axios from 'axios'
+import { action, observable } from 'mobx'
 import Request from './Request'
 
 export type Side = 'left' | 'right'
@@ -45,11 +45,11 @@ export default class Pallet {
 			await api.get(this.id + '/action/empty')
 
 			this.isEmpty = !this.isEmpty
-		} catch(err) {
+		} catch (err) {
 			console.log(err)
 		}
 	}
-	
+
 	getSideName(): string {
 		return this.side === 'left' ? 'Levá' : 'Pravá'
 	}

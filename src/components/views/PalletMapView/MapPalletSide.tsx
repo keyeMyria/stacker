@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { observer } from 'mobx-react'
 import * as classnames from 'classnames'
+import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import Typography from 'material-ui/Typography'
+import { common, deepOrange, grey } from 'material-ui/colors'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { lighten } from 'material-ui/styles/colorManipulator'
-import { grey, common, deepOrange } from 'material-ui/colors'
+import Typography from 'material-ui/Typography'
 
 import Pallet from '../../../models/Pallet'
 
@@ -39,7 +39,7 @@ const decorate = withStyles<ClassNames>(theme => ({
 		textAlign: 'center',
 		fontSize: 18,
 		fontWeight: 500,
-		color: common['white']
+		color: common.white
 	},
 	rootEmpty: {
 		background: deepOrange[100],
@@ -64,11 +64,14 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 	}
 
 	render() {
+		const rootClasses = classnames(
+			this.props.classes.root,
+			{ [this.props.classes.rootEmpty]: this.props.pallet.isEmpty }
+		)
+
 		return[
-			<div className={classnames(
-					this.props.classes.root,
-					{ [this.props.classes.rootEmpty]: this.props.pallet.isEmpty }
-				)}
+			<div
+				className={rootClasses}
 				onClick={this.handleDialogOpen}
 				key="content"
 			>

@@ -1,15 +1,16 @@
-import * as React from 'react'
+import * as classnames from 'classnames'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import Paper from 'material-ui/Paper'
-import TextField from 'material-ui/TextField'
-import Select from 'material-ui/Select'
 import Input from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
+import Paper from 'material-ui/Paper'
+import Select from 'material-ui/Select'
+import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 
+import { grey, red } from 'material-ui/colors'
 import { withStyles, WithStyles } from 'material-ui/styles'
-import { red, grey } from 'material-ui/colors'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
 
@@ -21,12 +22,12 @@ interface Props {
 
 type ClassKeys = (
 	'root'
-	|'search'
-	|'textInput'
-	|'palletInput'
-	|'locationInput'
-	|'selectPlaceholder'
-	|'errorText'
+	| 'search'
+	| 'textInput'
+	| 'palletInput'
+	| 'locationInput'
+	| 'selectPlaceholder'
+	| 'errorText'
 )
 
 const decorate = withStyles<ClassKeys>(() => ({
@@ -59,7 +60,7 @@ const decorate = withStyles<ClassKeys>(() => ({
 	},
 	errorText: {
 		height: 20,
-		color: red['A400'],
+		color: red.A400,
 		fontSize: 10
 	}
 }))
@@ -75,6 +76,24 @@ class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 	}
 
 	render() {
+		const palletClasses = classnames(
+			this.props.classes.textInput,
+			this.props.classes.palletInput
+		)
+		const locationClasses = classnames(
+			this.props.classes.textInput,
+			this.props.classes.locationInput
+		)
+
+		let locationPlaceholder: JSX.Element | null = null
+		if (!this.props.store.location) {
+			locationPlaceholder = (
+				<Typography className={this.props.classes.selectPlaceholder}>
+					Umístění
+				</Typography>
+			)
+		}
+
 		return(
 			<div className={this.props.classes.root}>
 				<Paper className={this.props.classes.search}>
@@ -87,34 +106,19 @@ class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 						autoFocus
 						value={this.props.store.input}
 						onChange={this.handleChangeInputPallet}
-						className={[
-							this.props.classes.textInput,
-							this.props.classes.palletInput
-						].join(' ')}
+						className={palletClasses}
 						InputProps={{ disableUnderline: true }}
 					/>
 
 					<div
-						className={[
-							this.props.classes.textInput,
-							this.props.classes.locationInput
-						].join(' ')}
+						className={locationClasses}
 					>
-						{!this.props.store.location &&
-							<Typography className={this.props.classes.selectPlaceholder}>
-								Umístění
-							</Typography>
-						}
+						{locationPlaceholder}
 
 						<Select
 							value={this.props.store.location}
 							onChange={this.handleChangeInputLocation}
-							input={
-								<Input
-									disableUnderline
-									fullWidth
-								/>
-							}
+							input={<Input disableUnderline fullWidth />}
 						>
 							<MenuItem value="prijem">Příjem</MenuItem>
 							<MenuItem value="sklad">Hutní sklad</MenuItem>
@@ -124,7 +128,7 @@ class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 						</Select>
 					</div>
 				</Paper>
-			
+
 				<Typography className={this.props.classes.errorText}>
 					{this.props.store.inputError}
 				</Typography>

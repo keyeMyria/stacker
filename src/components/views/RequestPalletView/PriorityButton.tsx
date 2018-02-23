@@ -1,12 +1,13 @@
-import * as React from 'react'
+import * as classnames from 'classnames'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
 import Button from 'material-ui/Button'
+import { green, orange, red, teal } from 'material-ui/colors'
 import Menu, { MenuItem } from 'material-ui/Menu'
-import Tooltip from 'material-ui/Tooltip'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import { darken } from 'material-ui/styles/colorManipulator'
-import { red, orange, green, teal } from 'material-ui/colors'
+import Tooltip from 'material-ui/Tooltip'
 
 import PalletSelectStore from '../../../stores/PalletSelectStore'
 import Priority from '../../../stores/types/Priority'
@@ -40,29 +41,29 @@ const decorate = withStyles<ClassKeys>(() => ({
 		borderTopRightRadius: 0,
 		borderBottomRightRadius: 0,
 		boxShadow: 'none'
-	}, 
+	},
 	priorityUrgent: {
-		backgroundColor: red['A200'],
+		backgroundColor: red.A200,
 		'&:hover': {
-			backgroundColor: darken(red['A200'], 0.12)
+			backgroundColor: darken(red.A200, 0.12)
 		}
 	},
 	priorityHigh: {
-		backgroundColor: orange['A200'],
+		backgroundColor: orange.A200,
 		'&:hover': {
-			backgroundColor: darken(orange['A200'], 0.12)
+			backgroundColor: darken(orange.A200, 0.12)
 		}
 	},
 	priorityStandard: {
-		backgroundColor: green['A200'],
+		backgroundColor: green.A200,
 		'&:hover': {
-			backgroundColor: darken(green['A200'], 0.12)
+			backgroundColor: darken(green.A200, 0.12)
 		}
 	},
 	priorityLow: {
-		backgroundColor: teal['A200'],
+		backgroundColor: teal.A200,
 		'&:hover': {
-			backgroundColor: darken(teal['A200'], 0.12)
+			backgroundColor: darken(teal.A200, 0.12)
 		}
 	}
 }))
@@ -71,23 +72,33 @@ const decorate = withStyles<ClassKeys>(() => ({
 class PriorityButton extends React.Component<Props & WithStyles<ClassKeys>, State> {
 	state: State = {
 		anchorEl: undefined,
-		open: false,
+		open: false
 	}
 
 	handleClick = (event: React.MouseEvent<HTMLAnchorElement & HTMLButtonElement>) => {
-		this.setState({ open: true, anchorEl: event.currentTarget });
+		this.setState({ open: true, anchorEl: event.currentTarget })
 	}
-	
+
 	handleRequestClose = (): void => {
 		this.setState({ open: false })
 	}
-	
+
 	selectPriority = (priority: Priority): void => {
 		this.props.store.setPriority(priority)
 		this.setState({ open: false })
 	}
 
+	handleSelectUrgentPriority = () => this.selectPriority('urgent')
+	handleSelectHighPriority = () => this.selectPriority('high')
+	handleSelectStandardPriority = () => this.selectPriority('standard')
+	handleSelectLowPriority = () => this.selectPriority('low')
+
 	render() {
+		const priorittyButtonClasses = classnames(
+			this.props.classes.button,
+			this.props.classes['priority' + capitalize(this.props.store.priority)]
+		)
+
 		return(
 			<div>
 				<Tooltip id="tooltip-priority" title="Priorita" placement="top">
@@ -95,10 +106,7 @@ class PriorityButton extends React.Component<Props & WithStyles<ClassKeys>, Stat
 						fab
 						color="primary"
 						aria-label="Priorita"
-						className={[
-							this.props.classes.button,
-							this.props.classes['priority' + capitalize(this.props.store.priority)]
-						].join(' ')}
+						className={priorittyButtonClasses}
 						onClick={this.handleClick}
 					>
 						&zwnj;
@@ -112,25 +120,25 @@ class PriorityButton extends React.Component<Props & WithStyles<ClassKeys>, Stat
 					onClose={this.handleRequestClose}
 				>
 					<MenuItem
-						onClick={() => this.selectPriority('urgent')}
+						onClick={this.handleSelectUrgentPriority}
 						selected={this.props.store.priority === 'urgent'}
 					>
 						Urgentní
 					</MenuItem>
 					<MenuItem
-						onClick={() => this.selectPriority('high')}
+						onClick={this.handleSelectHighPriority}
 						selected={this.props.store.priority === 'high'}
 					>
 						Vysoká
 					</MenuItem>
 					<MenuItem
-						onClick={() => this.selectPriority('standard')}
+						onClick={this.handleSelectStandardPriority}
 						selected={this.props.store.priority === 'standard'}
 					>
 						Standardní
 					</MenuItem>
 					<MenuItem
-						onClick={() => this.selectPriority('low')}
+						onClick={this.handleSelectLowPriority}
 						selected={this.props.store.priority === 'low'}
 					>
 						Nízká

@@ -1,5 +1,5 @@
-import Priority from '../types/Priority'
 import Pallet from '../../models/Pallet'
+import Priority from '../types/Priority'
 
 export interface RequestParams {
 	requester: string,

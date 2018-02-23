@@ -1,5 +1,5 @@
-import * as React from 'react'
 import * as classnames from 'classnames'
+import * as React from 'react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
@@ -23,16 +23,17 @@ const decorate = withStyles<ClassNames>(theme => ({
 
 class Field extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
-		if(this.props.content === undefined || this.props.content === null)
+		if (this.props.content === undefined || this.props.content === null) {
 			return null
-	
+		}
+
+		const rootClasses = classnames(
+			this.props.classes.root,
+			this.props.className
+		)
+
 		return(
-			<div
-				className={classnames(
-					this.props.classes.root,
-					this.props.className
-				)}
-			>
+			<div className={rootClasses}>
 				<Typography type="caption">
 					{this.props.title}
 				</Typography>

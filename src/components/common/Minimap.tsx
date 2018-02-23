@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Stage, Layer, Rect } from 'react-konva'
+import { Layer, Rect, Stage } from 'react-konva'
 
 import { grey } from 'material-ui/colors'
 
@@ -23,8 +23,9 @@ const defaultProps: Props = {
 }
 
 const Minimap: React.SFC<Props> = (props: Props): JSX.Element | null => {
-	if(!props.width || !props.height)
+	if (!props.width || !props.height) {
 		return null
+	}
 
 	return(
 		<Stage width={props.width * props.scale + 6} height={props.height * props.scale + 2}>

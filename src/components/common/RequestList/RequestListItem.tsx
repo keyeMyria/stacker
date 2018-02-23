@@ -1,9 +1,9 @@
-import * as React from 'react'
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import * as csLocale from 'date-fns/locale/cs'
+import * as React from 'react'
 
-import { withStyles, WithStyles } from 'material-ui/styles'
 import { ListItem } from 'material-ui/List'
+import { withStyles, WithStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 
 import PalletRequest from '../../../stores/interfaces/PalletRequest'
@@ -32,16 +32,18 @@ const decorate = withStyles<ClassNames>(() => ({
 
 class RequestListItem extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
+		const requestedAt = distanceInWordsToNow(
+			this.props.request.requestedAt,
+			{ addSuffix: true, locale: csLocale }
+		)
+
 		const primaryText = (
 			<div className={this.props.classes.primaryText}>
 				<Typography type="subheading">
 					{this.props.request.pallet.name}
 				</Typography>
 				<Typography type="caption">
-					{distanceInWordsToNow(
-						this.props.request.requestedAt,
-						{ addSuffix: true, locale: csLocale }
-					)}
+					{requestedAt}
 				</Typography>
 			</div>
 		)

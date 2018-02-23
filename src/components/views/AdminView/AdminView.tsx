@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
@@ -35,13 +35,15 @@ const decorate = withStyles<ClassNames>(() => ({
 
 @observer
 class AdminView extends React.Component<Props & WithStyles<ClassNames>> {
+	handleInitialize = () => this.props.store.initializePallets()
+
 	render() {
 		return(
 			<div className={this.props.classes.root}>
 				<Button
 					raised
 					color="secondary"
-					onClick={() => this.props.store.initializePallets()}
+					onClick={this.handleInitialize}
 				>
 					Inicializovat palety
 				</Button>

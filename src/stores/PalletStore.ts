@@ -1,7 +1,8 @@
-import { observable, action } from 'mobx'
 import axios from 'axios'
-import PalletRequest from './interfaces/PalletRequest'
+import { action, observable } from 'mobx'
+
 import { NoPalletError } from './common/Errors'
+import PalletRequest from './interfaces/PalletRequest'
 
 import Pallet from '../models/Pallet'
 
@@ -45,7 +46,7 @@ export default class PalletStore {
 	getPalletsFromSide(side: string): Pallet[] {
 		return this.pallets.filter((p: Pallet): boolean => p.side === side)
 	}
-	
+
 	getPalletsFromColumn(column: number, pair?: boolean): Pallet[] {
 		return this.pallets.filter((p: Pallet): boolean => (
 			p.column === column
@@ -58,9 +59,9 @@ export default class PalletStore {
 			p.column === column
 		))
 
-		let pallets: Pallet[][] = []
+		const pallets: Pallet[][] = []
 		for (let i = 1; i <= this.rowCount; i++) {
-			let palletPair: Pallet[] = []
+			const palletPair: Pallet[] = []
 			palletColumn.filter(p => p.row === i).forEach(p => palletPair.push(p))
 			pallets.push(palletPair)
 		}
@@ -79,7 +80,7 @@ export default class PalletStore {
 	}
 
 	getColumns(): Pallet[][] {
-		let columns: Pallet[][] = []
+		const columns: Pallet[][] = []
 
 		for (let i = 1; i <= this.columnCount; i++) {
 			let column: Pallet[]
@@ -91,7 +92,7 @@ export default class PalletStore {
 	}
 
 	getColumnPairs(): Pallet[][][] {
-		let columns: Pallet[][][] = []
+		const columns: Pallet[][][] = []
 
 		for (let i = 1; i <= this.columnCount; i++) {
 			let column: Pallet[][]
@@ -110,7 +111,7 @@ export default class PalletStore {
 			&& p.row === params.row
 		))
 
-		if(pallet === undefined) {
+		if (pallet === undefined) {
 			throw new NoPalletError()
 		}
 

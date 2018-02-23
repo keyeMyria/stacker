@@ -1,10 +1,10 @@
-import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import Select from 'material-ui/Select'
 import { FormControl } from 'material-ui/Form'
 import Input, { InputLabel } from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
+import Select from 'material-ui/Select'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
@@ -44,6 +44,14 @@ class PalletSelect extends React.Component<Props & WithStyles<ClassKeys>> {
 		this.props.store.setRow(event.target.value)
 	}
 
+	mapColumnNames = this.props.store.columnNames.map(c => (
+		<MenuItem key={c} value={c}>{c}</MenuItem>
+	))
+
+	mapRowNames = this.props.store.rowNames.map(r => (
+		<MenuItem key={r} value={r}>{r}</MenuItem>
+	))
+
 	render() {
 		return(
 			<div className={this.props.classes.root}>
@@ -61,7 +69,7 @@ class PalletSelect extends React.Component<Props & WithStyles<ClassKeys>> {
 						<MenuItem value="right">Pravá</MenuItem>
 					</Select>
 				</FormControl>
-				
+
 				<FormControl
 					className={this.props.classes.select}
 					disabled={!this.props.store.side}
@@ -73,13 +81,11 @@ class PalletSelect extends React.Component<Props & WithStyles<ClassKeys>> {
 						value={this.props.store.column}
 						onChange={this.handleChangeColumn}
 						input={<Input id="column" />}
-					>	
-						{this.props.store.columnNames.map(c => (
-							<MenuItem key={c} value={c}>{c}</MenuItem>
-						))}
+					>
+						{this.mapColumnNames}
 					</Select>
 				</FormControl>
-				
+
 				<FormControl
 					className={this.props.classes.select}
 					disabled={!this.props.store.side || !this.props.store.column}
@@ -92,9 +98,7 @@ class PalletSelect extends React.Component<Props & WithStyles<ClassKeys>> {
 						onChange={this.handleChangeRow}
 						input={<Input id="row" />}
 					>
-						{this.props.store.rowNames.map(r => (
-							<MenuItem key={r} value={r}>{r}</MenuItem>
-						))}
+						{this.mapRowNames}
 					</Select>
 				</FormControl>
 			</div>

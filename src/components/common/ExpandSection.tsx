@@ -1,12 +1,12 @@
-import * as React from 'react'
 import * as classnames from 'classnames'
+import * as React from 'react'
 
+import IconButton from 'material-ui/IconButton'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
-import IconButton from 'material-ui/IconButton'
 
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import ExpandLessIcon from 'material-ui-icons/ExpandLess'
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 
 interface Props {
 	title: string,
@@ -17,7 +17,7 @@ interface State {
 	expand: boolean
 }
 
-type ClassNames = 'toggle' | 'title' |'expandButton'
+type ClassNames = 'toggle' | 'title' | 'expandButton'
 
 const decorate = withStyles<ClassNames>(() => ({
 	toggle: {

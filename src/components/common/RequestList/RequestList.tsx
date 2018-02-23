@@ -1,18 +1,18 @@
-import * as React from 'react'
-import { observer } from 'mobx-react'
 import * as classnames from 'classnames'
+import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import { withStyles, WithStyles } from 'material-ui/styles'
-import Paper from 'material-ui/Paper'
-import List from 'material-ui/List'
-import Typography from 'material-ui/Typography'
 import { grey } from 'material-ui/colors'
+import Divider from 'material-ui/Divider'
+import List from 'material-ui/List'
+import Paper from 'material-ui/Paper'
+import { withStyles, WithStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 
-import RequestsStore from '../../../stores/RequestsStore'
 import PalletRequest, { RequestStatus } from '../../../stores/interfaces/PalletRequest'
+import RequestsStore from '../../../stores/RequestsStore'
 import RequestListItem from './RequestListItem'
 import RequestListItemSummary from './RequestListItemSummary'
-import Divider from 'material-ui/Divider/Divider';
 
 interface Props {
 	requests: RequestsStore,
@@ -47,7 +47,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	}
 
 	mapListItem = (r: PalletRequest): JSX.Element => {
-		if(this.props.itemType === 'summary') {
+		if (this.props.itemType === 'summary') {
 			return <RequestListItemSummary key={r.id} request={r} />
 		} else {
 			return <RequestListItem key={r.id} request={r} />
@@ -55,7 +55,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	}
 
 	getMapListItemFunction = (r: PalletRequest) => {
-		if(this.props.mapListItemFunction) {
+		if (this.props.mapListItemFunction) {
 			return this.props.mapListItemFunction(r)
 		} else {
 			return this.mapListItem(r)
@@ -65,22 +65,24 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	getRequests = () => {
 		let requests: PalletRequest[] = this.props.requests.requests
 
-		if(this.props.filter !== undefined) {
+		if (this.props.filter !== undefined) {
 			requests = requests.filter(this.props.filter)
 		}
-		
+
 		return requests
 			.filter(r => {
-				if(this.props.type === undefined)
+				if (this.props.type === undefined) {
 					return r
-				else if(this.props.type === r.status)
+				} else if (this.props.type === r.status) {
 					return r
+				}
 			})
 			.filter(r => {
-				if(this.props.completed === undefined)
+				if (this.props.completed === undefined) {
 					return r
-				else if(this.props.completed === r.isCompleted)
+				} else if (this.props.completed === r.isCompleted) {
 					return r
+				}
 			})
 			.map(this.getMapListItemFunction)
 	}
@@ -88,14 +90,14 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
 		const { disableUnderline } = this.props
 		let header = null
-		let requests = this.getRequests()
+		const requests = this.getRequests()
 
-		if(this.props.header && requests.length > 0) {
+		if (this.props.header && requests.length > 0) {
 			header = [
 				<Typography key="header" type="headline" className={this.props.classes.header}>
 					{this.props.header}
 				</Typography>,
-				(disableUnderline === undefined || disableUnderline === false) ? 
+				(disableUnderline === undefined || disableUnderline === false) ?
 					<Divider key="divider" /> : null
 			]
 		}
@@ -106,7 +108,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 			</List>
 		)
 
-		if(this.props.withPaper) {
+		if (this.props.withPaper) {
 			content = (
 				<Paper>
 					{content}
@@ -115,9 +117,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 		}
 
 		return(
-			<div className={
-				classnames(this.props.className, this.props.classes.root)
-			}>
+			<div className={classnames(this.props.className, this.props.classes.root)}>
 				{header}
 
 				{content}

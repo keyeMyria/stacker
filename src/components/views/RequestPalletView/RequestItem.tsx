@@ -1,13 +1,13 @@
-import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
-import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
-import Tooltip from 'material-ui/Tooltip'
-import IconButton from 'material-ui/IconButton'
 import BlockIcon from 'material-ui-icons/Block'
 import ForwardIcon from 'material-ui-icons/Forward'
-import { withStyles, WithStyles } from 'material-ui/styles'
 import { grey } from 'material-ui/colors'
+import IconButton from 'material-ui/IconButton'
+import { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
+import { withStyles, WithStyles } from 'material-ui/styles'
+import Tooltip from 'material-ui/Tooltip'
 
 import PalletRequest from '../../../stores/interfaces/PalletRequest'
 
@@ -60,8 +60,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 				<ListItemText
 					primary=""
 					secondary={this.props.request.location}
-				>
-				</ListItemText>
+				/>
 
 				<ListItemSecondaryAction>
 					{this.props.request.status === 'delivered' ? returnButton : cancelButton}

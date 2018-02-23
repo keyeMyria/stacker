@@ -1,13 +1,13 @@
-import * as React from 'react'
 import { observer } from 'mobx-react'
+import * as React from 'react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
-import TextField from 'material-ui/TextField'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Button from 'material-ui/Button'
+import Card, { CardActions, CardContent } from 'material-ui/Card'
 import { FormControl, FormHelperText } from 'material-ui/Form'
 import { CircularProgress } from 'material-ui/Progress'
+import TextField from 'material-ui/TextField'
 
 import AppStore from '../../../stores/AppStore'
 
@@ -58,21 +58,32 @@ class LoginView extends React.Component<Props & WithStyles<ClassNames>, State> {
 	}
 
 	handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-		if(event.key === 'Enter') {
+		if (event.key === 'Enter') {
 			this.handleLogin()
 		}
 	}
 
 	handleLogin = (): void => {
-		this.props.store.login(this.state.username,this.state.password)
+		this.props.store.login(this.state.username, this.state.password)
 	}
 
 	render() {
-		if(this.props.store.isAuthenticated === undefined) {
+		if (this.props.store.isAuthenticated === undefined) {
 			return(
 				<div className={this.props.classes.root}>
 					<CircularProgress size={128} />
 				</div>
+			)
+		}
+
+		let authError: JSX.Element | null = null
+		if (this.props.store.hasAuthError) {
+			authError = (
+				<FormControl error className={this.props.classes.formField}>
+					<FormHelperText>
+						{this.props.store.authError}
+					</FormHelperText>
+				</FormControl>
 			)
 		}
 
@@ -100,13 +111,7 @@ class LoginView extends React.Component<Props & WithStyles<ClassNames>, State> {
 							error={this.props.store.hasAuthError}
 						/>
 
-						{this.props.store.hasAuthError &&
-							<FormControl error className={this.props.classes.formField}>
-								<FormHelperText>
-									{this.props.store.authError}
-								</FormHelperText>
-							</FormControl>
-						}
+						{authError}
 
 						<FormControl>
 							<FormHelperText>

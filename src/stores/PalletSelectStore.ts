@@ -1,7 +1,7 @@
-import { observable, action } from 'mobx'
+import { action, observable } from 'mobx'
 
-import Priority from './types/Priority'
 import ErrorSnackbar from '../components/common/ErrorSnackbar'
+import Priority from './types/Priority'
 
 import RequestsStore from './RequestsStore'
 
@@ -28,14 +28,15 @@ export default class PalletSelectStore {
 		this.columnNames = []
 		this.rowNames = []
 
-		for(let i: number = 1; i <= 71; i++) {
-			if(i < 10)
+		for (let i: number = 1; i <= 71; i++) {
+			if (i < 10) {
 				this.columnNames.push('0' + i.toString())
-			else
+			} else {
 				this.columnNames.push(i.toString())
+			}
 		}
-		
-		for(let i: number = 0; i < 8; i++) {
+
+		for (let i: number = 0; i < 8; i++) {
 			this.rowNames.push(String.fromCharCode(65 + i))
 		}
 
@@ -53,7 +54,7 @@ export default class PalletSelectStore {
 	@action setInput(input: string): void {
 		this.inputError = ''
 
-		if(input.length === 0) {
+		if (input.length === 0) {
 			this.input = ''
 			this.side = ''
 			this.column = ''
@@ -62,17 +63,17 @@ export default class PalletSelectStore {
 			return
 		}
 
-		if(input.length >= 1) {
+		if (input.length >= 1) {
 			const side: string = input.charAt(0)
 
-			if(side === 'L') {
+			if (side === 'L') {
 				this.side = 'left'
-			} else if(side === 'R') {
+			} else if (side === 'R') {
 				this.side = 'right'
-			} else if(side === 'l') {
+			} else if (side === 'l') {
 				input = 'L' + input.substr(1)
 				this.side = 'left'
-			} else if(side === 'r') {
+			} else if (side === 'r') {
 				input = 'R' + input.substr(1)
 				this.side = 'right'
 			} else {
@@ -80,12 +81,13 @@ export default class PalletSelectStore {
 				return
 			}
 		}
-		
-		let columnFirst: string, columnSecond: string
-		if(input.length >= 2) {
+
+		let columnFirst: string
+		let columnSecond: string
+		if (input.length >= 2) {
 			columnFirst = input.charAt(1)
 
-			if(
+			if (
 				isNaN(parseInt(columnFirst))
 				|| parseInt(columnFirst) > 7
 			) {
@@ -93,10 +95,10 @@ export default class PalletSelectStore {
 				return
 			}
 
-			if(input.length >= 3) {
+			if (input.length >= 3) {
 				columnSecond = input.charAt(2)
-	
-				if(
+
+				if (
 					isNaN(parseInt(columnSecond))
 					|| parseInt(columnFirst + columnSecond) <= 0
 					|| parseInt(columnFirst + columnSecond) > 71
@@ -113,14 +115,15 @@ export default class PalletSelectStore {
 			this.column = ''
 		}
 
-		if(input.length >= 4) {
-			let row: string = input.charAt(3)
+		if (input.length >= 4) {
+			const row: string = input.charAt(3)
 			let rowNumber: number = row.charCodeAt(0) - 65
 
-			if(rowNumber >= 32 && rowNumber <= 39)
+			if (rowNumber >= 32 && rowNumber <= 39) {
 				rowNumber -= 32
+			}
 
-			if(rowNumber < 0 || rowNumber > 7) {
+			if (rowNumber < 0 || rowNumber > 7) {
 				this.inputError = 'Řádek je označen písmeny v rozmezí mezi A a H'
 				return
 			}
@@ -132,8 +135,9 @@ export default class PalletSelectStore {
 			this.row = ''
 		}
 
-		if(input.length > 4)
+		if (input.length > 4) {
 			return
+		}
 
 		this.input = input
 	}
@@ -159,19 +163,20 @@ export default class PalletSelectStore {
 
 		this.input = this.input.substr(0, 3) + row
 	}
-	
+
 	@action setPriority(priority: Priority): void {
 		this.priority = priority
 	}
-	
+
 	@action setLocation(location: string): void {
 		this.location = location
 	}
 
 	@action createRequest(): void {
-		if(!this.side || !this.column || !this.row)
+		if (!this.side || !this.column || !this.row) {
 			return
-		
+		}
+
 		try {
 			this.requestStore.addRequest({
 				side: this.side,
@@ -182,15 +187,16 @@ export default class PalletSelectStore {
 				location: this.location,
 				requester: 'Jan Novak'
 			})
-		} catch(e) {
+		} catch (e) {
 			this.errorHandler.handleDisplayError(e.message)
 		}
 	}
 
 	formMissingValues(): boolean {
-		if(!this.side || !this.column || !this.row || !this.priority || !this.location)
+		if (!this.side || !this.column || !this.row || !this.priority || !this.location) {
 			return true
-		else
+		} else {
 			return false
+		}
 	}
 }
