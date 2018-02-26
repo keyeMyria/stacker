@@ -1,6 +1,6 @@
-import Request from './Request'
 import Pallet from './Pallet'
-import User from './User'
+import Request from './Request'
 import StatusChange from './StatusChange'
+import User from './User'
 
 export default { Request, Pallet, User, StatusChange }

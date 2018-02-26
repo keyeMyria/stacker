@@ -3,10 +3,11 @@ import * as React from 'react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
+import RequestListCommon from '../../common/RequestList/RequestList'
 import RequestItem from './RequestItem'
 
+import PalletRequest from '../../../stores/interfaces/PalletRequest'
 import RequestsStore from '../../../stores/RequestsStore'
-import RequestListCommon from '../../common/RequestList/RequestList'
 
 interface Props {
 	store: RequestsStore
@@ -30,6 +31,20 @@ const decorate = withStyles<ClassKeys>(() => ({
 
 @observer
 class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
+	mapRequestItems = (r: PalletRequest) => {
+		const handleDeliver = () => this.props.store.deliver(r.id)
+		const handleComplete = () => this.props.store.deliver(r.id)
+
+		return (
+			<RequestItem
+				key={r.id}
+				request={r}
+				deliver={handleDeliver}
+				complete={handleComplete}
+			/>
+		)
+	}
+
 	render() {
 		return(
 			<div className={this.props.classes.root}>
@@ -39,14 +54,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 					type="requested"
 					withPaper
 					disableUnderline
-					mapListItemFunction={(r => (
-						<RequestItem
-							key={r.id}
-							request={r}
-							deliver={() => this.props.store.deliver(r.id)}
-							complete={() => this.props.store.complete(r.id)}
-						/>
-					))}
+					mapListItemFunction={this.mapRequestItems}
 					className={this.props.classes.requestList}
 				/>
 
@@ -56,14 +64,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 					type="toReturn"
 					withPaper
 					disableUnderline
-					mapListItemFunction={(r => (
-						<RequestItem
-							key={r.id}
-							request={r}
-							deliver={() => this.props.store.deliver(r.id)}
-							complete={() => this.props.store.complete(r.id)}
-						/>
-					))}
+					mapListItemFunction={this.mapRequestItems}
 					className={this.props.classes.requestList}
 				/>
 

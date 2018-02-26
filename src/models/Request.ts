@@ -1,6 +1,6 @@
 import Pallet from './Pallet'
-import User from './User'
 import StatusChange, { StatusName } from './StatusChange'
+import User from './User'
 
 export type Priority = 'urgent' | 'high' | 'standard' | 'low'
 

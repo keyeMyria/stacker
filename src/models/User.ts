@@ -8,6 +8,6 @@ export default class User {
 	isAdmin: boolean
 	isWorker: boolean
 	requests?: Request[]
-    statusChange?: StatusChange
+	statusChange?: StatusChange
 	fullName: string
 }

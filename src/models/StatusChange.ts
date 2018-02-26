@@ -8,5 +8,5 @@ export default class StatusChange {
 	statusName: StatusName
 	date: string
 	request: Request
-    user: User
+	user: User
 }

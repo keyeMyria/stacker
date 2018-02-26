@@ -15,6 +15,7 @@
 		"object-literal-key-quotes": false,
 		"prefer-conditional-expression": false,
 		"radix": false,
+		"max-classes-per-file": false,
 		// override tslint-react rules here
 		"jsx-wrap-multiline": false,
 		"jsx-boolean-value": false
