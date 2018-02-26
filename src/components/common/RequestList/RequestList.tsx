@@ -94,7 +94,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 
 		if (this.props.header && requests.length > 0) {
 			header = [
-				<Typography key="header" type="headline" className={this.props.classes.header}>
+				<Typography key="header" variant="headline" className={this.props.classes.header}>
 					{this.props.header}
 				</Typography>,
 				(disableUnderline === undefined || disableUnderline === false) ?

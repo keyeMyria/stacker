@@ -39,6 +39,7 @@ const drawerWidth = 240
 
 const decorate = withStyles<ClassKeys>(theme => ({
 	root: {
+		zIndex: 1,
 		position: 'relative',
 		display: 'flex',
 		width: '100%',
@@ -64,7 +65,6 @@ const decorate = withStyles<ClassKeys>(theme => ({
 		marginLeft: drawerWidth
 	},
 	content: {
-		width: '100%',
 		flexGrow: 1,
 		backgroundColor: theme.palette.background.default,
 		padding: theme.spacing.unit * 3,
@@ -168,7 +168,7 @@ class AppFrame extends React.Component<Props & WithStyles<ClassKeys>> {
 						</IconButton>
 
 						<Typography
-							type="title"
+							variant="title"
 							color="inherit"
 							className={this.props.classes.title}
 						>

@@ -27,7 +27,6 @@ const drawerWidth = 240
 const decorate = withStyles<ClassKeys>(theme => ({
 	drawerPaper: {
 		position: 'relative',
-		height: '100%',
 		width: drawerWidth
 	},
 	drawerHeader: {
@@ -50,7 +49,7 @@ class NavigationDrawer extends React.Component<Props & WithStyles<ClassKeys>> {
 	render() {
 		return (
 			<Drawer
-				type="persistent"
+				variant="persistent"
 				open={this.props.open}
 				classes={{ paper: this.props.classes.drawerPaper }}
 			>

@@ -50,7 +50,7 @@ class ExpandSection extends React.Component<Props & WithStyles<ClassNames>, Stat
 					className={this.props.classes.toggle}
 					onClick={this.handleToggleExpand}
 				>
-					<Typography type="subheading" className={this.props.classes.title}>
+					<Typography variant="subheading" className={this.props.classes.title}>
 						{this.props.title}
 					</Typography>
 

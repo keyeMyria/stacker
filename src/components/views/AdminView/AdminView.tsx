@@ -41,7 +41,7 @@ class AdminView extends React.Component<Props & WithStyles<ClassNames>> {
 		return(
 			<div className={this.props.classes.root}>
 				<Button
-					raised
+					variant="raised"
 					color="secondary"
 					onClick={this.handleInitialize}
 				>

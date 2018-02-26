@@ -34,7 +34,7 @@ class Field extends React.Component<Props & WithStyles<ClassNames>> {
 
 		return(
 			<div className={rootClasses}>
-				<Typography type="caption">
+				<Typography variant="caption">
 					{this.props.title}
 				</Typography>
 				<Typography>

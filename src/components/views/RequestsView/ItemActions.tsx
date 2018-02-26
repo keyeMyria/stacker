@@ -15,7 +15,7 @@ const ItemActions: React.SFC<Props> = (props) => {
 	if (props.status === 'requested') {
 		return(
 			<Button
-				raised
+				variant="raised"
 				color="primary"
 				onClick={props.deliver}
 			>
@@ -25,7 +25,7 @@ const ItemActions: React.SFC<Props> = (props) => {
 	} else if (props.status === 'toReturn') {
 		return(
 			<Button
-				raised
+				variant="raised"
 				color="secondary"
 				onClick={props.complete}
 			>

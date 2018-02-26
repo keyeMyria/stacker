@@ -140,7 +140,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 
 					<div className={this.props.classes.main}>
 						<div className={this.props.classes.parameters}>
-							<Typography type="title">
+							<Typography variant="title">
 								{this.props.request.pallet.name}
 							</Typography>
 							<div>
@@ -154,7 +154,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 						</div>
 
 						<div className={this.props.classes.side}>
-							<Typography type="caption">
+							<Typography variant="caption">
 								{requestedAt}
 							</Typography>
 

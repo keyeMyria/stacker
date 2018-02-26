@@ -61,7 +61,7 @@ class RequestListItemUser extends React.Component<Props & WithStyles<ClassNames>
 
 		const text = (
 			<div className={this.props.classes.text}>
-				<Typography type="subheading">
+				<Typography variant="subheading">
 					{request.pallet.name}
 					<span className={this.props.classes.textLight}>&nbsp;do&nbsp;</span>
 					{request.location}

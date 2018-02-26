@@ -39,10 +39,10 @@ class RequestListItem extends React.Component<Props & WithStyles<ClassNames>> {
 
 		const primaryText = (
 			<div className={this.props.classes.primaryText}>
-				<Typography type="subheading">
+				<Typography variant="subheading">
 					{this.props.request.pallet.name}
 				</Typography>
-				<Typography type="caption">
+				<Typography variant="caption">
 					{requestedAt}
 				</Typography>
 			</div>

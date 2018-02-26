@@ -115,7 +115,7 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 					</div>
 
 					<Button
-						fab={true}
+						variant="fab"
 						color="primary"
 						aria-label="add"
 						className={this.props.classes.button}

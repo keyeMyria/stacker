@@ -103,7 +103,7 @@ class PriorityButton extends React.Component<Props & WithStyles<ClassKeys>, Stat
 			<div>
 				<Tooltip id="tooltip-priority" title="Priorita" placement="top">
 					<Button
-						fab
+						variant="fab"
 						color="primary"
 						aria-label="Priorita"
 						className={priorittyButtonClasses}
