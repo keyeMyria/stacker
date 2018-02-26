@@ -33,7 +33,7 @@ const decorate = withStyles<ClassKeys>(() => ({
 class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
 	mapRequestItems = (r: Request) => {
 		const handleDeliver = () => this.props.store.deliver(r.id)
-		const handleComplete = () => this.props.store.deliver(r.id)
+		const handleComplete = () => this.props.store.complete(r.id)
 
 		return (
 			<RequestItem

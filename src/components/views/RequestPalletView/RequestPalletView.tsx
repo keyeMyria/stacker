@@ -67,7 +67,7 @@ const ListRequestedItem: React.SFC<ItemProps> = (props: ItemProps) => {
 }
 
 const ListToDeliverItem: React.SFC<ItemProps> = (props: ItemProps) => {
-	const handleReturnRequest = () => this.props.store.return(props.request.id)
+	const handleReturnRequest = () => props.store.return(props.request.id)
 
 	return(
 		<RequestListItemUser

@@ -54,27 +54,32 @@ export default class PalletSelectStore {
 	}
 
 	@action deliver(id: number): void {
-		this.requests.forEach(r => {
-			if (r.id === id) {
-				r.statusName = 'delivered'
-			}
-		})
+		this.changeStatus(id, 'deliver')
 	}
 
 	@action return(id: number): void {
-		this.requests.forEach(r => {
-			if (r.id === id) {
-				r.statusName = 'toReturn'
-			}
-		})
+		this.changeStatus(id, 'return')
 	}
 
 	@action complete(id: number): void {
-		this.requests.forEach(r => {
-			if (r.id === id) {
-				r.statusName = 'completed'
-			}
-		})
+		this.changeStatus(id, 'store')
+	}
+
+	async changeStatus(id: number, actionName: string): Promise<void> {
+		try {
+			const response = await api.get<Request>(id + '/action/' + actionName)
+			const request = new Request(response.data)
+
+			this.requests = this.requests.map(r => {
+				if (r.id === request.id) {
+					r.statusName = request.statusName
+				}
+
+				return r
+			})
+		} catch (err) {
+			this.errorHandler.handleDisplayError(err.response.data)
+		}
 	}
 
 	getRequestsByStatus(status: StatusName): Request[] {
