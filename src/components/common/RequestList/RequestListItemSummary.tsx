@@ -1,8 +1,8 @@
 import * as classnames from 'classnames'
-// import * as distanceInWords from 'date-fns/distance_in_words'
-// import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-// import * as format from 'date-fns/format'
-// import * as csLocale from 'date-fns/locale/cs'
+import * as distanceInWords from 'date-fns/distance_in_words'
+import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import * as format from 'date-fns/format'
+import * as csLocale from 'date-fns/locale/cs'
 import * as React from 'react'
 
 import ExpandLessIcon from 'material-ui-icons/ExpandLess'
@@ -17,8 +17,8 @@ import Typography from 'material-ui/Typography'
 import { formatPriority } from '../../../helpers/priority'
 import Request from '../../../models/Request'
 
-// const timeFormat: string = 'H:mm'
-// const dateFormat: string = ', D. M. YYYY'
+const timeFormat: string = 'H:mm'
+const dateFormat: string = ', D. M. YYYY'
 
 interface Props {
 	request: Request
@@ -75,23 +75,23 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 	render() {
 		const request = this.props.request
 
-		// const requestedAt = distanceInWordsToNow(
-		// 	this.props.request.requestedAt,
-		// 	{ addSuffix: true, locale: csLocale }
-		// )
+		const requestedAt = distanceInWordsToNow(
+			this.props.request.requestedAt,
+			{ addSuffix: true, locale: csLocale }
+		)
 
 		const text = (
 			<div className={this.props.classes.text}>
 				<Typography>
-					{request.pallet.name}
+					{request.palletName}
 					<span className={this.props.classes.textLight}>&nbsp;do&nbsp;</span>
 					{request.location}
 					<span className={this.props.classes.textLight}>&nbsp;zadal(a)&nbsp;</span>
-					{request.user.fullName}
+					{request.requester}
 				</Typography>
-				{/* <Typography className={this.props.classes.textLight}> */}
-					{/* {requestedAt} */}
-				{/* </Typography> */}
+				<Typography className={this.props.classes.textLight}>
+					{requestedAt}
+				</Typography>
 			</div>
 		)
 
@@ -102,6 +102,40 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 		const infoPriorityClasses = classnames(
 			this.props.classes.section,
 			this.props.classes.infoItem
+		)
+
+		const deliveredTimes = (
+			<Typography>
+				<span className={this.props.classes.infoItem}>
+					Doručeno:
+				</span>
+				<span>
+					{format(request.deliveredAt, timeFormat, csLocale)}
+				</span>
+				<span className={infoClasses}>
+					{format(request.deliveredAt, dateFormat, csLocale)}
+				</span>
+				<span>
+					{distanceInWords(request.deliveredAt, request.requestedAt, { locale: csLocale})}
+				</span>
+			</Typography>
+		)
+
+		const returnedTimes = (
+			<Typography>
+				<span className={this.props.classes.infoItem}>
+				Vráceno:
+				</span>
+				<span>
+					{format(request.returnedAt, timeFormat, csLocale)}
+				</span>
+				<span className={infoClasses}>
+					{format(request.returnedAt, dateFormat, csLocale)}
+				</span>
+				<span>
+					{distanceInWords(request.returnedAt, request.deliveredAt, { locale: csLocale})}
+				</span>
+			</Typography>
 		)
 
 		return(
@@ -122,40 +156,14 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 							Zažádáno:
 						</span>
 						<span>
-							{/* {format(request.requestedAt, timeFormat, csLocale)} */}
+							{format(request.requestedAt, timeFormat, csLocale)}
 						</span>
 						<span className={this.props.classes.textLight}>
-							{/* {format(request.requestedAt, dateFormat, csLocale)} */}
+							{format(request.requestedAt, dateFormat, csLocale)}
 						</span>
 					</Typography>
-					<Typography>
-						<span className={this.props.classes.infoItem}>
-							Doručeno:
-						</span>
-						<span>
-							{/* {format(request.requestedAt, timeFormat, csLocale)} */}
-						</span>
-						<span className={infoClasses}>
-							{/* {format(request.requestedAt, dateFormat, csLocale)} */}
-						</span>
-						<span>
-							{/* {distanceInWords(request.requestedAt, new Date(), { locale: csLocale})} */}
-						</span>
-					</Typography>
-					<Typography>
-						<span className={this.props.classes.infoItem}>
-							Vráceno:
-						</span>
-						<span>
-							{/* {format(request.requestedAt, timeFormat, csLocale)} */}
-						</span>
-						<span className={infoClasses}>
-							{/* {format(request.requestedAt, dateFormat, csLocale)} */}
-						</span>
-						<span>
-							{/* {distanceInWords(request.requestedAt, new Date(), { locale: csLocale})} */}
-						</span>
-					</Typography>
+					{request.deliveredAt && deliveredTimes}
+					{request.returnedAt && returnedTimes}
 					<Typography>
 						<span className={infoPriorityClasses}>
 							Priorita:

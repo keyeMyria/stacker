@@ -6,7 +6,7 @@ export type StatusName = 'requested' | 'delivered' | 'toReturn' | 'completed' | 
 export default class StatusChange {
 	id: number
 	statusName: StatusName
-	date: string
+	date: Date
 	request: Request
 	user: User
 }

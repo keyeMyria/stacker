@@ -1,5 +1,5 @@
-// import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-// import * as csLocale from 'date-fns/locale/cs'
+import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import * as csLocale from 'date-fns/locale/cs'
 import { observer } from 'mobx-react'
 import * as React from 'react'
 
@@ -54,20 +54,20 @@ class RequestListItemUser extends React.Component<Props & WithStyles<ClassNames>
 	render() {
 		const request = this.props.request
 
-		// const requestedAt = distanceInWordsToNow(
-		// 	this.props.request.requestedAt,
-		// 	{ addSuffix: true, locale: csLocale }
-		// )
+		const requestedAt = distanceInWordsToNow(
+			this.props.request.requestedAt,
+			{ addSuffix: true, locale: csLocale }
+		)
 
 		const text = (
 			<div className={this.props.classes.text}>
 				<Typography variant="subheading">
-					{request.pallet.name}
+					{request.palletName}
 					<span className={this.props.classes.textLight}>&nbsp;do&nbsp;</span>
 					{request.location}
 				</Typography>
 				<Typography className={this.props.classes.textLight}>
-					{/* {requestedAt} */}
+					{requestedAt}
 				</Typography>
 			</div>
 		)

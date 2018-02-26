@@ -1,5 +1,5 @@
-// import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-// import * as csLocale from 'date-fns/locale/cs'
+import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import * as csLocale from 'date-fns/locale/cs'
 import { observer } from 'mobx-react'
 import * as React from 'react'
 
@@ -116,10 +116,10 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 			return null
 		}
 
-		// const requestedAt = distanceInWordsToNow(
-		// 	this.props.request.requestedAt,
-		// 	{ addSuffix: true, locale: csLocale }
-		// )
+		const requestedAt = distanceInWordsToNow(
+			this.props.request.requestedAt,
+			{ addSuffix: true, locale: csLocale }
+		)
 
 		return(
 			<div className={this.props.classes.root}>
@@ -141,11 +141,11 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 					<div className={this.props.classes.main}>
 						<div className={this.props.classes.parameters}>
 							<Typography variant="title">
-								{this.props.request.pallet.name}
+								{this.props.request.palletName}
 							</Typography>
 							<div>
 								<Typography>
-									Žadatel: {this.props.request.user.fullName}
+									Žadatel: {this.props.request.requester}
 								</Typography>
 								<Typography>
 									Umístění: {this.props.request.location}
@@ -155,7 +155,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 
 						<div className={this.props.classes.side}>
 							<Typography variant="caption">
-								{/* {requestedAt} */}
+								{requestedAt}
 							</Typography>
 
 							<ItemActions

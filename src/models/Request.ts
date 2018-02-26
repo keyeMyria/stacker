@@ -19,15 +19,15 @@ export default class Request implements RequestParams {
 	user: User
 	statusChanges: StatusChange[]
 	palletId: number
+	palletName: string
+	requester: string
+	requestedAt: Date
+	deliveredAt: Date
+	returnedAt: Date
 
-	constructor(request: Request) {
-		this.id = request.id
-		this.priority = request.priority
-		this.location = request.location
-		this.statusName = request.statusName
-		this.pallet = request.pallet
-		this.user = request.user
-		this.statusChanges = request.statusChanges
-		this.palletId = request.palletId
+	constructor(request?: Request) {
+		if (request) {
+			Object.assign(this, request)
+		}
 	}
 }
