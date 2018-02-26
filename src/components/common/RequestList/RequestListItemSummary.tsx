@@ -32,11 +32,11 @@ type ClassNames = 'root' | 'content' | 'text' | 'textLight' | 'section' | 'infoI
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
-		width: 500,
 		paddingTop: 8,
 		paddingBottom: 8,
 		flexDirection: 'column',
-		alignItems: 'flex-start'
+		alignItems: 'flex-start',
+		cursor: 'pointer'
 	},
 	content: {
 		flex: '1 1 auto'
@@ -56,7 +56,7 @@ const decorate = withStyles<ClassNames>(() => ({
 	},
 	infoItem: {
 		display: 'inline-block',
-		width: 100
+		width: 120
 	},
 	expandButton: {
 		top: 18

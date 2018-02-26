@@ -20,7 +20,7 @@ const decorate = withStyles<ClassNames>(() => ({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',
-		width: 500
+		width: 600
 	}
 }))
 
