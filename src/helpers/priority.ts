@@ -1,4 +1,4 @@
-import Priority from '../stores/types/Priority'
+import { Priority } from '../models/Request'
 
 export const formatPriority = (priority: Priority): string => {
 	switch (priority) {

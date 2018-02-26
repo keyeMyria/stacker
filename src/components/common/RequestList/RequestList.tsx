@@ -9,7 +9,8 @@ import Paper from 'material-ui/Paper'
 import { withStyles, WithStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 
-import PalletRequest, { RequestStatus } from '../../../stores/interfaces/PalletRequest'
+import Request from '../../../models/Request'
+import { StatusName } from '../../../models/StatusChange'
 import RequestsStore from '../../../stores/RequestsStore'
 import RequestListItem from './RequestListItem'
 import RequestListItemSummary from './RequestListItemSummary'
@@ -17,14 +18,14 @@ import RequestListItemSummary from './RequestListItemSummary'
 interface Props {
 	requests: RequestsStore,
 	header?: string,
-	type?: RequestStatus,
+	type?: StatusName,
 	completed?: boolean,
 	withPaper?: boolean,
 	disableUnderline?: boolean,
 	itemType?: 'default' | 'summary' | 'user',
 	className?: string,
-	mapListItemFunction?: (r: PalletRequest) => JSX.Element,
-	filter?: (request: PalletRequest) => PalletRequest | undefined
+	mapListItemFunction?: (r: Request) => JSX.Element,
+	filter?: (request: Request) => Request | undefined
 }
 
 type ClassNames = 'root' | 'header' | 'list'
@@ -46,7 +47,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 		itemType: 'default'
 	}
 
-	mapListItem = (r: PalletRequest): JSX.Element => {
+	mapListItem = (r: Request): JSX.Element => {
 		if (this.props.itemType === 'summary') {
 			return <RequestListItemSummary key={r.id} request={r} />
 		} else {
@@ -54,7 +55,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 		}
 	}
 
-	getMapListItemFunction = (r: PalletRequest) => {
+	getMapListItemFunction = (r: Request) => {
 		if (this.props.mapListItemFunction) {
 			return this.props.mapListItemFunction(r)
 		} else {
@@ -63,7 +64,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 	}
 
 	getRequests = () => {
-		let requests: PalletRequest[] = this.props.requests.requests
+		let requests: Request[] = this.props.requests.requests
 
 		if (this.props.filter !== undefined) {
 			requests = requests.filter(this.props.filter)
@@ -73,14 +74,7 @@ class RequestList extends React.Component<Props & WithStyles<ClassNames>> {
 			.filter(r => {
 				if (this.props.type === undefined) {
 					return r
-				} else if (this.props.type === r.status) {
-					return r
-				}
-			})
-			.filter(r => {
-				if (this.props.completed === undefined) {
-					return r
-				} else if (this.props.completed === r.isCompleted) {
+				} else if (this.props.type === r.statusName) {
 					return r
 				}
 			})

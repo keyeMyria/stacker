@@ -3,10 +3,10 @@ import * as React from 'react'
 
 import Button from 'material-ui/Button'
 
-import { RequestStatus } from '../../../stores/interfaces/PalletRequest'
+import { StatusName } from '../../../models/StatusChange'
 
 interface Props {
-	status: RequestStatus,
+	status: StatusName,
 	deliver: () => void,
 	complete: () => void
 }

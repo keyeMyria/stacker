@@ -6,7 +6,7 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 import RequestListCommon from '../../common/RequestList/RequestList'
 import RequestItem from './RequestItem'
 
-import PalletRequest from '../../../stores/interfaces/PalletRequest'
+import Request from '../../../models/Request'
 import RequestsStore from '../../../stores/RequestsStore'
 
 interface Props {
@@ -31,7 +31,7 @@ const decorate = withStyles<ClassKeys>(() => ({
 
 @observer
 class RequestList extends React.Component<Props & WithStyles<ClassKeys>> {
-	mapRequestItems = (r: PalletRequest) => {
+	mapRequestItems = (r: Request) => {
 		const handleDeliver = () => this.props.store.deliver(r.id)
 		const handleComplete = () => this.props.store.deliver(r.id)
 

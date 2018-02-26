@@ -1,8 +1,8 @@
 import * as classnames from 'classnames'
-import * as distanceInWords from 'date-fns/distance_in_words'
-import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-import * as format from 'date-fns/format'
-import * as csLocale from 'date-fns/locale/cs'
+// import * as distanceInWords from 'date-fns/distance_in_words'
+// import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+// import * as format from 'date-fns/format'
+// import * as csLocale from 'date-fns/locale/cs'
 import * as React from 'react'
 
 import ExpandLessIcon from 'material-ui-icons/ExpandLess'
@@ -15,13 +15,13 @@ import Collapse from 'material-ui/transitions/Collapse'
 import Typography from 'material-ui/Typography'
 
 import { formatPriority } from '../../../helpers/priority'
-import PalletRequest from '../../../stores/interfaces/PalletRequest'
+import Request from '../../../models/Request'
 
-const timeFormat: string = 'H:mm'
-const dateFormat: string = ', D. M. YYYY'
+// const timeFormat: string = 'H:mm'
+// const dateFormat: string = ', D. M. YYYY'
 
 interface Props {
-	request: PalletRequest
+	request: Request
 }
 
 interface State {
@@ -75,10 +75,10 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 	render() {
 		const request = this.props.request
 
-		const requestedAt = distanceInWordsToNow(
-			this.props.request.requestedAt,
-			{ addSuffix: true, locale: csLocale }
-		)
+		// const requestedAt = distanceInWordsToNow(
+		// 	this.props.request.requestedAt,
+		// 	{ addSuffix: true, locale: csLocale }
+		// )
 
 		const text = (
 			<div className={this.props.classes.text}>
@@ -87,11 +87,11 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 					<span className={this.props.classes.textLight}>&nbsp;do&nbsp;</span>
 					{request.location}
 					<span className={this.props.classes.textLight}>&nbsp;zadal(a)&nbsp;</span>
-					{request.requester}
+					{request.user.fullName}
 				</Typography>
-				<Typography className={this.props.classes.textLight}>
-					{requestedAt}
-				</Typography>
+				{/* <Typography className={this.props.classes.textLight}> */}
+					{/* {requestedAt} */}
+				{/* </Typography> */}
 			</div>
 		)
 
@@ -122,10 +122,10 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 							Zažádáno:
 						</span>
 						<span>
-							{format(request.requestedAt, timeFormat, csLocale)}
+							{/* {format(request.requestedAt, timeFormat, csLocale)} */}
 						</span>
 						<span className={this.props.classes.textLight}>
-							{format(request.requestedAt, dateFormat, csLocale)}
+							{/* {format(request.requestedAt, dateFormat, csLocale)} */}
 						</span>
 					</Typography>
 					<Typography>
@@ -133,13 +133,13 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 							Doručeno:
 						</span>
 						<span>
-							{format(request.requestedAt, timeFormat, csLocale)}
+							{/* {format(request.requestedAt, timeFormat, csLocale)} */}
 						</span>
 						<span className={infoClasses}>
-							{format(request.requestedAt, dateFormat, csLocale)}
+							{/* {format(request.requestedAt, dateFormat, csLocale)} */}
 						</span>
 						<span>
-							{distanceInWords(request.requestedAt, new Date(), { locale: csLocale})}
+							{/* {distanceInWords(request.requestedAt, new Date(), { locale: csLocale})} */}
 						</span>
 					</Typography>
 					<Typography>
@@ -147,13 +147,13 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 							Vráceno:
 						</span>
 						<span>
-							{format(request.requestedAt, timeFormat, csLocale)}
+							{/* {format(request.requestedAt, timeFormat, csLocale)} */}
 						</span>
 						<span className={infoClasses}>
-							{format(request.requestedAt, dateFormat, csLocale)}
+							{/* {format(request.requestedAt, dateFormat, csLocale)} */}
 						</span>
 						<span>
-							{distanceInWords(request.requestedAt, new Date(), { locale: csLocale})}
+							{/* {distanceInWords(request.requestedAt, new Date(), { locale: csLocale})} */}
 						</span>
 					</Typography>
 					<Typography>

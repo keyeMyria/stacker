@@ -7,21 +7,20 @@ import ForwardIcon from 'material-ui-icons/Forward'
 import Button from 'material-ui/Button'
 import { withStyles, WithStyles } from 'material-ui/styles'
 
-import PalletRequest from '../../../stores/interfaces/PalletRequest'
+import Request from '../../../models/Request'
+import AppStore from '../../../stores/AppStore'
 import PalletSelectStore from '../../../stores/PalletSelectStore'
-import PalletStore from '../../../stores/PalletStore'
 import RequestsStore from '../../../stores/RequestsStore'
 
-import ErrorSnackbar from '../../common/ErrorSnackbar'
 import RequestList from '../../common/RequestList/RequestList'
 import RequestListItemUser from '../../common/RequestList/RequestListItemUser'
 import PalletInput from './PalletInput'
 import PalletSelect from './PalletSelect'
 
 interface Props {
+	appStore: AppStore,
 	selectStore: PalletSelectStore,
-	requests: RequestsStore,
-	palletStore: PalletStore
+	requests: RequestsStore
 }
 
 type ClassKeys = (
@@ -53,13 +52,12 @@ const decorate = withStyles<ClassKeys>(() => ({
 	}
 }))
 
-interface ItemProps { store: RequestsStore, request: PalletRequest }
+interface ItemProps { store: RequestsStore, request: Request }
 const ListRequestedItem: React.SFC<ItemProps> = (props: ItemProps) => {
 	const handleCancelRequest = () => this.props.store.cancel(props.request.id)
 
 	return(
 		<RequestListItemUser
-			key={props.request.id}
 			request={props.request}
 			actionName="Zrušit"
 			actionIcon={<BlockIcon />}
@@ -84,20 +82,18 @@ const ListToDeliverItem: React.SFC<ItemProps> = (props: ItemProps) => {
 
 @observer
 class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
-	mapRequestedPallets = ((r: PalletRequest) => (
-		<ListRequestedItem store={this.props.requests} request={r} />
+	mapRequestedPallets = ((r: Request) => (
+		<ListRequestedItem store={this.props.requests} request={r} key={r.id} />
 	))
 
-	mapToReturnPallets = ((r: PalletRequest) =>  (
-		<ListToDeliverItem store={this.props.requests} request={r} />
+	mapToReturnPallets = ((r: Request) =>  (
+		<ListToDeliverItem store={this.props.requests} request={r} key={r.id} />
 	))
 
-	handleCreateRequest = () => this.props.selectStore.createRequest()
-
-	mapErrorHandler = (instance: ErrorSnackbar) => {
-		if (instance) {
-			this.props.selectStore.errorHandler = instance
-		}
+	handleCreateRequest = () => {
+		this.props.selectStore.createRequest(
+			this.props.appStore.user
+		)
 	}
 
 	render() {
@@ -124,7 +120,6 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 					>
 						<AddIcon />
 					</Button>
-					<ErrorSnackbar ref={this.mapErrorHandler} />
 				</div>
 
 				<RequestList

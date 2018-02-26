@@ -1,46 +1,52 @@
+import axios from 'axios'
 import { action, observable } from 'mobx'
 
-import Pallet from '../models/Pallet'
-import { AlreadySelectedError } from './common/Errors'
-import PalletRequest, { RequestParams, RequestStatus } from './interfaces/PalletRequest'
+import Request, { RequestParams } from '../models/Request'
+import { StatusName } from '../models/StatusChange'
 
-import PalletStore from './PalletStore'
+import ErrorSnackbar from '../components/common/ErrorSnackbar'
+
+const baseURL: string = 'http://localhost:8080/stacker/'
+const api = axios.create({ baseURL: baseURL + 'request/' })
 
 export default class PalletSelectStore {
 	static nextId: number = 0
-	palletStore: PalletStore
+	errorHandler: ErrorSnackbar
 
-	@observable requests: PalletRequest[]
+	@observable requests: Request[]
 
-	constructor(palletStore: PalletStore) {
-		this.palletStore = palletStore
+	fetchingRequests: boolean
+
+	constructor() {
 		this.requests = []
 
-		// this.initRequests()
+		this.fetchRequests()
 	}
 
-	@action addRequest(palletParams: any, requestParams: RequestParams): void {
-		const pallet: Pallet = this.palletStore.findPallet(palletParams)
+	async fetchRequests(): Promise<void> {
+		this.fetchingRequests = true
 
-		for (const r of this.requests) {
-			if (r.id === pallet.id) {
-				throw new AlreadySelectedError('Pallet')
-			}
+		try {
+			const response = await api.get<Request[]>('')
+			this.requests = response.data.map(r => new Request(r))
+		} catch (err) {
+			console.log(err)
 		}
 
-		const request: PalletRequest = {
-			id: PalletSelectStore.nextId++,
-			status: 'requested',
-			isCompleted: false,
-			requestedAt: new Date(),
-			palletId: pallet.id,
-			pallet,
-			requester: requestParams.requester,
-			location: requestParams.location,
-			priority: requestParams.priority
-		}
+		this.fetchingRequests = false
+	}
 
-		this.requests.push(request)
+	@action async createRequest(requestParams: RequestParams, palletName: string) {
+		try {
+			const response = await api.post<Request>('', {
+				requestParams,
+				palletName
+			})
+
+			this.requests.push(new Request(response.data))
+		} catch (err) {
+			this.errorHandler.handleDisplayError(err.response.data)
+		}
 	}
 
 	@action cancel(id: number): void {
@@ -50,7 +56,7 @@ export default class PalletSelectStore {
 	@action deliver(id: number): void {
 		this.requests.forEach(r => {
 			if (r.id === id) {
-				r.status = 'delivered'
+				r.statusName = 'delivered'
 			}
 		})
 	}
@@ -58,7 +64,7 @@ export default class PalletSelectStore {
 	@action return(id: number): void {
 		this.requests.forEach(r => {
 			if (r.id === id) {
-				r.status = 'toReturn'
+				r.statusName = 'toReturn'
 			}
 		})
 	}
@@ -66,52 +72,12 @@ export default class PalletSelectStore {
 	@action complete(id: number): void {
 		this.requests.forEach(r => {
 			if (r.id === id) {
-				r.status = 'completed'
-				r.isCompleted = true
+				r.statusName = 'completed'
 			}
 		})
 	}
 
-	getRequestsByStatus(status: RequestStatus): PalletRequest[] {
-		return this.requests.filter(r => r.status === status)
-	}
-
-	initRequests(): void {
-		this.addRequest({
-			side: 'left',
-			column: 1,
-			row: 'A'
-		}, {
-			requester: 'Jan Novák',
-			location: 'Přízemí',
-			priority: 'standard'
-		})
-		this.addRequest({
-			side: 'right',
-			column: 71,
-			row: 'H'
-		}, {
-			requester: 'Jan Novák',
-			location: 'Přízemí',
-			priority: 'standard'
-		})
-		this.addRequest({
-			side: 'right',
-			column: 67,
-			row: 'G'
-		}, {
-			requester: 'Jan Novák',
-			location: 'Přízemí',
-			priority: 'standard'
-		})
-		this.addRequest({
-			side: 'left',
-			column: 39,
-			row: 'C'
-		}, {
-			requester: 'Jan Novák',
-			location: 'Přízemí',
-			priority: 'standard'
-		})
+	getRequestsByStatus(status: StatusName): Request[] {
+		return this.requests.filter(r => r.statusName === status)
 	}
 }

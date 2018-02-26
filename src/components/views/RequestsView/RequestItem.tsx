@@ -1,5 +1,5 @@
-import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-import * as csLocale from 'date-fns/locale/cs'
+// import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+// import * as csLocale from 'date-fns/locale/cs'
 import { observer } from 'mobx-react'
 import * as React from 'react'
 
@@ -10,13 +10,13 @@ import Typography from 'material-ui/Typography'
 
 // import ErrorOutline from 'material-ui-icons/ErrorOutline'
 
-import PalletRequest from '../../../stores/interfaces/PalletRequest'
+import Request from '../../../models/Request'
 
 import Minimap from '../../common/Minimap'
 import ItemActions from './ItemActions'
 
 interface Props {
-	request: PalletRequest,
+	request: Request,
 	deliver: () => void,
 	complete: () => void
 }
@@ -116,10 +116,10 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 			return null
 		}
 
-		const requestedAt = distanceInWordsToNow(
-			this.props.request.requestedAt,
-			{ addSuffix: true, locale: csLocale }
-		)
+		// const requestedAt = distanceInWordsToNow(
+		// 	this.props.request.requestedAt,
+		// 	{ addSuffix: true, locale: csLocale }
+		// )
 
 		return(
 			<div className={this.props.classes.root}>
@@ -145,7 +145,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 							</Typography>
 							<div>
 								<Typography>
-									Žadatel: {this.props.request.requester}
+									Žadatel: {this.props.request.user.fullName}
 								</Typography>
 								<Typography>
 									Umístění: {this.props.request.location}
@@ -155,11 +155,11 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 
 						<div className={this.props.classes.side}>
 							<Typography variant="caption">
-								{requestedAt}
+								{/* {requestedAt} */}
 							</Typography>
 
 							<ItemActions
-								status={this.props.request.status}
+								status={this.props.request.statusName}
 								deliver={this.props.deliver}
 								complete={this.props.complete}
 							/>

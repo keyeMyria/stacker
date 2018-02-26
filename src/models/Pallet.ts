@@ -17,9 +17,17 @@ const charToSide = (char: string): Side => char === 'L' ? 'left' : 'right'
 const numToDoubleDigit = (num: number): string => num > 9 ? num.toString() : '0' + num
 const doubleDigitToNum = (digit: string): number => Number(digit)
 const numToChar = (num: number): string => String.fromCharCode(64 + num)
-const charToNum = (char: string): number => char.charCodeAt(0) - 64
+export const charToNum = (char: string): number => char.charCodeAt(0) - 64
 
-export default class Pallet {
+export const stringToSide = (side: string): Side => side === 'left' ? 'left' : 'right'
+
+export interface PalletParams {
+	side: Side
+	column: number
+	row: number
+}
+
+export default class Pallet implements PalletParams {
 	id: number
 	side: Side
 	column: number

@@ -14,6 +14,7 @@ import PalletSelectStore from '../stores/PalletSelectStore'
 import PalletStore from '../stores/PalletStore'
 import RequestsStore from '../stores/RequestsStore'
 
+import ErrorSnackbar from './common/ErrorSnackbar'
 import AdminView from './views/AdminView/AdminView'
 import AppFrame from './views/AppFrame/AppFrame'
 import HistoryView from './views/HistoryView/HistoryView'
@@ -39,20 +40,27 @@ const decorate = withStyles<ClassKeys>(theme => ({
 }))
 
 const palletStore: PalletStore = new PalletStore()
-const requestsStore: RequestsStore = new RequestsStore(palletStore)
+const requestsStore: RequestsStore = new RequestsStore()
 const palletSelectStore: PalletSelectStore = new PalletSelectStore(requestsStore)
 
 @observer
 class App extends React.Component<Props & WithStyles<ClassKeys>> {
+	mapErrorHandler = (instance: ErrorSnackbar) => {
+		if (instance) {
+			requestsStore.errorHandler = instance
+			palletSelectStore.errorHandler = instance
+		}
+	}
+
 	render() {
 		const { isAuthenticated } = this.props.store
 
 		const requestPalletView = (props: RouteProps) => (
 			<RequestPalletView
 				{...props}
+				appStore={this.props.store}
 				selectStore={palletSelectStore}
 				requests={requestsStore}
-				palletStore={palletStore}
 			/>
 		)
 		const requestsView = (props: RouteProps) => (
@@ -90,6 +98,7 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 				<>
 					<Reboot />
 					{isAuthenticated ? routes : login}
+					<ErrorSnackbar ref={this.mapErrorHandler} />
 				</>
 			</Router>
 		)

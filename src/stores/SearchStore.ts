@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx'
-import PalletRequest from './interfaces/PalletRequest'
+import Request from '../models/Request'
 
 export default class SearchStore {
 	@observable filterText: string
@@ -18,13 +18,9 @@ export default class SearchStore {
 		this.filterField = field
 	}
 
-	filter = (i: PalletRequest) => {
+	filter = (i: Request) => {
 		if (this.filterField === 'name') {
 			if (i.pallet.name.toLowerCase().search(this.filterText) > -1) {
-				return i
-			}
-		} else if (this.filterField === 'location' || this.filterField === 'requester') {
-			if (i[this.filterField].search(this.filterText) > -1) {
 				return i
 			}
 		}
