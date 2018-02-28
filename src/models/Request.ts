@@ -7,7 +7,6 @@ export type Priority = 'urgent' | 'high' | 'standard' | 'low'
 export interface RequestParams {
 	priority: string
 	location: string
-	user: User
 }
 
 export default class Request implements RequestParams {

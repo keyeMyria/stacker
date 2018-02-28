@@ -54,7 +54,7 @@ const decorate = withStyles<ClassKeys>(() => ({
 
 interface ItemProps { store: RequestsStore, request: Request }
 const ListRequestedItem: React.SFC<ItemProps> = (props: ItemProps) => {
-	const handleCancelRequest = () => this.props.store.cancel(props.request.id)
+	const handleCancelRequest = () => props.store.cancel(props.request.id)
 
 	return(
 		<RequestListItemUser
@@ -90,11 +90,7 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 		<ListToDeliverItem store={this.props.requests} request={r} key={r.id} />
 	))
 
-	handleCreateRequest = () => {
-		this.props.selectStore.createRequest(
-			this.props.appStore.user
-		)
-	}
+	handleCreateRequest = () => this.props.selectStore.createRequest()
 
 	render() {
 		return(

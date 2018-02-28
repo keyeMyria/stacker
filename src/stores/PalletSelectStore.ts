@@ -1,7 +1,6 @@
 import { action, observable } from 'mobx'
 
 import ErrorSnackbar from '../components/common/ErrorSnackbar'
-import User from '../models/User'
 import Priority from './types/Priority'
 
 import RequestsStore from './RequestsStore'
@@ -173,7 +172,7 @@ export default class PalletSelectStore {
 		this.location = location
 	}
 
-	@action createRequest(user: User): void {
+	@action createRequest(): void {
 		if (!this.side || !this.column || !this.row) {
 			return
 		}
@@ -181,8 +180,7 @@ export default class PalletSelectStore {
 		try {
 			this.requestStore.createRequest({
 				priority: this.priority,
-				location: this.location,
-				user
+				location: this.location
 			}, this.input)
 		} catch (e) {
 			this.errorHandler.handleDisplayError(e.message)

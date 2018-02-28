@@ -45,6 +45,12 @@ const palletSelectStore: PalletSelectStore = new PalletSelectStore(requestsStore
 
 @observer
 class App extends React.Component<Props & WithStyles<ClassKeys>> {
+	constructor(props: Props & WithStyles<ClassKeys>) {
+		super(props)
+
+		requestsStore.appStore = props.store
+	}
+
 	mapErrorHandler = (instance: ErrorSnackbar) => {
 		if (instance) {
 			requestsStore.errorHandler = instance

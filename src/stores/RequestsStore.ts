@@ -3,6 +3,7 @@ import { action, observable } from 'mobx'
 
 import Request, { RequestParams } from '../models/Request'
 import { StatusName } from '../models/StatusChange'
+import AppStore from './AppStore'
 
 import ErrorSnackbar from '../components/common/ErrorSnackbar'
 
@@ -12,6 +13,7 @@ const api = axios.create({ baseURL: baseURL + 'request/' })
 export default class PalletSelectStore {
 	static nextId: number = 0
 	errorHandler: ErrorSnackbar
+	appStore: AppStore
 
 	@observable requests: Request[]
 
@@ -40,7 +42,8 @@ export default class PalletSelectStore {
 		try {
 			const response = await api.post<Request>('', {
 				requestParams,
-				palletName
+				palletName,
+				user: this.appStore.user
 			})
 
 			this.requests.push(new Request(response.data))
@@ -49,7 +52,9 @@ export default class PalletSelectStore {
 		}
 	}
 
+	// FIXME: Don't filter if fails at remote cancel
 	@action cancel(id: number): void {
+		this.changeStatus(id, 'cancel')
 		this.requests = this.requests.filter(r => r.id !== id)
 	}
 
@@ -67,7 +72,9 @@ export default class PalletSelectStore {
 
 	async changeStatus(id: number, actionName: string): Promise<void> {
 		try {
-			const response = await api.get<Request>(id + '/action/' + actionName)
+			const response = await api.post<Request>(id + '/action/' + actionName, {
+				user: this.appStore.user
+			})
 			const request = new Request(response.data)
 
 			this.requests = this.requests.map(r => {
