@@ -18,10 +18,20 @@ export default class SearchStore {
 		this.filterField = field
 	}
 
+	search = (text: string, searchText: string): boolean => {
+		return text.toLowerCase().search(searchText.toLowerCase()) > -1 ? true : false
+	}
+
 	filter = (i: Request) => {
-		if (this.filterField === 'name') {
-			if (i.pallet.name.toLowerCase().search(this.filterText) > -1) {
-				return i
+		switch (this.filterField) {
+			case 'name': {
+				return this.search(i.pallet.name, this.filterText) ? i : undefined
+			}
+			case 'location': {
+				return this.search(i.location, this.filterText) ? i : undefined
+			}
+			case 'requester': {
+				return this.search(i.requester, this.filterText) ? i : undefined
 			}
 		}
 	}
