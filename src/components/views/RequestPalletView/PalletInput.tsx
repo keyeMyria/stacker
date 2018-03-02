@@ -120,11 +120,11 @@ class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 							onChange={this.handleChangeInputLocation}
 							input={<Input disableUnderline fullWidth />}
 						>
-							<MenuItem value="prijem">Příjem</MenuItem>
-							<MenuItem value="sklad">Hutní sklad</MenuItem>
-							<MenuItem value="expedice">Expedice</MenuItem>
-							<MenuItem value="haslerPrvniPatro">Hasler 1. patro</MenuItem>
-							<MenuItem value="haslerSklad">Hasler sklad</MenuItem>
+							<MenuItem value="Příjem">Příjem</MenuItem>
+							<MenuItem value="Hutní sklad">Hutní sklad</MenuItem>
+							<MenuItem value="Expedice">Expedice</MenuItem>
+							<MenuItem value="Hasler 1. patro">Hasler 1. patro</MenuItem>
+							<MenuItem value="Hasler sklad">Hasler sklad</MenuItem>
 						</Select>
 					</div>
 				</Paper>
