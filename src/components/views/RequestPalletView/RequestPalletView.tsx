@@ -99,6 +99,7 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 					<div className={this.props.classes.inputs}>
 						<PalletInput
 							store={this.props.selectStore}
+							onSubmit={this.handleCreateRequest}
 						/>
 
 						<PalletSelect

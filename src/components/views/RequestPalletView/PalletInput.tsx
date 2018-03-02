@@ -18,6 +18,7 @@ import PriorityButton from './PriorityButton'
 
 interface Props {
 	store: PalletSelectStore
+	onSubmit: () => void
 }
 
 type ClassKeys = (
@@ -75,6 +76,12 @@ class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 		this.props.store.setLocation(event.target.value)
 	}
 
+	handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+		if (event.key === 'Enter') {
+			this.props.onSubmit()
+		}
+	}
+
 	render() {
 		const palletClasses = classnames(
 			this.props.classes.textInput,
@@ -108,6 +115,7 @@ class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 						onChange={this.handleChangeInputPallet}
 						className={palletClasses}
 						InputProps={{ disableUnderline: true }}
+						onKeyPress={this.handleEnterPress}
 					/>
 
 					<div
@@ -119,6 +127,7 @@ class PalletInput extends React.Component<Props & WithStyles<ClassKeys>> {
 							value={this.props.store.location}
 							onChange={this.handleChangeInputLocation}
 							input={<Input disableUnderline fullWidth />}
+							onKeyPress={this.handleEnterPress}
 						>
 							<MenuItem value="Příjem">Příjem</MenuItem>
 							<MenuItem value="Hutní sklad">Hutní sklad</MenuItem>

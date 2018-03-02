@@ -173,10 +173,6 @@ export default class PalletSelectStore {
 	}
 
 	@action createRequest(): void {
-		if (!this.side || !this.column || !this.row) {
-			return
-		}
-
 		try {
 			this.requestStore.createRequest({
 				priority: this.priority,
