@@ -26,6 +26,7 @@ interface Props {
 type ClassKeys = (
 	'root'
 	| 'request'
+	| 'mainSelect'
 	| 'inputs'
 	| 'button'
 	| 'requests'
@@ -37,7 +38,11 @@ const decorate = withStyles<ClassKeys>(() => ({
 	},
 	request: {
 		display: 'flex',
+		flexDirection: 'column',
 		marginBottom: 64
+	},
+	mainSelect: {
+		display: 'flex'
 	},
 	inputs: {
 		width: 400
@@ -96,27 +101,29 @@ class RequestPalletView extends React.Component<Props & WithStyles<ClassKeys>> {
 		return(
 			<div className={this.props.classes.root}>
 				<div className={this.props.classes.request}>
-					<div className={this.props.classes.inputs}>
-						<PalletInput
-							store={this.props.selectStore}
-							onSubmit={this.handleCreateRequest}
-						/>
+					<div className={this.props.classes.mainSelect}>
+						<div className={this.props.classes.inputs}>
+							<PalletInput
+								store={this.props.selectStore}
+								onSubmit={this.handleCreateRequest}
+							/>
+						</div>
 
-						<PalletSelect
-							store={this.props.selectStore}
-						/>
+						<Button
+							variant="fab"
+							color="primary"
+							aria-label="add"
+							className={this.props.classes.button}
+							disabled={this.props.selectStore.formMissingValues()}
+							onClick={this.handleCreateRequest}
+						>
+							<AddIcon />
+						</Button>
 					</div>
 
-					<Button
-						variant="fab"
-						color="primary"
-						aria-label="add"
-						className={this.props.classes.button}
-						disabled={this.props.selectStore.formMissingValues()}
-						onClick={this.handleCreateRequest}
-					>
-						<AddIcon />
-					</Button>
+					<div className={this.props.classes.inputs}>
+						<PalletSelect store={this.props.selectStore} />
+					</div>
 				</div>
 
 				<RequestList
