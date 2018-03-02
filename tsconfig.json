@@ -1,23 +1,30 @@
 {
 	"compilerOptions": {
-		"outDir": "./dist/",
-		"sourceMap": true,
-		"noImplicitAny": true,
-		"strictNullChecks": true,
-		"module": "commonjs",
-		"target": "es6",
-		"jsx": "react",
-		"allowJs": true,
-		"experimentalDecorators": true,
+	  "outDir": "dist",
+	  "module": "esnext",
+	  "target": "es5",
+	  "lib": ["es6", "dom"],
+	  "sourceMap": true,
+	  "allowJs": true,
+	  "jsx": "react",
+	  "moduleResolution": "node",
+	  "rootDir": "src",
+	  "forceConsistentCasingInFileNames": true,
+	  "noImplicitThis": true,
+	  "noImplicitAny": true,
+	  "strictNullChecks": true,
+	  "suppressImplicitAnyIndexErrors": true,
 		"noUnusedLocals": true,
-		"types": [
-			"material-ui",
-			"material-ui-icons"
-		]
+		"experimentalDecorators": true
 	},
 	"exclude": [
 		"node_modules",
-		"node_modules/material-ui",
-    	"dist"
-  	]
-}
+		"build",
+		"scripts",
+		"acceptance-tests",
+		"webpack",
+		"jest",
+		"src/setupTests.ts"
+	]
+  }
+  
