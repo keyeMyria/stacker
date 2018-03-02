@@ -48,7 +48,7 @@ export default class PalletSelectStore {
 		this.row = ''
 
 		this.priority = 'standard'
-		this.location = ''
+		this.location = localStorage.getItem('palletLocation') || ''
 	}
 
 	@action setInput(input: string): void {
@@ -172,12 +172,14 @@ export default class PalletSelectStore {
 		this.location = location
 	}
 
-	@action createRequest(): void {
+	@action async createRequest(): Promise<void> {
 		try {
-			this.requestStore.createRequest({
+			await this.requestStore.createRequest({
 				priority: this.priority,
 				location: this.location
 			}, this.input)
+
+			localStorage.setItem('palletLocation', this.location)
 		} catch (e) {
 			this.errorHandler.handleDisplayError(e.message)
 		}
