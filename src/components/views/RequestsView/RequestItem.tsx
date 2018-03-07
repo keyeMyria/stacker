@@ -112,12 +112,15 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 	}
 
 	render() {
+		const { requestedAt, deliveredAt, returnedAt } = this.props.request
+
 		if (this.props.request.pallet === undefined) {
 			return null
 		}
 
-		const requestedAt = distanceInWordsToNow(
-			this.props.request.requestedAt,
+		const timeAt = returnedAt ? returnedAt : deliveredAt ? deliveredAt : requestedAt
+		const timeToNow = distanceInWordsToNow(
+			timeAt,
 			{ addSuffix: true, locale: csLocale }
 		)
 
@@ -155,7 +158,7 @@ class RequestItem extends React.Component<Props & WithStyles<ClassKeys>> {
 
 						<div className={this.props.classes.side}>
 							<Typography variant="caption">
-								{requestedAt}
+								{timeToNow}
 							</Typography>
 
 							<ItemActions

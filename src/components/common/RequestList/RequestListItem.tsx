@@ -32,8 +32,11 @@ const decorate = withStyles<ClassNames>(() => ({
 
 class RequestListItem extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
-		const requestedAt = distanceInWordsToNow(
-			this.props.request.requestedAt,
+		const { requestedAt, deliveredAt, returnedAt } = this.props.request
+
+		const timeAt = returnedAt ? returnedAt : deliveredAt ? deliveredAt : requestedAt
+		const timeToNow = distanceInWordsToNow(
+			timeAt,
 			{ addSuffix: true, locale: csLocale }
 		)
 
@@ -43,7 +46,7 @@ class RequestListItem extends React.Component<Props & WithStyles<ClassNames>> {
 					{this.props.request.palletName}
 				</Typography>
 				<Typography variant="caption">
-					{requestedAt}
+					{timeToNow}
 				</Typography>
 			</div>
 		)
