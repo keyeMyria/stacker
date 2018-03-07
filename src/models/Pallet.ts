@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { action, observable } from 'mobx'
+import { observable } from 'mobx'
 import Request from './Request'
 
 export type Side = 'left' | 'right'
@@ -8,9 +7,6 @@ export interface Position {
 	column: number,
 	row: number
 }
-
-const baseURL: string = 'http://localhost:8080/stacker/'
-const api = axios.create({ baseURL: baseURL + 'pallet' })
 
 const sideToChar = (side: Side): string => side === 'left' ? 'L' : 'R'
 const charToSide = (char: string): Side => char === 'L' ? 'left' : 'right'
@@ -46,16 +42,6 @@ export default class Pallet implements PalletParams {
 		this.content = pallet.content
 		this.requests = pallet.requests
 		this.name = pallet.name
-	}
-
-	@action async toggleEmpty(): Promise<void> {
-		try {
-			await api.get(this.id + '/action/empty')
-
-			this.isEmpty = !this.isEmpty
-		} catch (err) {
-			console.log(err)
-		}
 	}
 
 	getSideName(): string {

@@ -9,6 +9,7 @@ import Typography from 'material-ui/Typography'
 
 import Pallet from '../../../models/Pallet'
 
+import PalletDialogStore from '../../../stores/PalletDialogStore'
 import PalletDialog from '../../dialogs/PalletDialog'
 
 interface Props {
@@ -69,7 +70,7 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 			{ [this.props.classes.rootEmpty]: this.props.pallet.isEmpty }
 		)
 
-		return[
+		const content = [
 			<div
 				className={rootClasses}
 				onClick={this.handleDialogOpen}
@@ -79,14 +80,21 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 					{this.props.pallet.side === 'left' ? 'L' : 'R'}
 				</Typography>
 			</div>
-		,
-			<PalletDialog
-				open={this.state.open}
-				handleClose={this.handleDialogClose}
-				pallet={this.props.pallet}
-				key="dialog"
-			/>
 		]
+
+		if (this.state.open) {
+			const dialogStore = new PalletDialogStore(this.props.pallet.id)
+			content.push(
+				<PalletDialog
+					open={this.state.open}
+					handleClose={this.handleDialogClose}
+					store={dialogStore}
+					key="dialog"
+				/>
+			)
+		}
+
+		return content
 	}
 }
 
