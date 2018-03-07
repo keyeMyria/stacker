@@ -33,7 +33,7 @@ type ClassKeys = (
 
 const decorate = withStyles<ClassKeys>(theme => ({
 	routes: {
-		display: 'flex',
+		display: 'grid',
 		justifyContent: 'center',
 		paddingTop: 32
 	}

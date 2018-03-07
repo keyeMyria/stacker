@@ -24,7 +24,6 @@ type ClassNames = 'root' | 'rowLegend' | 'rowLegendLetter'
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
 		display: 'flex',
-		width: 1000,
 		overflow: 'hidden'
 	},
 	rowLegend: {
