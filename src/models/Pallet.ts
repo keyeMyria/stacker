@@ -1,4 +1,5 @@
-import { observable } from 'mobx'
+import axios from 'axios'
+import { action, observable } from 'mobx'
 import Request from './Request'
 
 export type Side = 'left' | 'right'
@@ -7,6 +8,9 @@ export interface Position {
 	column: number,
 	row: number
 }
+
+const baseURL: string = 'http://localhost:8080/stacker/'
+const api = axios.create({ baseURL: baseURL + 'pallet' })
 
 const sideToChar = (side: Side): string => side === 'left' ? 'L' : 'R'
 const charToSide = (char: string): Side => char === 'L' ? 'left' : 'right'
@@ -29,9 +33,12 @@ export default class Pallet implements PalletParams {
 	column: number
 	row: number
 	@observable isEmpty: boolean
-	content: string
+	@observable content: string
 	requests: Request[]
 	name: string
+
+	@observable pristineContent: boolean
+	originalContent: string
 
 	constructor(pallet: Pallet) {
 		this.id = pallet.id
@@ -39,9 +46,45 @@ export default class Pallet implements PalletParams {
 		this.column = pallet.column
 		this.row = pallet.row
 		this.isEmpty = pallet.isEmpty
-		this.content = pallet.content
+		this.content = this.originalContent = pallet.content || ''
 		this.requests = pallet.requests
 		this.name = pallet.name
+
+		this.pristineContent = true
+	}
+
+	@action async toggleEmpty(): Promise<void> {
+		try {
+			await api.get(this.id + '/action/empty')
+
+			this.isEmpty = !this.isEmpty
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	@action changeContent(content: string): void {
+		this.pristineContent = false
+		this.content = content
+
+		if (
+			content === this.originalContent ||
+			(content === '' && this.originalContent === null)
+		) {
+			this.pristineContent = true
+		}
+	}
+
+	@action async savePalletContent(): Promise<void> {
+		try {
+			await api.post<Pallet>(this.id + '/action/changeContent', {
+				content: this.content
+			})
+
+			this.pristineContent = true
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
 	getSideName(): string {

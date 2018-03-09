@@ -9,7 +9,6 @@ import Typography from 'material-ui/Typography'
 
 import Pallet from '../../../models/Pallet'
 
-import PalletDialogStore from '../../../stores/PalletDialogStore'
 import PalletDialog from '../../dialogs/PalletDialog'
 
 interface Props {
@@ -83,12 +82,11 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 		]
 
 		if (this.state.open) {
-			const dialogStore = new PalletDialogStore(this.props.pallet.id)
 			content.push(
 				<PalletDialog
 					open={this.state.open}
 					handleClose={this.handleDialogClose}
-					store={dialogStore}
+					pallet={this.props.pallet}
 					key="dialog"
 				/>
 			)
