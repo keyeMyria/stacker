@@ -14,7 +14,7 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 import Collapse from 'material-ui/transitions/Collapse'
 import Typography from 'material-ui/Typography'
 
-import { formatPriority } from '../../../helpers/priority'
+import { formatPriority, formatStatus } from '../../../helpers/priority'
 import Request from '../../../models/Request'
 
 const timeFormat: string = 'H:mm'
@@ -164,6 +164,14 @@ class RequestListItemSummary extends React.Component<Props & WithStyles<ClassNam
 					</Typography>
 					{request.deliveredAt && deliveredTimes}
 					{request.returnedAt && returnedTimes}
+					<Typography>
+						<span className={infoPriorityClasses}>
+							Status:
+						</span>
+						<span>
+							{formatStatus(request.statusName)}
+						</span>
+					</Typography>
 					<Typography>
 						<span className={infoPriorityClasses}>
 							Priorita:
