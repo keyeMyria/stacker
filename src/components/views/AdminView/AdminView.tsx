@@ -6,32 +6,25 @@ import { withStyles, WithStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 
 import AppStore from '../../../stores/AppStore'
+import RoleSelectStore from '../../../stores/RoleSelectStore'
+
+import RoleSelect from './RoleSelect'
 
 interface Props {
 	store: AppStore
 }
 
-type ClassNames = 'root' | 'content' | 'form' | 'formField'
+type ClassNames = 'root'
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
-		height: '100%',
-		width: '100%',
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center'
-	},
-	content: {
-		width: 300
-	},
-	form: {
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	formField: {
-		marginBottom: 16
 	}
 }))
+
+const roleSelectStore = new RoleSelectStore()
 
 @observer
 class AdminView extends React.Component<Props & WithStyles<ClassNames>> {
@@ -40,6 +33,7 @@ class AdminView extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
 		return(
 			<div className={this.props.classes.root}>
+				<RoleSelect store={roleSelectStore} />
 				<Button
 					variant="raised"
 					color="secondary"

@@ -10,4 +10,10 @@ export default class User {
 	requests?: Request[]
 	statusChange?: StatusChange
 	fullName: string
+
+	constructor(user?: User) {
+		if (user) {
+			Object.assign(this, user)
+		}
+	}
 }
