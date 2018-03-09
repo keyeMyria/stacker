@@ -12,6 +12,7 @@ import ErrorSnackbar from '../common/ErrorSnackbar'
 import ExpandSection from '../common/ExpandSection'
 import Field from '../common/Field'
 import Minimap from '../common/Minimap'
+import RequestList from './RequestList'
 
 interface Props {
 	open: boolean,
@@ -71,8 +72,6 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 
 	render() {
 		const { pallet } = this.props
-
-		console.log(pallet)
 
 		return (
 			<Dialog
@@ -135,10 +134,10 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 					/>
 
 					<ExpandSection
-						title="Požadavky"
+						title="Poslední Požadavky"
 						className={this.props.classes.requests}
 					>
-						Empty
+						<RequestList requests={pallet.requests} />
 					</ExpandSection>
 				</DialogContent>
 
