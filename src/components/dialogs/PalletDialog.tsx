@@ -72,6 +72,8 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
 		const { pallet } = this.props
 
+		console.log(pallet)
+
 		return (
 			<Dialog
 				open={this.props.open}
