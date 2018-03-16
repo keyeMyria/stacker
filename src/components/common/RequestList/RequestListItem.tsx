@@ -2,8 +2,10 @@ import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import * as csLocale from 'date-fns/locale/cs'
 import * as React from 'react'
 
-import { ListItem } from 'material-ui/List'
+import { grey } from 'material-ui/colors'
 import { withStyles, WithStyles } from 'material-ui/styles'
+
+import { ListItem } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 
 import Request from '../../../models/Request'
@@ -12,7 +14,7 @@ interface Props {
 	request: Request
 }
 
-type ClassNames = 'root' | 'content' | 'primaryText'
+type ClassNames = 'root' | 'content' | 'text' | 'textLight'
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
@@ -23,10 +25,16 @@ const decorate = withStyles<ClassNames>(() => ({
 	content: {
 		flex: '1 1 auto'
 	},
-	primaryText: {
+	text: {
+		width: '100%',
+		boxSizing: 'border-box',
+		paddingRight: 24,
 		display: 'flex',
 		justifyContent: 'space-between',
-		alignItems: 'flex-start'
+		alignItems: 'center'
+	},
+	textLight: {
+		color: grey[500]
 	}
 }))
 
@@ -40,28 +48,25 @@ class RequestListItem extends React.Component<Props & WithStyles<ClassNames>> {
 			{ addSuffix: true, locale: csLocale }
 		)
 
-		const primaryText = (
-			<div className={this.props.classes.primaryText}>
+		const text = (
+			<div className={this.props.classes.text}>
 				<Typography variant="subheading">
 					{this.props.request.palletName}
+					<span className={this.props.classes.textLight}>&nbsp;do&nbsp;</span>
+					{this.props.request.location}
+					<span className={this.props.classes.textLight}>&nbsp;zadal(a)&nbsp;</span>
+					{this.props.request.requester}
 				</Typography>
-				<Typography variant="caption">
+				<Typography className={this.props.classes.textLight}>
 					{timeToNow}
 				</Typography>
 			</div>
 		)
 
-		const secondaryText = (
-			<Typography>
-				{this.props.request.requester}, {this.props.request.location}
-			</Typography>
-		)
-
 		return(
 			<ListItem disableGutters className={this.props.classes.root}>
 				<div className={this.props.classes.content}>
-					{primaryText}
-					{secondaryText}
+					{text}
 				</div>
 			</ListItem>
 		)
