@@ -6,7 +6,7 @@ import {
 	RouteProps
 } from 'react-router-dom'
 
-import Reboot from 'material-ui/Reboot'
+import CssBaseline from 'material-ui/CssBaseline'
 import { withStyles, WithStyles } from 'material-ui/styles'
 
 import AppStore from '../stores/AppStore'
@@ -102,7 +102,7 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 		return(
 			<Router>
 				<>
-					<Reboot />
+					<CssBaseline />
 					{isAuthenticated ? routes : login}
 					<ErrorSnackbar ref={this.mapErrorHandler} />
 				</>
