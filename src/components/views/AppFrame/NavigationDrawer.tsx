@@ -10,9 +10,12 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
+import AppStore from '../../../stores/AppStore'
+
 interface Props {
 	open: boolean,
-	handleClose: () => void
+	handleClose: () => void,
+	store: AppStore
 }
 
 type ClassKeys = (
@@ -46,7 +49,29 @@ const decorate = withStyles<ClassKeys>(theme => ({
 }), { withTheme: true })
 
 class NavigationDrawer extends React.Component<Props & WithStyles<ClassKeys>> {
+	isWorker = () => {
+		const { isWorker, isAdmin } =  this.props.store.user
+		return isWorker || isAdmin
+	}
+	isAdmin = () => this.props.store.user.isAdmin
+
+	renderLink(path: string, text: string, showOn?: any) {
+		if (showOn && !showOn()) { return null }
+
+		return (
+			<Link to={path} className={this.props.classes.linkItem}>
+				<ListItem button>
+					<ListItemText primary={text} />
+				</ListItem>
+			</Link>
+		)
+	}
+
 	render() {
+		const { isAdmin } = this.props.store.user
+
+		if (this.props.store.user === undefined) { return null }
+
 		return (
 			<Drawer
 				variant="persistent"
@@ -61,34 +86,14 @@ class NavigationDrawer extends React.Component<Props & WithStyles<ClassKeys>> {
 					</div>
 					<Divider />
 					<List>
-						<Link to="/" className={this.props.classes.linkItem}>
-							<ListItem button>
-								<ListItemText primary="Zažádat paletu" />
-							</ListItem>
-						</Link>
-						<Link to="/requests" className={this.props.classes.linkItem}>
-							<ListItem button>
-								<ListItemText primary="Aktivní požadavky" />
-							</ListItem>
-						</Link>
-						<Link to="/map" className={this.props.classes.linkItem}>
-							<ListItem button>
-								<ListItemText primary="Mapa palet" />
-							</ListItem>
-						</Link>
-						<Link to="/history" className={this.props.classes.linkItem}>
-							<ListItem button>
-								<ListItemText primary="Historie požadavků" />
-							</ListItem>
-						</Link>
+						{this.renderLink('/', 'Zažádat paletu')}
+						{this.renderLink('/requests', 'Aktivní požadavky', this.isWorker)}
+						{this.renderLink('/map', 'Mapa palet')}
+						{this.renderLink('/history', 'Historie požadavků')}
 
-						<Divider className={this.props.classes.divider} />
+						{isAdmin && <Divider className={this.props.classes.divider} />}
 
-						<Link to="/administration" className={this.props.classes.linkItem}>
-							<ListItem button>
-								<ListItemText primary="Administrace" />
-							</ListItem>
-						</Link>
+						{this.renderLink('/administration', 'Administrace', this.isAdmin)}
 					</List>
 				</div>
 			</Drawer>

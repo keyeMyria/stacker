@@ -182,6 +182,7 @@ class AppFrame extends React.Component<Props & WithStyles<ClassKeys>> {
 				<NavigationDrawer
 					open={this.state.drawerOpen}
 					handleClose={this.handleDrawerClose}
+					store={this.props.store}
 				/>
 
 				<main className={contentClasses}>
