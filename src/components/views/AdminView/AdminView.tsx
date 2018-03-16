@@ -8,10 +8,12 @@ import Button from 'material-ui/Button'
 import AppStore from '../../../stores/AppStore'
 import RoleSelectStore from '../../../stores/RoleSelectStore'
 
+import NoPermissionView from '../../common/NoPermissionView'
 import RoleSelect from './RoleSelect'
 
 interface Props {
-	store: AppStore
+	store: AppStore,
+	canShow: boolean
 }
 
 type ClassNames = 'root'
@@ -31,6 +33,8 @@ class AdminView extends React.Component<Props & WithStyles<ClassNames>> {
 	handleInitialize = () => this.props.store.initializePallets()
 
 	render() {
+		if (!this.props.canShow) { return <NoPermissionView /> }
+
 		return(
 			<div className={this.props.classes.root}>
 				<RoleSelect store={roleSelectStore} />

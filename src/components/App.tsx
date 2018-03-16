@@ -59,7 +59,7 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 	}
 
 	render() {
-		const { isAuthenticated } = this.props.store
+		const { isAuthenticated, user } = this.props.store
 
 		const requestPalletView = (props: RouteProps) => (
 			<RequestPalletView
@@ -73,6 +73,7 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 			<RequestsView
 				{...props}
 				store={requestsStore}
+				canShow={user.isWorker || user.isAdmin}
 			/>
 		)
 		const palletMapView = (props: RouteProps) => (
@@ -82,7 +83,11 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 			<HistoryView {...props} store={requestsStore} />
 		)
 		const adminView = (props: RouteProps) => (
-			<AdminView {...props} store={this.props.store} />
+			<AdminView
+				{...props}
+				store={this.props.store}
+				canShow={user.isAdmin}
+			/>
 		)
 
 		const routes = (
