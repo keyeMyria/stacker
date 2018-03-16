@@ -17,17 +17,31 @@ type ClassNames = 'root'
 
 const decorate = withStyles<ClassNames>(() => ({
 	root: {
-		margin: '8px 16px'
+		height: 400,
+		overflow: 'auto'
 	}
 }))
 
 const UserList: React.SFC<Props & WithStyles<ClassNames>> = (props) => {
+	const { users } = props.store
+
 	const mapUsers = () => (
-		props.store.users.map(u => <UserListItem key={u.username} user={u} />)
+		users
+		.filter(u => {
+			if (
+				(props.store.role === 'admin' && !u.isAdmin) ||
+				(props.store.role === 'worker' && !u.isWorker)
+			) {
+				return null
+			}
+
+			return u
+		})
+		.map(u => <UserListItem key={u.username} user={u} store={props.store} />)
 	)
 
 	return(
-		<List>
+		<List className={props.classes.root}>
 			{mapUsers()}
 		</List>
 	)

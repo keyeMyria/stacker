@@ -3,10 +3,11 @@ import * as React from 'react'
 
 import { withStyles, WithStyles } from 'material-ui/styles'
 
-import { FormControl } from 'material-ui/Form'
-import Input from 'material-ui/Input'
 import { MenuItem } from 'material-ui/Menu'
-import Select from 'material-ui/Select'
+import Paper from 'material-ui/Paper'
+import TextField from 'material-ui/TextField'
+
+import Downshift, { ControllerStateAndHelpers } from 'downshift'
 
 import User from '../../../models/User'
 import RoleSelectStore from '../../../stores/RoleSelectStore'
@@ -15,10 +16,12 @@ interface Props {
 	store: RoleSelectStore
 }
 
-type ClassNames = 'root' | 'filter'
+type ClassNames = 'root' | 'filter' | 'suggestions'
 
-const decorate = withStyles<ClassNames>(() => ({
+const decorate = withStyles<ClassNames>((theme) => ({
 	root: {
+		flexGrow: 1,
+		position: 'relative',
 		margin: '8px 16px'
 	},
 	filter: {
@@ -27,58 +30,74 @@ const decorate = withStyles<ClassNames>(() => ({
 		paddingLeft: 16,
 		paddingRight: 16,
 		marginBottom: 8
-	}
+	},
+	suggestions: {
+		position: 'absolute',
+		zIndex: 1,
+		marginTop: theme.spacing.unit,
+		left: 0,
+		right: 0
+	  }
 }))
 
+const filterUsers = (inputValue: string) => (u: User) => (
+	!inputValue || u.fullName.toLowerCase().includes(inputValue.toLowerCase())
+)
+
 const UserSelect: React.SFC<Props & WithStyles<ClassNames>> = (props) => {
-	const handleChange = (event: any) => {
-		props.store.changeSelected(event.target.value)
-	}
+	const { users } = props.store
 
-	const handleFilter = (event: any) => {
-		props.store.changeFilter(event.target.value)
-	}
-
-	const mapMenuItems = (user: User) => (
+	const mapSuggestion = (sugProps: ControllerStateAndHelpers) => (u: User, index: number) => (
 		<MenuItem
-			key={user.username}
-			value={user.username}
+			{...sugProps.getItemProps({ item: u })}
+			key={u.fullName}
+			selected={sugProps.highlightedIndex === index}
+			component="div"
+			style={{ fontWeight: sugProps.selectedItem === u.fullName ? 500 : 400 }}
+			dense
 		>
-			{user.fullName}
+			{u.fullName}
 		</MenuItem>
 	)
 
-	const renderSelected = (selected: any) => {
-		selected = selected.filter((v: any) => v === undefined ? null : v)
-		return selected.map((s: string) => {
-			const user = props.store.users.find(u => u.username === s)
-			if (user) { return user.fullName }
-		}).join(', ')
+	const renderAutocomplete = (sugProps: ControllerStateAndHelpers) => {
+		const items = users.filter(filterUsers(sugProps.inputValue || ''))
+
+		const suggestions = (
+			<Paper className={props.classes.suggestions}>
+				{items.map(mapSuggestion(sugProps))}
+			</Paper>
+		)
+
+		return (
+			<div className={props.classes.root}>
+				<TextField
+					fullWidth={true}
+					placeholder="Přidat..."
+					{...sugProps.getInputProps({ onChange: (e: any) => {
+						console.log(e.target.value)
+						if (e.target.value === '') {
+							sugProps.clearSelection()
+						}
+					}})}
+				/>
+				{sugProps.isOpen ? suggestions : null}
+			</div>
+		)
 	}
 
+	// FIXME: Clear after selection
+	const handleSelect = (selectedItem: User) => {
+		props.store.addRole(selectedItem)
+	}
+	const itemToString = (item: User) => item ? item.fullName : ''
+
 	return(
-		<FormControl className={props.classes.root}>
-			<Select
-				multiple
-				value={props.store.selectedUsers.slice()}
-				onChange={handleChange}
-				renderValue={renderSelected}
-				disableUnderline
-				MenuProps={{ MenuListProps: { dense: true }}}
-			>
-				<div>
-					<Input
-						value={props.store.filterUsers}
-						onChange={handleFilter}
-						className={props.classes.filter}
-						placeholder="Hledat"
-						disableUnderline
-						fullWidth
-					/>
-				</div>
-				{props.store.users.filter(props.store.filter).map(mapMenuItems)}
-			</Select>
-		</FormControl>
+		<Downshift
+			render={renderAutocomplete}
+			onSelect={handleSelect}
+			itemToString={itemToString}
+		/>
 	)
 }
 

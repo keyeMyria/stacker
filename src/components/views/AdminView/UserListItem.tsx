@@ -8,9 +8,11 @@ import { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/Lis
 import RemoveIcon from 'material-ui-icons/Clear'
 
 import User from '../../../models/User'
+import RoleSelectStore from '../../../stores/RoleSelectStore'
 
 interface Props {
-	user: User
+	user: User,
+	store: RoleSelectStore
 }
 
 type ClassNames = 'root' | 'actionIcon'
@@ -26,11 +28,17 @@ const decorate = withStyles<ClassNames>(() => ({
 }))
 
 const UserListItem: React.SFC<Props & WithStyles<ClassNames>> = (props) => {
+	const handleChange = () => { props.store.removeRole(props.user) }
+
 	return(
 		<ListItem className={props.classes.root}>
 			<ListItemText primary={props.user.fullName} />
 			<ListItemSecondaryAction>
-				<IconButton aria-label="Remove" className={props.classes.actionIcon}>
+				<IconButton
+					aria-label="Remove"
+					className={props.classes.actionIcon}
+					onClick={handleChange}
+				>
 					<RemoveIcon />
 				</IconButton>
 			</ListItemSecondaryAction>

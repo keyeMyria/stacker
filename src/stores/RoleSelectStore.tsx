@@ -11,14 +11,12 @@ export default class RoleSelectStore {
 
 	@observable role: string
 
-	@observable selectedUsers: string[]
-	@observable filterUsers: string
+	@observable selectedUser: string
 	@observable users: User[]
 
 	constructor() {
 		this.fetchingUsers = false
-		this.selectedUsers = []
-		this.filterUsers = ''
+		this.selectedUser = ''
 
 		this.role = 'admin'
 
@@ -26,8 +24,36 @@ export default class RoleSelectStore {
 	}
 
 	@action changeRole(role: string) { this.role = role }
-	@action changeSelected(selected: string[]) { this.selectedUsers = selected }
-	@action changeFilter(filter: string) { this.filterUsers = filter }
+	@action changeSelected(selected: string) { this.selectedUser = selected }
+
+	@action addRole(user: User): void {
+		if (this.role === 'admin') {
+			user.isAdmin = true
+		} else if (this.role === 'worker') {
+			user.isWorker = true
+		}
+
+		this.updateUser(user)
+	}
+
+	@action removeRole(user: User): void {
+		if (this.role === 'admin') {
+			user.isAdmin = false
+		} else if (this.role === 'worker') {
+			user.isWorker = false
+		}
+
+		this.updateUser(user)
+	}
+
+	@action async updateUser(user: User): Promise<void> {
+		try {
+			await api.patch<User[]>(user.username, user)
+			this.users = this.users.map(u => u.username === user.username ? user : u)
+		} catch (err) {
+			console.log(err)
+		}
+	}
 
 	async fetchUsers(): Promise<void> {
 		this.fetchingUsers = true
@@ -40,11 +66,5 @@ export default class RoleSelectStore {
 		}
 
 		this.fetchingUsers = false
-	}
-
-	filter = (u: User) => {
-		return u.fullName.toLowerCase().search(
-			this.filterUsers.toLowerCase()
-		) > -1 ? u : undefined
 	}
 }
