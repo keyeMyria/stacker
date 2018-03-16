@@ -63,22 +63,22 @@ class NavigationDrawer extends React.Component<Props & WithStyles<ClassKeys>> {
 					<List>
 						<Link to="/" className={this.props.classes.linkItem}>
 							<ListItem button>
-								<ListItemText primary="Request" />
+								<ListItemText primary="Zažádat paletu" />
 							</ListItem>
 						</Link>
 						<Link to="/requests" className={this.props.classes.linkItem}>
 							<ListItem button>
-								<ListItemText primary="Active Requests" />
+								<ListItemText primary="Aktivní požadavky" />
 							</ListItem>
 						</Link>
 						<Link to="/map" className={this.props.classes.linkItem}>
 							<ListItem button>
-								<ListItemText primary="Pallet map" />
+								<ListItemText primary="Mapa palet" />
 							</ListItem>
 						</Link>
 						<Link to="/history" className={this.props.classes.linkItem}>
 							<ListItem button>
-								<ListItemText primary="Request history" />
+								<ListItemText primary="Historie požadavků" />
 							</ListItem>
 						</Link>
 

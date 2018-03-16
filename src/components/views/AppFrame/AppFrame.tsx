@@ -144,7 +144,7 @@ class AppFrame extends React.Component<Props & WithStyles<ClassKeys>> {
 						onClose={this.handleMenuClose}
 					>
 						<MenuItem onClick={this.handleLogout}>
-							Logout
+							Odhlásit
 						</MenuItem>
 					</Menu>
 				</div>
@@ -172,7 +172,7 @@ class AppFrame extends React.Component<Props & WithStyles<ClassKeys>> {
 							color="inherit"
 							className={this.props.classes.title}
 						>
-							Stacker
+							Zakladač
 						</Typography>
 
 						{logoutMenu}

@@ -122,7 +122,7 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 							disabled={pallet.pristineContent}
 							onClick={this.handleSaveContent}
 						>
-							Save
+							Uložit
 						</Button>
 					</div>
 
@@ -143,11 +143,11 @@ class PalletDialog extends React.Component<Props & WithStyles<ClassNames>> {
 
 				<DialogActions>
 					<Button color="secondary" onClick={this.handleEmptyPallet}>
-						{pallet.isEmpty ? 'Fill' : 'Empty'}
+						{pallet.isEmpty ? 'Zaplnit' : 'Vyprázdnit'}
 					</Button>
 
 					<Button onClick={this.props.handleClose}>
-						Close
+						Zavřít
 					</Button>
 				</DialogActions>
 				<ErrorSnackbar ref={this.mapErrorHandler} />
