@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { action, observable } from 'mobx'
+
+import PalletType from './PalletType'
 import Request from './Request'
 
 export type Side = 'left' | 'right'
@@ -33,23 +35,21 @@ export default class Pallet implements PalletParams {
 	column: number
 	row: number
 	@observable isEmpty: boolean
+	@observable isDisabled: boolean
 	@observable content: string
 	requests: Request[]
+	types: PalletType[]
 	name: string
 
 	@observable pristineContent: boolean
 	originalContent: string
 
-	constructor(pallet: Pallet) {
-		this.id = pallet.id
-		this.side = pallet.side
-		this.column = pallet.column
-		this.row = pallet.row
-		this.isEmpty = pallet.isEmpty
-		this.content = this.originalContent = pallet.content || ''
-		this.requests = pallet.requests
-		this.name = pallet.name
+	constructor(pallet?: Pallet) {
+		if (pallet) {
+			Object.assign(this, pallet)
+		}
 
+		this.originalContent = this.content || ''
 		this.pristineContent = true
 	}
 
