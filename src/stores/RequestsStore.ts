@@ -22,20 +22,27 @@ export default class PalletSelectStore {
 	constructor() {
 		this.requests = []
 
+		this.fetchingRequests = true
 		this.fetchRequests()
+		this.fetchingRequests = false
+
+		this.reloadStore()
 	}
 
 	async fetchRequests(): Promise<void> {
-		this.fetchingRequests = true
-
 		try {
 			const response = await api.get<Request[]>('')
 			this.requests = response.data.map(r => new Request(r))
 		} catch (err) {
 			console.log(err)
 		}
+	}
 
-		this.fetchingRequests = false
+	reloadStore() {
+		setTimeout(() => {
+			this.fetchRequests()
+			this.reloadStore()
+		}, 2 * 60 * 1000)
 	}
 
 	@action async createRequest(requestParams: RequestParams, palletName: string) {

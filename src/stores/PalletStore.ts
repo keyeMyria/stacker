@@ -21,14 +21,17 @@ export default class PalletStore {
 
 	constructor() {
 		this.showSide = 'left'
-		this.fetchingPallets = true
 
 		this.pallets = []
 		this.requests = []
 		this.rowCount = 8
 		this.columnCount = 71
 
+		this.fetchingPallets = true
 		this.fetchPallets()
+		this.fetchingPallets = false
+
+		this.reloadStore()
 	}
 
 	@action switchSide(side: string): void {
@@ -40,7 +43,13 @@ export default class PalletStore {
 
 		this.pallets = response.data.map(p => new Pallet(p))
 		this.pallets = this.sortPallets()
-		this.fetchingPallets = false
+	}
+
+	reloadStore() {
+		setTimeout(() => {
+			this.fetchPallets()
+			this.reloadStore()
+		}, 5 * 60 * 1000)
 	}
 
 	getPalletsFromSide(side: string): Pallet[] {
