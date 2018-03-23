@@ -8,6 +8,7 @@ import { lighten } from 'material-ui/styles/colorManipulator'
 import Typography from 'material-ui/Typography'
 
 import Pallet from '../../../models/Pallet'
+import PalletType from '../../../models/PalletType'
 
 import PalletDialog from '../../dialogs/PalletDialog'
 
@@ -19,15 +20,19 @@ interface State {
 	open: boolean
 }
 
-type ClassNames = 'root' | 'name' | 'rootEmpty' | 'rootDisabled'
+type ClassNames = (
+	'root' |
+	'name' |
+	'rootEmpty' |
+	'rootDisabled' |
+	'types' |
+	'type'
+)
 
 const decorate = withStyles<ClassNames>(theme => ({
 	root: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		width: 32,
-		height: 64,
+		width: 40,
+		height: 80,
 		background: grey[300],
 		cursor: 'pointer',
 		'&:hover': {
@@ -51,8 +56,17 @@ const decorate = withStyles<ClassNames>(theme => ({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		width: 32,
-		height: 64
+		width: 40,
+		height: 80
+	},
+	types: {
+
+	},
+	type: {
+		fontSize: '0.6rem',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+		whiteSpace: 'nowrap'
 	}
 }))
 
@@ -70,7 +84,22 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 		this.setState({ open: false })
 	}
 
+	mapType = (type: PalletType) => {
+		return (
+			<Typography
+				key={type.id}
+				variant="caption"
+				className={this.props.classes.type}
+			>
+				{type.typeName}
+			</Typography>
+		)
+	}
+
 	render() {
+		const { pallet } = this.props
+		const types = pallet.types.slice(0, 4)
+
 		if (this.props.pallet.isDisabled) {
 			return(<div className={this.props.classes.rootDisabled} />)
 		}
@@ -89,6 +118,8 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 				<Typography className={this.props.classes.name}>
 					{this.props.pallet.side === 'left' ? 'L' : 'R'}
 				</Typography>
+
+				{types.map(this.mapType)}
 			</div>
 		]
 

@@ -36,7 +36,7 @@ const decorate = withStyles<ClassNames>(() => ({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		height: 64,
+		height: 80,
 		marginBottom: 4
 	}
 }))
