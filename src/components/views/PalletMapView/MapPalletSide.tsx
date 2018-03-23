@@ -19,7 +19,7 @@ interface State {
 	open: boolean
 }
 
-type ClassNames = 'root' | 'name' | 'rootEmpty'
+type ClassNames = 'root' | 'name' | 'rootEmpty' | 'rootDisabled'
 
 const decorate = withStyles<ClassNames>(theme => ({
 	root: {
@@ -46,6 +46,13 @@ const decorate = withStyles<ClassNames>(theme => ({
 		'&:hover': {
 			background: lighten(deepOrange[100], 0.4)
 		}
+	},
+	rootDisabled: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: 32,
+		height: 64
 	}
 }))
 
@@ -64,6 +71,10 @@ class MapPallet extends React.Component<Props & WithStyles<ClassNames>, State> {
 	}
 
 	render() {
+		if (this.props.pallet.isDisabled) {
+			return(<div className={this.props.classes.rootDisabled} />)
+		}
+
 		const rootClasses = classnames(
 			this.props.classes.root,
 			{ [this.props.classes.rootEmpty]: this.props.pallet.isEmpty }
