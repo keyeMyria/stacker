@@ -2,6 +2,6 @@ import Pallet from './Pallet'
 
 export default class PalletType {
 	id: number
-	name: string
+	typeName: string
 	pallets: Pallet[]
 }

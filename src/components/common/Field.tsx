@@ -6,7 +6,8 @@ import Typography from 'material-ui/Typography'
 
 interface Props {
 	title: string,
-	content: string,
+	content?: string,
+	children?: JSX.Element,
 	className?: string
 }
 
@@ -23,7 +24,10 @@ const decorate = withStyles<ClassNames>(theme => ({
 
 class Field extends React.Component<Props & WithStyles<ClassNames>> {
 	render() {
-		if (this.props.content === undefined || this.props.content === null) {
+		if (
+			(this.props.content === undefined || this.props.content === null) &&
+			!this.props.children
+		) {
 			return null
 		}
 
@@ -32,14 +36,21 @@ class Field extends React.Component<Props & WithStyles<ClassNames>> {
 			this.props.className
 		)
 
+		const contentEl = (
+			<Typography>
+				{this.props.content}
+			</Typography>
+		)
+
 		return(
 			<div className={rootClasses}>
 				<Typography variant="caption">
 					{this.props.title}
 				</Typography>
-				<Typography>
-					{this.props.content}
-				</Typography>
+
+				{this.props.content && contentEl}
+
+				{this.props.children}
 			</div>
 		)
 	}

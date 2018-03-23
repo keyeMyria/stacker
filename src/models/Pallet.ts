@@ -13,6 +13,7 @@ export interface Position {
 
 const baseURL: string = 'http://localhost:8080/stacker/'
 const api = axios.create({ baseURL: baseURL + 'pallet' })
+const apiType = axios.create({ baseURL: baseURL + 'palletType' })
 
 const sideToChar = (side: Side): string => side === 'left' ? 'L' : 'R'
 const charToSide = (char: string): Side => char === 'L' ? 'left' : 'right'
@@ -22,6 +23,18 @@ const numToChar = (num: number): string => String.fromCharCode(64 + num)
 export const charToNum = (char: string): number => char.charCodeAt(0) - 64
 
 export const stringToSide = (side: string): Side => side === 'left' ? 'left' : 'right'
+
+export const fetchPalletTypes = async () => {
+	try {
+		const response = await apiType.get<PalletType[]>('')
+
+		return response.data
+	} catch (err) {
+		console.log(err)
+	}
+
+	return []
+}
 
 export interface PalletParams {
 	side: Side
@@ -38,7 +51,7 @@ export default class Pallet implements PalletParams {
 	@observable isDisabled: boolean
 	@observable content: string
 	requests: Request[]
-	types: PalletType[]
+	@observable types: PalletType[]
 	name: string
 
 	@observable pristineContent: boolean
@@ -49,13 +62,13 @@ export default class Pallet implements PalletParams {
 			Object.assign(this, pallet)
 		}
 
-		this.originalContent = this.content || ''
+		this.content = this.originalContent = this.content || ''
 		this.pristineContent = true
 	}
 
 	@action async toggleEmpty(): Promise<void> {
 		try {
-			await api.get(this.id + '/action/empty')
+			await api.get<Pallet>(this.id + '/action/empty')
 
 			this.isEmpty = !this.isEmpty
 		} catch (err) {
@@ -82,6 +95,30 @@ export default class Pallet implements PalletParams {
 			})
 
 			this.pristineContent = true
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	@action async addType(type: PalletType): Promise<void> {
+		try {
+			await api.post<Pallet>(this.id + '/action/addType', {
+				typeId: type.id
+			})
+
+			this.types = [ ...this.types, type ]
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	@action async deleteType(type: PalletType): Promise<void> {
+		try {
+			await api.post<Pallet>(this.id + '/action/deleteType', {
+				typeId: type.id
+			})
+
+			this.types = this.types.filter(t => t.id !== type.id)
 		} catch (err) {
 			console.log(err)
 		}
