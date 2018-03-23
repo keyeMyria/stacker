@@ -39,6 +39,7 @@ const decorate = withStyles<ClassKeys>(theme => ({
 	}
 }))
 
+// FIXME: Don't load all store, split into modules
 const palletStore: PalletStore = new PalletStore()
 const requestsStore: RequestsStore = new RequestsStore()
 const palletSelectStore: PalletSelectStore = new PalletSelectStore(requestsStore)
@@ -49,6 +50,16 @@ class App extends React.Component<Props & WithStyles<ClassKeys>> {
 		super(props)
 
 		requestsStore.appStore = props.store
+	}
+
+	componentDidMount() {
+		document.documentElement.style.height = '100%'
+		document.body.style.height = '100%'
+
+		const root = document.getElementById('root')
+		if (root) {
+			root.style.height = '100%'
+		}
 	}
 
 	mapErrorHandler = (instance: ErrorSnackbar) => {
